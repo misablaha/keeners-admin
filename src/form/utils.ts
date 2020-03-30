@@ -1,5 +1,5 @@
 import pick from 'lodash/pick';
-import { AnyObject } from '../types';
+import { AnyObject } from '../types/core';
 
 export const pickToolbarProps = (props: AnyObject) =>
   pick(props, [

@@ -6,7 +6,7 @@ export default defaultsDeep(
   {
     resources: {
       helpers: {
-        name: 'Dobrovolník',
+        name: 'Dobrovolníci',
         fields: {
           firstName: 'Jméno',
           lastName: 'Příjmení',
@@ -19,7 +19,7 @@ export default defaultsDeep(
         },
       },
       recipients: {
-        name: 'Klient',
+        name: 'Klienti',
         fields: {
           firstName: 'Jméno',
           lastName: 'Příjmení',
@@ -31,6 +31,26 @@ export default defaultsDeep(
           address: 'Adresa',
         },
       },
+      requirements: {
+        name: 'Požadavky',
+        fields: {
+          createdTime: 'Datum vytvoření',
+          address: 'Adresa',
+          demands: 'Požadavek',
+          helper: 'Dobrovolník',
+          note: 'Poznámka',
+          recipient: 'Klient',
+          status: 'Stav',
+          supervisor: 'Spravuje',
+          supplyDate: 'Datum plnění',
+        },
+        statuses: {
+          open: 'Otevřeno',
+          assign: 'Dobrovolník',
+          done: 'Vyřešeno',
+          cancel: 'Zrušeno',
+        },
+      },
       services: {
         name: 'Služby',
         fields: {
@@ -40,7 +60,7 @@ export default defaultsDeep(
         },
       },
       supervisors: {
-        name: 'Supervisor',
+        name: 'Supervisoři',
         fields: {
           name: 'Jméno',
         },
