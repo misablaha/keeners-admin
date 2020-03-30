@@ -1,9 +1,13 @@
 import React from 'react';
-import { Datagrid, Filter, List, SearchInput, TextField } from 'react-admin';
+import { BooleanField, BooleanInput, Datagrid, Filter, List, TextField, TextInput } from 'react-admin';
+import { CondOperator } from '@nestjsx/crud-request';
 
 const HelperFilter = (props: any) => (
   <Filter {...props}>
-    <SearchInput source="phoneNumber" alwaysOn />
+    <TextInput label={`resources.helpers.fields.firstName`} source={'firstName'} alwaysOn />
+    <TextInput label={`resources.helpers.fields.lastName`} source={'lastName'} alwaysOn />
+    <TextInput label={`resources.helpers.fields.phoneNumber`} source={'phoneNumber'} alwaysOn />
+    <BooleanInput label={`resources.helpers.fields.isActive`} source={`isActive||${CondOperator.EQUALS}`} />
   </Filter>
 );
 
@@ -13,7 +17,9 @@ const HelperList = (props: any) => (
       <TextField source="firstName" />
       <TextField source="lastName" />
       <TextField source="phoneNumber" />
+      <TextField source="email" />
       <TextField source="address" />
+      <BooleanField source="isActive" />
     </Datagrid>
   </List>
 );

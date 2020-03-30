@@ -10,7 +10,7 @@ const Aside = () => (
 );
 
 const SupervisorCreate = (props: any) => (
-  <Edit {...props} component="div" aside={<Aside />}>
+  <Edit {...props} component="form" aside={<Aside />}>
     <RecipientForm />
   </Edit>
 );

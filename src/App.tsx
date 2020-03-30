@@ -1,8 +1,6 @@
 import React from 'react';
 import { Admin, Resource } from 'react-admin';
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import crudProvider from '@fusionworks/ra-data-nest-crud';
+import crudProvider from './NestjsCrudProvider';
 import { i18nProvider } from './i18n';
 
 import helpers from './resources/helpers';
