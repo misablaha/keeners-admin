@@ -14,6 +14,7 @@ export default defaultsDeep(
           phoneNumber: 'Telefon',
           address: 'Adresa',
           isActive: 'Je k dispozici',
+          note: 'Poznámka',
           provideIds: 'Nabízí',
         },
       },
@@ -26,6 +27,7 @@ export default defaultsDeep(
           age: 'Věk',
           email: 'Email',
           phoneNumber: 'Telefon',
+          note: 'Poznámka',
           address: 'Adresa',
         },
       },
@@ -33,6 +35,7 @@ export default defaultsDeep(
         name: 'Služby',
         fields: {
           name: 'Název',
+          note: 'Poznámka',
           isInternal: 'Řeší se centrálně',
         },
       },
