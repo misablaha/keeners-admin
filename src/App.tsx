@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Admin, Resource } from 'react-admin';
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import crudProvider from '@fusionworks/ra-data-nest-crud';
+import { i18nProvider } from './i18n';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import helpers from './resources/helpers';
+import recipients from './resources/recipients';
+import services from './resources/services';
+import supervisors from './resources/supervisors';
+import InitGoogle from './InitGoogle';
 
+const dataProvider = crudProvider('/api');
+const App = () => (
+  <InitGoogle>
+    <Admin dataProvider={dataProvider} i18nProvider={i18nProvider}>
+      <Resource {...helpers} />
+      <Resource {...recipients} />
+      <Resource {...supervisors} />
+      <Resource {...services} />
+    </Admin>
+  </InitGoogle>
+);
 export default App;

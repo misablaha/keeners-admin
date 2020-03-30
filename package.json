@@ -2,28 +2,51 @@
   "name": "keeners-admin",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "typescript": "~3.7.2"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "dependencies": {
+    "@fusionworks/ra-data-nest-crud": "^1.0.8",
+    "@material-ui/core": "^4.9.8",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.47",
+    "@react-google-maps/api": "^1.8.6",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "autosuggest-highlight": "^3.1.1",
+    "google-libphonenumber": "^3.2.8",
+    "lodash": "^4.17.15",
+    "prop-types": "^15.7.2",
+    "ra-core": "^3.3.3",
+    "ra-language-czech": "^2.0.0",
+    "ra-language-english": "^3.2.0",
+    "react": "^16.13.1",
+    "react-admin": "^3.3.3",
+    "react-cool-onclickoutside": "^1.3.3",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "typescript": "~3.7.2",
+    "use-places-autocomplete": "^1.0.4"
   },
+  "devDependencies": {
+    "@types/autosuggest-highlight": "^3.1.0",
+    "@types/google-libphonenumber": "^7.4.17",
+    "@types/googlemaps": "^3.39.3",
+    "@types/jest": "^24.0.0",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
+    "prettier": "^2.0.2"
+  },
+  "proxy": "http://localhost:3000",
   "browserslist": {
     "production": [
       ">0.2%",
