@@ -1,4 +1,12 @@
-import { Record } from 'ra-core';
+import { Record, ReduxState } from 'ra-core';
+
+export type ThemeName = 'light' | 'dark';
+export type FontSize = 'medium' | 'large';
+
+export interface AppState extends ReduxState {
+  theme: ThemeName;
+  fontSize:  FontSize;
+}
 
 export interface AnyObject {
   [key: string]: any;

@@ -20,7 +20,7 @@ const RequirementList = (props: any) => (
     <Datagrid optimized rowClick="edit">
       <DateField source="createdTime" showTime />
       <RecipientLinkField />
-      <TextField label={`resources.recipients.fields.age`} source="recipient.age" sortable={false} />
+      <TextField label={`resources.recipients.fields.age`} source="recipient.age" sortable={false} noWrap />
       <TextField label={`resources.recipients.fields.phoneNumber`} source="recipient.phoneNumber" sortable={false} />
       <DemandsField />
       <DateField source="supplyDate" showTime />

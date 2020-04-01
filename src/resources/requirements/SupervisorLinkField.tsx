@@ -10,7 +10,7 @@ const SupervisorLinkField: FC<FieldProps<Requirement>> = props => {
       to={`supervisors/${props.record.supervisor.id}`}
       onClick={(ev: React.MouseEvent) => ev.stopPropagation()}
     >
-      <ChipField record={props.record.supervisor} source="name" clickable color={'secondary'} />
+      <ChipField record={props.record.supervisor} source="name" clickable color={'primary'} />
     </Link>
   ) : null;
 };

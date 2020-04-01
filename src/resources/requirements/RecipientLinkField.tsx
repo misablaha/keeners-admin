@@ -10,7 +10,7 @@ const RecipientLinkField: FC<FieldProps<Requirement>> = props => {
       to={`recipients/${props.record.recipient.id}`}
       onClick={(ev: React.MouseEvent) => ev.stopPropagation()}
     >
-      <ChipField record={props.record.recipient} source="name" clickable color={'secondary'} />
+      <ChipField record={props.record.recipient} source="name" clickable color={'primary'} />
     </Link>
   ) : null;
 };

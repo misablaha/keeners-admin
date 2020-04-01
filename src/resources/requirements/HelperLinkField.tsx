@@ -10,7 +10,7 @@ const HelperLinkField: FC<FieldProps<Requirement>> = props => {
       to={`helpers/${props.record.helper.id}`}
       onClick={(ev: React.MouseEvent) => ev.stopPropagation()}
     >
-      <ChipField record={props.record.helper} source="name" clickable color={'secondary'} />
+      <ChipField record={props.record.helper} source="name" clickable color={'primary'} />
     </Link>
   ) : null;
 };
