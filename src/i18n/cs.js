@@ -39,6 +39,7 @@ export default defaultsDeep(
           demands: 'Požadavek',
           helper: 'Dobrovolník',
           note: 'Poznámka',
+          phoneNumber: 'Telefonní číslo',
           recipient: 'Klient',
           status: 'Stav',
           supervisor: 'Spravuje',

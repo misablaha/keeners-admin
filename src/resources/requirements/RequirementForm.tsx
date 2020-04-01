@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import {
   CheckboxGroupInput,
-  DateTimeInput,
+  DateInput,
   FormWithRedirect,
   RadioButtonGroupInput,
   ReferenceArrayInput,
@@ -17,26 +17,24 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import { pickToolbarProps } from '../../form/utils';
+import { formatPhoneNumber, pickToolbarProps } from '../../form/utils';
 import LocationMapInput from '../../form/LocationMapInput';
 import { Helper, Recipient, Requirement, Supervisor } from '../../types/records';
+import RecipientAutocompleteInput from '../recipients/RecepientAutocompleteInput';
+import { phone } from '../../form/validate';
+import RecipientForm from './RecipientForm';
+import LocationAutocompleteInput from '../../form/LocationAutocompleteInput';
 
 const useStyles = makeStyles(theme => ({
+  container: {
+    marginBottom: 0,
+    marginTop: 0,
+  },
   item: {
-    marginBottom: theme.spacing(-2),
+    paddingBottom: '0!important',
+    paddingTop: '0!important',
   },
 }));
-
-const fieldList = {
-  address: 'Adresa',
-  demands: 'Požadavek',
-  helper: 'Dobrovolník',
-  note: 'Poznámka',
-  recipient: 'Klient',
-  status: 'Stav',
-  supervisor: 'Zajišťuje',
-  supplyDate: 'Datum plnění',
-};
 
 interface RequirementFormState extends Requirement {
   recipientId: string;
@@ -50,20 +48,54 @@ const RequirementFormBody: FC<{ record?: Requirement }> = props => {
   const { values } = useFormState<RequirementFormState>();
   const dataProvider = useDataProvider();
 
-  React.useEffect(() => {
-    if (!values.recipientId) {
-      form.change('recipient', null);
-      form.change('address', null);
-      form.change('location', null);
-    } else if (!values.recipient || values.recipient.id !== values.recipientId) {
-      dataProvider.getOne('recipients', { id: values.recipientId }).then(res => {
-        const recipient = res.data as Recipient;
+  const handleRecipientClean = React.useCallback(() => {
+    form.change('recipient', null);
+    form.change('recipientId', null);
+    form.change('address', null);
+    form.change('location', null);
+  }, [form]);
+
+  const handleRecipientSelect = React.useCallback(
+    (recipient: Recipient | string | null) => {
+      console.log(recipient);
+      if (!recipient) {
+        form.change('recipient', null);
+        form.change('recipientId', null);
+        form.change('address', null);
+        form.change('location', null);
+      } else if (typeof recipient === 'string') {
+        form.change('recipient', {
+          firstName: null,
+          lastName: null,
+          yearOfBirth: null,
+          age: null,
+          email: null,
+          phoneNumber: formatPhoneNumber(recipient),
+        });
+        form.change('recipientId', null);
+        form.change('address', null);
+        form.change('location', null);
+      } else {
         form.change('recipient', recipient);
+        form.change('recipientId', recipient.id);
         form.change('address', recipient.address);
         form.change('location', recipient.location);
-      });
-    }
-  }, [form, values.recipient, values.recipientId]);
+      }
+    },
+    [form],
+  );
+
+  // Pass address and location to the new recipient
+  const handleAddressChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>, result: google.maps.GeocoderResult | null) => {
+      form.change('location', result ? result.geometry.location : null);
+      if (!values.recipientId) {
+        form.change('recipient.address', result ? result.formatted_address : null);
+        form.change('recipient.location', result ? result.geometry.location : null);
+      }
+    },
+    [form, values.recipientId],
+  );
 
   React.useEffect(() => {
     if (!values.supervisorId) {
@@ -90,20 +122,22 @@ const RequirementFormBody: FC<{ record?: Requirement }> = props => {
   return (
     <Card>
       <CardContent>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} className={classes.container}>
           <Grid item xs={12} lg={6} className={classes.item}>
-            <ReferenceInput
-              label={`resources.requirements.fields.recipient`}
-              reference="recipients"
-              resource="requirements"
-              source="recipientId"
-              fullWidth
-              validate={required()}
-              disabled={props.record && props.record.id}
-            >
-              <SelectInput autoFocus />
-            </ReferenceInput>
-            <TextInput resource="requirements" source="address" fullWidth disabled />
+            {values.recipient ? (
+              <RecipientForm onDrop={handleRecipientClean} />
+            ) : (
+              <RecipientAutocompleteInput
+                resource="requirements"
+                source="phoneNumber"
+                onChange={handleRecipientSelect}
+                autoFocus
+                validate={[required(), phone()]}
+              />
+            )}
+            {values.recipient && (
+              <LocationAutocompleteInput resource="helpers" source="address" fullWidth onChange={handleAddressChange} />
+            )}
             <LocationMapInput source="location" />
           </Grid>
           <Grid item xs={12} lg={6} className={classes.item}>
@@ -116,7 +150,7 @@ const RequirementFormBody: FC<{ record?: Requirement }> = props => {
               fullWidth
               validate={required()}
             >
-              <RadioButtonGroupInput />
+              <RadioButtonGroupInput choices={[]} />
             </ReferenceInput>
             <ReferenceArrayInput
               label={`resources.requirements.fields.demands`}
@@ -127,7 +161,7 @@ const RequirementFormBody: FC<{ record?: Requirement }> = props => {
             >
               <CheckboxGroupInput />
             </ReferenceArrayInput>
-            <DateTimeInput resource="requirements" source="supplyDate" fullWidth />
+            <DateInput resource="requirements" source="supplyDate" fullWidth />
             <ReferenceInput
               label={`resources.requirements.fields.helper`}
               reference="helpers"
