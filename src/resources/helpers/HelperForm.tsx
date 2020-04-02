@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, Fragment } from 'react';
 import {
   BooleanInput,
   CheckboxGroupInput,
@@ -17,14 +17,36 @@ import { pickToolbarProps } from '../../form/utils';
 import { phone } from '../../form/validate';
 import LocationAutocompleteInput from '../../form/LocationAutocompleteInput';
 import LocationMapInput from '../../form/LocationMapInput';
+import { Helper } from '../../types/records';
+import HelperRequirementList from '../requirements/HelperRequirementList';
 
 const useStyles = makeStyles(theme => ({
+  container: {
+    marginBottom: 0,
+    marginTop: 0,
+  },
   item: {
-    marginBottom: theme.spacing(-2),
+    paddingBottom: '0!important',
+    paddingTop: '0!important',
   },
 }));
 
-const HelperFormBody: FC = props => {
+const HelperFormLayout: FC<{ record: Partial<Helper> }> = ({ record, children }) => {
+  return record.id ? (
+    <Grid container spacing={2}>
+      <Grid item xs={12} md={6} lg={7}>
+        {children}
+      </Grid>
+      <Grid item xs={12} md={6} lg={5}>
+        <HelperRequirementList record={record} />
+      </Grid>
+    </Grid>
+  ) : (
+    <Fragment>{children}</Fragment>
+  );
+};
+
+const HelperFormBody: FC<{ record: Partial<Helper> }> = props => {
   const classes = useStyles();
   const form = useForm();
 
@@ -36,39 +58,41 @@ const HelperFormBody: FC = props => {
   );
 
   return (
-    <Card>
-      <CardContent>
-        <Grid container spacing={2}>
-          <Grid item xs={12} lg={6} className={classes.item}>
-            <TextInput resource="helpers" source="firstName" fullWidth validate={required()} autoFocus />
+    <HelperFormLayout record={props.record}>
+      <Card>
+        <CardContent>
+          <Grid container spacing={2} className={classes.container}>
+            <Grid item xs={12} lg={6} className={classes.item}>
+              <TextInput resource="helpers" source="firstName" fullWidth validate={required()} autoFocus />
+            </Grid>
+            <Grid item xs={12} lg={6} className={classes.item}>
+              <TextInput resource="helpers" source="lastName" validate={required()} fullWidth />
+            </Grid>
+            <Grid item xs={12} lg={6} className={classes.item}>
+              <TextInput resource="helpers" source="phoneNumber" fullWidth validate={[required(), phone()]} />
+            </Grid>
+            <Grid item xs={12} lg={6} className={classes.item}>
+              <TextInput resource="helpers" source="email" fullWidth />
+            </Grid>
+            <Grid item xs={12} className={classes.item}>
+              <BooleanInput resource="helpers" source="isActive" defaultValue={true} />
+            </Grid>
+            <Grid item xs={12} className={classes.item}>
+              <ReferenceArrayInput reference="services" resource="helpers" source="provideIds" fullWidth>
+                <CheckboxGroupInput />
+              </ReferenceArrayInput>
+            </Grid>
+            <Grid item xs={12} className={classes.item}>
+              <LocationAutocompleteInput resource="helpers" source="address" fullWidth onChange={handleAddressChange} />
+            </Grid>
+            <Grid item xs={12} className={classes.item}>
+              <LocationMapInput source="location" />
+            </Grid>
           </Grid>
-          <Grid item xs={12} lg={6} className={classes.item}>
-            <TextInput resource="helpers" source="lastName" validate={required()} fullWidth />
-          </Grid>
-          <Grid item xs={12} lg={6} className={classes.item}>
-            <TextInput resource="helpers" source="phoneNumber" fullWidth validate={[required(), phone()]} />
-          </Grid>
-          <Grid item xs={12} lg={6} className={classes.item}>
-            <TextInput resource="helpers" source="email" fullWidth />
-          </Grid>
-          <Grid item xs={12} className={classes.item}>
-            <BooleanInput resource="helpers" source="isActive" defaultValue={true} />
-          </Grid>
-          <Grid item xs={12} className={classes.item}>
-            <ReferenceArrayInput reference="services" resource="helpers" source="provideIds" fullWidth>
-              <CheckboxGroupInput />
-            </ReferenceArrayInput>
-          </Grid>
-          <Grid item xs={12} className={classes.item}>
-            <LocationAutocompleteInput resource="helpers" source="address" fullWidth onChange={handleAddressChange} />
-          </Grid>
-          <Grid item xs={12} className={classes.item}>
-            <LocationMapInput source="location" />
-          </Grid>
-        </Grid>
-      </CardContent>
-      <Toolbar {...pickToolbarProps(props)} />
-    </Card>
+        </CardContent>
+        <Toolbar {...pickToolbarProps(props)} />
+      </Card>
+    </HelperFormLayout>
   );
 };
 

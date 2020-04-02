@@ -43,7 +43,7 @@ export default defaultsDeep(
           recipient: 'Klient',
           status: 'Stav',
           supervisor: 'Spravuje',
-          supplyDate: 'Datum plnění',
+          supplyDate: 'Termín',
         },
         statuses: {
           open: 'Otevřeno',

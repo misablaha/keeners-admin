@@ -42,7 +42,7 @@ const RecipientForm: FC<{ onDrop: () => void }> = props => {
 
   return (
     <Grid container spacing={2} className={classes.container}>
-      <Grid item xs={12} lg={6} className={classes.item}>
+      <Grid item xs={9} lg={9} className={classes.item}>
         <TextInput
           label={'resources.recipients.fields.phoneNumber'}
           resource="recipients"
@@ -52,7 +52,7 @@ const RecipientForm: FC<{ onDrop: () => void }> = props => {
           validate={[required(), phone()]}
         />
       </Grid>
-      <Grid item xs={12} lg={6} className={classes.item}>
+      <Grid item xs={3} lg={3} className={classes.item}>
         {!values.id && (
           <FormControl margin={'dense'}>
             <IconButton color="primary" onClick={props.onDrop}>
@@ -61,7 +61,7 @@ const RecipientForm: FC<{ onDrop: () => void }> = props => {
           </FormControl>
         )}
       </Grid>
-      <Grid item xs={12} lg={6} className={classes.item}>
+      <Grid item xs={12} className={classes.item}>
         <TextInput
           label={'resources.recipients.fields.firstName'}
           resource="recipients"
@@ -70,7 +70,7 @@ const RecipientForm: FC<{ onDrop: () => void }> = props => {
           autoFocus
         />
       </Grid>
-      <Grid item xs={12} lg={6} className={classes.item}>
+      <Grid item xs={12} className={classes.item}>
         <TextInput
           label={'resources.recipients.fields.lastName'}
           resource="recipients"

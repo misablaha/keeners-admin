@@ -10,7 +10,7 @@ import { AnyObject } from '../types/core';
 const useStyles = makeStyles({
   map: {
     width: '100%',
-    height: 500,
+    height: 400,
   },
 });
 

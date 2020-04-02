@@ -4,10 +4,10 @@ import DemandsField from './DemandsField';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
-import { Recipient } from '../../types/records';
-import HelperLinkField from './HelperLinkField';
+import { Helper } from '../../types/records';
 import SupervisorLinkField from './SupervisorLinkField';
 import requirementStatuses from './requirementStatuses';
+import RecipientLinkField from './RecipientLinkField';
 
 const RequirementShow: FC = props => (
   <Show
@@ -19,14 +19,14 @@ const RequirementShow: FC = props => (
       <RichTextField source="note" />
       <DemandsField />
       <DateField source="supplyDate" showTime />
-      <HelperLinkField />
+      <RecipientLinkField />
       <SupervisorLinkField />
       <SelectField source="status" choices={requirementStatuses} sortable={false} />
     </SimpleShowLayout>
   </Show>
 );
 
-const RecipientRequirementList: FC<{ record: Partial<Recipient> }> = ({ record }) => (
+const HelperRequirementList: FC<{ record: Partial<Helper> }> = ({ record }) => (
   <Card>
     <CardHeader title="Poslední požadavky" subheader={record.name} />
     <Divider />
@@ -35,13 +35,12 @@ const RecipientRequirementList: FC<{ record: Partial<Recipient> }> = ({ record }
       resource={'requirements'}
       title={' '}
       component={'div'}
-      filter={{ recipientId: record.id }}
+      filter={{ helperId: record.id }}
       sort={{ field: 'createdTime', order: 'DESC' }}
       perPage={15}
       bulkActionButtons={false}
       exporter={false}
       actions={null}
-      pagination={null}
       hasCreate={false}
       hasEdit={false}
       hasShow={false}
@@ -57,4 +56,4 @@ const RecipientRequirementList: FC<{ record: Partial<Recipient> }> = ({ record }
   </Card>
 );
 
-export default RecipientRequirementList;
+export default HelperRequirementList;

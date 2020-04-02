@@ -50,10 +50,10 @@ const RequirementFormLayout: FC<{ record: RequirementFormState }> = ({ record, c
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={6} lg={8}>
+      <Grid item xs={12} md={6} lg={7}>
         {children}
       </Grid>
-      <Grid item xs={12} md={6} lg={4}>
+      <Grid item xs={12} md={6} lg={5}>
         {record.recipientId && <RecipientRequirementList record={record.recipient} />}
       </Grid>
     </Grid>

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, Fragment } from 'react';
 import { FormWithRedirect, NumberInput, required, TextInput, Toolbar } from 'react-admin';
 import { useForm } from 'react-final-form';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,14 +9,36 @@ import { pickToolbarProps } from '../../form/utils';
 import { phone } from '../../form/validate';
 import LocationAutocompleteInput from '../../form/LocationAutocompleteInput';
 import LocationMapInput from '../../form/LocationMapInput';
+import RecipientRequirementList from '../requirements/RecipientRequirementList';
+import { Recipient } from '../../types/records';
 
 const useStyles = makeStyles(theme => ({
+  container: {
+    marginBottom: 0,
+    marginTop: 0,
+  },
   item: {
-    marginBottom: theme.spacing(-2),
+    paddingBottom: '0!important',
+    paddingTop: '0!important',
   },
 }));
 
-const RecipientFormBody: FC = props => {
+const RecipientFormLayout: FC<{ record: Partial<Recipient> }> = ({ record, children }) => {
+  return record.id ? (
+    <Grid container spacing={2}>
+      <Grid item xs={12} md={6} lg={7}>
+        {children}
+      </Grid>
+      <Grid item xs={12} md={6} lg={5}>
+        <RecipientRequirementList record={record} />
+      </Grid>
+    </Grid>
+  ) : (
+    <Fragment>{children}</Fragment>
+  );
+};
+
+const RecipientFormBody: FC<{record: Partial<Recipient>}> = props => {
   const classes = useStyles();
   const form = useForm();
 
@@ -44,42 +66,44 @@ const RecipientFormBody: FC = props => {
   );
 
   return (
-    <Card>
-      <CardContent>
-        <Grid container spacing={2}>
-          <Grid item xs={12} lg={6} className={classes.item}>
-            <TextInput resource="recipients" source="firstName" fullWidth autoFocus />
+    <RecipientFormLayout record={props.record}>
+      <Card>
+        <CardContent>
+          <Grid container spacing={2} className={classes.container}>
+            <Grid item xs={12} lg={6} className={classes.item}>
+              <TextInput resource="recipients" source="firstName" fullWidth autoFocus />
+            </Grid>
+            <Grid item xs={12} lg={6} className={classes.item}>
+              <TextInput resource="recipients" source="lastName" fullWidth />
+            </Grid>
+            <Grid item xs={12} lg={6} className={classes.item}>
+              <NumberInput resource="recipients" source="age" fullWidth onChange={handleAgeChange} />
+            </Grid>
+            <Grid item xs={12} lg={6} className={classes.item}>
+              <NumberInput resource="recipients" source="yearOfBirth" fullWidth onChange={handleYearOfBirthChange} />
+            </Grid>
+            <Grid item xs={12} lg={6} className={classes.item}>
+              <TextInput resource="recipients" source="phoneNumber" fullWidth validate={[required(), phone()]} />
+            </Grid>
+            <Grid item xs={12} lg={6} className={classes.item}>
+              <TextInput resource="recipients" source="email" fullWidth />
+            </Grid>
+            <Grid item xs={12} className={classes.item}>
+              <LocationAutocompleteInput
+                resource="recipients"
+                source="address"
+                fullWidth
+                onChange={handleAddressChange}
+              />
+            </Grid>
+            <Grid item xs={12} className={classes.item}>
+              <LocationMapInput source="location" />
+            </Grid>
           </Grid>
-          <Grid item xs={12} lg={6} className={classes.item}>
-            <TextInput resource="recipients" source="lastName" fullWidth />
-          </Grid>
-          <Grid item xs={12} lg={6} className={classes.item}>
-            <NumberInput resource="recipients" source="age" fullWidth onChange={handleAgeChange} />
-          </Grid>
-          <Grid item xs={12} lg={6} className={classes.item}>
-            <NumberInput resource="recipients" source="yearOfBirth" fullWidth onChange={handleYearOfBirthChange} />
-          </Grid>
-          <Grid item xs={12} lg={6} className={classes.item}>
-            <TextInput resource="recipients" source="phoneNumber" fullWidth validate={[required(), phone()]} />
-          </Grid>
-          <Grid item xs={12} lg={6} className={classes.item}>
-            <TextInput resource="recipients" source="email" fullWidth />
-          </Grid>
-          <Grid item xs={12} className={classes.item}>
-            <LocationAutocompleteInput
-              resource="recipients"
-              source="address"
-              fullWidth
-              onChange={handleAddressChange}
-            />
-          </Grid>
-          <Grid item xs={12} className={classes.item}>
-            <LocationMapInput source="location" />
-          </Grid>
-        </Grid>
-      </CardContent>
-      <Toolbar {...pickToolbarProps(props)} />
-    </Card>
+        </CardContent>
+        <Toolbar {...pickToolbarProps(props)} />
+      </Card>
+    </RecipientFormLayout>
   );
 };
 
