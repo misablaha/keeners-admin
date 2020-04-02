@@ -5,12 +5,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
+import Icon from '@material-ui/icons/Accessible';
 import { pickToolbarProps } from '../../form/utils';
 import { phone } from '../../form/validate';
 import LocationAutocompleteInput from '../../form/LocationAutocompleteInput';
 import LocationMapInput from '../../form/LocationMapInput';
 import RecipientRequirementList from '../requirements/RecipientRequirementList';
 import { Recipient } from '../../types/records';
+import IconBar from '../../components/IconBar';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -68,6 +70,7 @@ const RecipientFormBody: FC<{record: Partial<Recipient>}> = props => {
   return (
     <RecipientFormLayout record={props.record}>
       <Card>
+        <IconBar Icon={Icon} bgColor="#ff9800" />
         <CardContent>
           <Grid container spacing={2} className={classes.container}>
             <Grid item xs={12} lg={6} className={classes.item}>
