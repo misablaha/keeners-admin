@@ -92,6 +92,9 @@ const RecipientFormBody: FC<{record: Partial<Recipient>}> = props => {
               <TextInput resource="recipients" source="email" fullWidth />
             </Grid>
             <Grid item xs={12} className={classes.item}>
+              <TextInput resource="helpers" source="note" multiline fullWidth />
+            </Grid>
+            <Grid item xs={12} className={classes.item}>
               <LocationAutocompleteInput
                 resource="recipients"
                 source="address"

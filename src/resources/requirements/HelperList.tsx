@@ -58,7 +58,8 @@ const HelperList: FC<{ record: RequirementFormState; onSelect: (helper: Helper) 
         // difference([1,2,3], [1,2,3,4]) => []
         filter(helpers.data, h => difference(required, h.provideIds).length === 0)
           .sort((a, b) => a.distance - b.distance)
-          .map(h => h.id),
+          .map(h => h.id)
+          .slice(0, 15),
       );
     }
   }, [setIds, helpers.loaded, services.loaded, record.demandIds, record.location]);

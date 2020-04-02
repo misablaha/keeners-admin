@@ -92,6 +92,9 @@ const HelperFormBody: FC<{ record: Partial<Helper> }> = props => {
               </ReferenceArrayInput>
             </Grid>
             <Grid item xs={12} className={classes.item}>
+              <TextInput resource="helpers" source="note" multiline fullWidth />
+            </Grid>
+            <Grid item xs={12} className={classes.item}>
               <LocationAutocompleteInput resource="helpers" source="address" fullWidth onChange={handleAddressChange} />
             </Grid>
             <Grid item xs={12} className={classes.item}>
