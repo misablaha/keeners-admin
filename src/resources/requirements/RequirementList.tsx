@@ -1,5 +1,15 @@
 import React from 'react';
-import { Datagrid, DateField, Filter, List, SelectField, TextField } from 'react-admin';
+import {
+  Datagrid,
+  DateField,
+  DateInput,
+  Filter,
+  List,
+  ReferenceInput,
+  SelectField,
+  SelectInput,
+  TextField,
+} from 'react-admin';
 import DemandsField from './DemandsField';
 import RecipientLinkField from './RecipientLinkField';
 import HelperLinkField from './HelperLinkField';
@@ -8,10 +18,21 @@ import requirementStatuses from './requirementStatuses';
 
 const RequirementFilter = (props: any) => (
   <Filter {...props}>
-    {/*<TextInput label={`resources.requirements.fields.firstName`} source={'firstName'} alwaysOn />*/}
-    {/*<TextInput label={`resources.requirements.fields.lastName`} source={'lastName'} alwaysOn />*/}
-    {/*<TextInput label={`resources.requirements.fields.phoneNumber`} source={'phoneNumber'} alwaysOn />*/}
-    {/*<BooleanInput label={`resources.requirements.fields.isActive`} source={`isActive||${CondOperator.EQUALS}`} />*/}
+    <DateInput label={`resources.requirements.filters.createdTimeGte`} source="createdTime||gte" alwaysOn />
+    <ReferenceInput
+      label={`resources.requirements.fields.supervisor`}
+      reference="supervisors"
+      source="supervisorId"
+      alwaysOn
+    >
+      <SelectInput source={'name'} />
+    </ReferenceInput>
+    <SelectInput
+      label={`resources.requirements.fields.status`}
+      source={'status'}
+      choices={requirementStatuses}
+      alwaysOn
+    />
   </Filter>
 );
 

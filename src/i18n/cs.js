@@ -42,7 +42,7 @@ export default defaultsDeep(
           phoneNumber: 'Telefonní číslo',
           recipient: 'Klient',
           status: 'Stav',
-          supervisor: 'Spravuje',
+          supervisor: 'Srávce',
           supplyDate: 'Termín',
         },
         statuses: {
@@ -50,6 +50,9 @@ export default defaultsDeep(
           assign: 'Dobrovolník',
           done: 'Vyřešeno',
           cancel: 'Zrušeno',
+        },
+        filters: {
+          createdTimeGte: 'Ode dne',
         },
       },
       services: {

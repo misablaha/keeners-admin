@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { NumberInput, required, TextInput } from 'react-admin';
 import { useForm, useFormState } from 'react-final-form';
 import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { phone } from '../../form/validate';
 import FormControl from '@material-ui/core/FormControl';
@@ -40,26 +41,32 @@ const RecipientForm: FC<{ onDrop: () => void }> = props => {
     [form],
   );
 
+  const isCreate = !values.id;
+
   return (
     <Grid container spacing={2} className={classes.container}>
-      <Grid item xs={9} lg={9} className={classes.item}>
-        <TextInput
-          label={'resources.recipients.fields.phoneNumber'}
-          resource="recipients"
-          source="recipient.phoneNumber"
-          fullWidth
-          disabled={values.recipient.id}
-          validate={[required(), phone()]}
-        />
-      </Grid>
-      <Grid item xs={3} lg={3} className={classes.item}>
-        {!values.id && (
-          <FormControl margin={'dense'}>
-            <IconButton color="primary" onClick={props.onDrop}>
-              <CancelIcon />
-            </IconButton>
-          </FormControl>
-        )}
+      <Grid item xs={12} className={classes.item}>
+        <Box display="flex">
+          <Box flexGrow={1}>
+            <TextInput
+              label={'resources.recipients.fields.phoneNumber'}
+              resource="recipients"
+              source="recipient.phoneNumber"
+              fullWidth
+              disabled={values.recipient.id}
+              validate={[required(), phone()]}
+            />
+          </Box>
+          {isCreate && (
+            <Box >
+              <FormControl margin={'dense'}>
+                <IconButton color="primary" onClick={props.onDrop}>
+                  <CancelIcon />
+                </IconButton>
+              </FormControl>
+            </Box>
+          )}
+        </Box>
       </Grid>
       <Grid item xs={12} className={classes.item}>
         <TextInput
