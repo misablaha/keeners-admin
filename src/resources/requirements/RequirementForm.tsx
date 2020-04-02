@@ -3,28 +3,33 @@ import {
   CheckboxGroupInput,
   DateInput,
   FormWithRedirect,
+  Link,
   RadioButtonGroupInput,
   ReferenceArrayInput,
   ReferenceInput,
   required,
-  SelectInput,
   TextInput,
   Toolbar,
 } from 'react-admin';
-import { useDataProvider } from 'ra-core';
+import { useDataProvider, useTranslate } from 'ra-core';
 import { useForm, useFormState } from 'react-final-form';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import Chip from '@material-ui/core/Chip';
+import FormControl from '@material-ui/core/FormControl';
+import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
+import HelperIcon from '@material-ui/icons/SupervisedUserCircle';
 import { formatPhoneNumber, pickToolbarProps } from '../../form/utils';
 import LocationMapInput from '../../form/LocationMapInput';
-import { Helper, Recipient, Requirement, Supervisor } from '../../types/records';
+import { Helper, Recipient, Requirement, RequirementStatus, Supervisor } from '../../types/records';
 import RecipientAutocompleteInput from '../recipients/RecepientAutocompleteInput';
 import { phone } from '../../form/validate';
 import RecipientForm from './RecipientForm';
 import LocationAutocompleteInput from '../../form/LocationAutocompleteInput';
 import RecipientRequirementList from './RecipientRequirementList';
+import HelperList from './HelperList';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -37,10 +42,17 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const useChipStyles = makeStyles(theme => ({
+  label: {
+    fontSize: 16,
+  },
+}));
+
 interface RequirementFormState extends Requirement {
+  demandIds: string[];
+  helperId: string;
   recipientId: string;
   supervisorId: string;
-  helperId: string;
 }
 
 const RequirementFormLayout: FC<{ record: RequirementFormState }> = ({ record, children }) => {
@@ -62,6 +74,8 @@ const RequirementFormLayout: FC<{ record: RequirementFormState }> = ({ record, c
 
 const RequirementFormBody: FC<{ record?: Requirement }> = props => {
   const classes = useStyles();
+  const chipClasses = useChipStyles();
+  const translate = useTranslate();
   const form = useForm();
   const { values } = useFormState<RequirementFormState>();
   const dataProvider = useDataProvider();
@@ -75,7 +89,6 @@ const RequirementFormBody: FC<{ record?: Requirement }> = props => {
 
   const handleRecipientSelect = React.useCallback(
     (recipient: Recipient | string | null) => {
-      console.log(recipient);
       if (!recipient) {
         form.change('recipient', null);
         form.change('recipientId', null);
@@ -106,10 +119,10 @@ const RequirementFormBody: FC<{ record?: Requirement }> = props => {
   // Pass address and location to the new recipient
   const handleAddressChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>, result: google.maps.GeocoderResult | null) => {
-      form.change('location', result ? result.geometry.location : null);
+      form.change('location', result ? result.geometry.location.toJSON() : null);
       if (!values.recipientId) {
         form.change('recipient.address', result ? result.formatted_address : null);
-        form.change('recipient.location', result ? result.geometry.location : null);
+        form.change('recipient.location', result ? result.geometry.location.toJSON() : null);
       }
     },
     [form, values.recipientId],
@@ -126,16 +139,29 @@ const RequirementFormBody: FC<{ record?: Requirement }> = props => {
     }
   }, [form, values.supervisor, values.supervisorId]);
 
-  React.useEffect(() => {
-    if (!values.helperId) {
+  const handleHelperSelect = React.useCallback(
+    (helper: Helper) => {
+      form.change('helper', helper);
+      if (values.status === RequirementStatus.OPEN) {
+        // Set status to assign if it was opened
+        form.change('status', RequirementStatus.ASSIGN);
+      }
+    },
+    [form, values.status],
+  );
+
+  const handleHelperRemove = React.useCallback(
+    (ev: React.MouseEvent) => {
+      ev.stopPropagation();
+      ev.preventDefault();
       form.change('helper', null);
-    } else if (!values.helper || values.helper.id !== values.helperId) {
-      dataProvider.getOne('helpers', { id: values.helperId }).then(res => {
-        const helper = res.data as Helper;
-        form.change('helper', helper);
-      });
-    }
-  }, [form, values.helper, values.helperId]);
+      if (values.status === RequirementStatus.ASSIGN) {
+        // Set status to assign if it was assigned
+        form.change('status', RequirementStatus.OPEN);
+      }
+    },
+    [form, values.status],
+  );
 
   return (
     <RequirementFormLayout {...props} record={values}>
@@ -186,15 +212,25 @@ const RequirementFormBody: FC<{ record?: Requirement }> = props => {
                 <CheckboxGroupInput />
               </ReferenceArrayInput>
               <DateInput resource="requirements" source="supplyDate" fullWidth />
-              <ReferenceInput
-                label={`resources.requirements.fields.helper`}
-                reference="helpers"
-                resource="requirements"
-                source="helperId"
-                fullWidth
-              >
-                <SelectInput resettable />
-              </ReferenceInput>
+              {values.helper ? (
+                <FormControl>
+                  <Typography variant={'caption'} color={'textSecondary'} gutterBottom>
+                    {translate('resources.requirements.fields.helper')}
+                  </Typography>
+                  <Link to={`/helpers/${values.helper.id}`} onClick={(ev: React.MouseEvent) => ev.stopPropagation()}>
+                    <Chip
+                      classes={chipClasses}
+                      icon={<HelperIcon />}
+                      color={'primary'}
+                      label={values.helper.name}
+                      clickable
+                      onDelete={handleHelperRemove}
+                    />
+                  </Link>
+                </FormControl>
+              ) : (
+                <HelperList record={values} onSelect={handleHelperSelect} />
+              )}
             </Grid>
           </Grid>
         </CardContent>

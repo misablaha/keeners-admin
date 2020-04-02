@@ -37,14 +37,20 @@ const RequirementFilter = (props: any) => (
 );
 
 const RequirementList = (props: any) => (
-  <List {...props} filters={<RequirementFilter />} perPage={25} sort={{ field: 'createdTime', order: 'DESC' }}>
+  <List
+    {...props}
+    filters={<RequirementFilter />}
+    perPage={25}
+    sort={{ field: 'createdTime', order: 'DESC' }}
+    bulkActionButtons={false}
+  >
     <Datagrid optimized rowClick="edit">
       <DateField source="createdTime" showTime />
       <RecipientLinkField />
       <TextField label={`resources.recipients.fields.age`} source="recipient.age" sortable={false} noWrap />
       <TextField label={`resources.recipients.fields.phoneNumber`} source="recipient.phoneNumber" sortable={false} />
       <DemandsField />
-      <DateField source="supplyDate" showTime />
+      <DateField source="supplyDate" />
       <HelperLinkField />
       <SupervisorLinkField />
       <SelectField source="status" choices={requirementStatuses} sortable={false} />

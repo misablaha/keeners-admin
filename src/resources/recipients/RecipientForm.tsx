@@ -62,7 +62,7 @@ const RecipientFormBody: FC<{record: Partial<Recipient>}> = props => {
 
   const handleAddressChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>, result: google.maps.GeocoderResult | null) => {
-      form.change('location', result ? result.geometry.location : null);
+      form.change('location', result ? result.geometry.location.toJSON() : null);
     },
     [form],
   );

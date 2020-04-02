@@ -12,7 +12,13 @@ const HelperFilter = (props: any) => (
 );
 
 const HelperList = (props: any) => (
-  <List {...props} filters={<HelperFilter />} perPage={25} sort={{ field: 'createdTime', order: 'ASC' }}>
+  <List
+    {...props}
+    filters={<HelperFilter />}
+    perPage={25}
+    sort={{ field: 'createdTime', order: 'ASC' }}
+    bulkActionButtons={false}
+  >
     <Datagrid optimized rowClick="edit">
       <TextField source="firstName" />
       <TextField source="lastName" />

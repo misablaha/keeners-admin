@@ -54,7 +54,7 @@ const HelperFormBody: FC<{ record: Partial<Helper> }> = props => {
 
   const handleAddressChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>, result: google.maps.GeocoderResult | null) => {
-      form.change('location', result ? result.geometry.location : null);
+      form.change('location', result ? result.geometry.location.toJSON() : null);
     },
     [form],
   );
@@ -81,7 +81,13 @@ const HelperFormBody: FC<{ record: Partial<Helper> }> = props => {
               <BooleanInput resource="helpers" source="isActive" defaultValue={true} />
             </Grid>
             <Grid item xs={12} className={classes.item}>
-              <ReferenceArrayInput reference="services" resource="helpers" source="provideIds" fullWidth>
+              <ReferenceArrayInput
+                reference="services"
+                resource="helpers"
+                source="provideIds"
+                filter={{ 'isInternal||$eq': false }}
+                fullWidth
+              >
                 <CheckboxGroupInput />
               </ReferenceArrayInput>
             </Grid>

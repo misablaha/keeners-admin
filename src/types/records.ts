@@ -53,7 +53,7 @@ export interface Helper extends BaseRecord {
   location: GpsPoint;
   note: string;
   provide: Service[];
-  provideIds: number[];
+  provideIds: string[];
   requirements: Requirement[];
 }
 

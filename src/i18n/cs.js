@@ -8,6 +8,8 @@ export default defaultsDeep(
       helpers: {
         name: 'Dobrovolníci',
         fields: {
+          name: 'Jméno',
+          distance: 'Vzd. (m)',
           firstName: 'Jméno',
           lastName: 'Příjmení',
           email: 'Email',
@@ -42,7 +44,7 @@ export default defaultsDeep(
           phoneNumber: 'Telefonní číslo',
           recipient: 'Klient',
           status: 'Stav',
-          supervisor: 'Srávce',
+          supervisor: 'Správce',
           supplyDate: 'Termín',
         },
         statuses: {

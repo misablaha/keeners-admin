@@ -53,7 +53,7 @@ const RecipientForm: FC<{ onDrop: () => void }> = props => {
               resource="recipients"
               source="recipient.phoneNumber"
               fullWidth
-              disabled={values.recipient.id}
+              disabled={!!values.recipient.id}
               validate={[required(), phone()]}
             />
           </Box>
