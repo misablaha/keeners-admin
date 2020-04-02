@@ -16,6 +16,7 @@ const HelperLinkField: FC<FieldProps<Requirement>> = props => {
 };
 
 HelperLinkField.defaultProps = {
+  addLabel: true,
   resource: 'requirements',
   source: 'helper',
   sortable: false,

@@ -101,6 +101,7 @@ const LocationAutocompleteInput: FC<Omit<InputProps<TextFieldProps>, 'onChange'>
       defaultValue={form.getState().values[source]}
       options={options}
       autoComplete
+      forcePopupIcon={false}
       includeInputInList
       onChange={handleSelect}
       renderInput={params => (

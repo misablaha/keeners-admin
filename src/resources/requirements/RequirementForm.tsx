@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, Fragment } from 'react';
 import {
   CheckboxGroupInput,
   DateInput,
@@ -24,6 +24,7 @@ import RecipientAutocompleteInput from '../recipients/RecepientAutocompleteInput
 import { phone } from '../../form/validate';
 import RecipientForm from './RecipientForm';
 import LocationAutocompleteInput from '../../form/LocationAutocompleteInput';
+import RecipientRequirementList from './RecipientRequirementList';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -41,6 +42,23 @@ interface RequirementFormState extends Requirement {
   supervisorId: string;
   helperId: string;
 }
+
+const RequirementFormLayout: FC<{ record: RequirementFormState }> = ({ record, children }) => {
+  if (record.id) {
+    return <Fragment>{children}</Fragment>;
+  }
+
+  return (
+    <Grid container spacing={2}>
+      <Grid item xs={12} md={6} lg={8}>
+        {children}
+      </Grid>
+      <Grid item xs={12} md={6} lg={4}>
+        {record.recipientId && <RecipientRequirementList record={record.recipient} />}
+      </Grid>
+    </Grid>
+  );
+};
 
 const RequirementFormBody: FC<{ record?: Requirement }> = props => {
   const classes = useStyles();
@@ -120,62 +138,69 @@ const RequirementFormBody: FC<{ record?: Requirement }> = props => {
   }, [form, values.helper, values.helperId]);
 
   return (
-    <Card>
-      <CardContent>
-        <Grid container spacing={2} className={classes.container}>
-          <Grid item xs={12} lg={6} className={classes.item}>
-            {values.recipient ? (
-              <RecipientForm onDrop={handleRecipientClean} />
-            ) : (
-              <RecipientAutocompleteInput
+    <RequirementFormLayout {...props} record={values}>
+      <Card>
+        <CardContent>
+          <Grid container spacing={2} className={classes.container}>
+            <Grid item xs={12} lg={6} className={classes.item}>
+              {values.recipient ? (
+                <RecipientForm onDrop={handleRecipientClean} />
+              ) : (
+                <RecipientAutocompleteInput
+                  resource="requirements"
+                  source="phoneNumber"
+                  onChange={handleRecipientSelect}
+                  autoFocus
+                  validate={[required(), phone()]}
+                />
+              )}
+              {values.recipient && (
+                <LocationAutocompleteInput
+                  resource="helpers"
+                  source="address"
+                  fullWidth
+                  onChange={handleAddressChange}
+                />
+              )}
+              <LocationMapInput source="location" />
+            </Grid>
+            <Grid item xs={12} lg={6} className={classes.item}>
+              <TextInput resource="requirements" source="note" multiline fullWidth />
+              <ReferenceInput
+                label={`resources.requirements.fields.supervisor`}
+                reference="supervisors"
                 resource="requirements"
-                source="phoneNumber"
-                onChange={handleRecipientSelect}
-                autoFocus
-                validate={[required(), phone()]}
-              />
-            )}
-            {values.recipient && (
-              <LocationAutocompleteInput resource="helpers" source="address" fullWidth onChange={handleAddressChange} />
-            )}
-            <LocationMapInput source="location" />
+                source="supervisorId"
+                fullWidth
+                validate={required()}
+              >
+                <RadioButtonGroupInput choices={[]} />
+              </ReferenceInput>
+              <ReferenceArrayInput
+                label={`resources.requirements.fields.demands`}
+                reference="services"
+                resource="requirements"
+                source="demandIds"
+                fullWidth
+              >
+                <CheckboxGroupInput />
+              </ReferenceArrayInput>
+              <DateInput resource="requirements" source="supplyDate" fullWidth />
+              <ReferenceInput
+                label={`resources.requirements.fields.helper`}
+                reference="helpers"
+                resource="requirements"
+                source="helperId"
+                fullWidth
+              >
+                <SelectInput resettable />
+              </ReferenceInput>
+            </Grid>
           </Grid>
-          <Grid item xs={12} lg={6} className={classes.item}>
-            <TextInput resource="requirements" source="note" multiline fullWidth />
-            <ReferenceInput
-              label={`resources.requirements.fields.supervisor`}
-              reference="supervisors"
-              resource="requirements"
-              source="supervisorId"
-              fullWidth
-              validate={required()}
-            >
-              <RadioButtonGroupInput choices={[]} />
-            </ReferenceInput>
-            <ReferenceArrayInput
-              label={`resources.requirements.fields.demands`}
-              reference="services"
-              resource="requirements"
-              source="demandIds"
-              fullWidth
-            >
-              <CheckboxGroupInput />
-            </ReferenceArrayInput>
-            <DateInput resource="requirements" source="supplyDate" fullWidth />
-            <ReferenceInput
-              label={`resources.requirements.fields.helper`}
-              reference="helpers"
-              resource="requirements"
-              source="helperId"
-              fullWidth
-            >
-              <SelectInput resettable />
-            </ReferenceInput>
-          </Grid>
-        </Grid>
-      </CardContent>
-      <Toolbar {...pickToolbarProps(props)} />
-    </Card>
+        </CardContent>
+        <Toolbar {...pickToolbarProps(props)} />
+      </Card>
+    </RequirementFormLayout>
   );
 };
 

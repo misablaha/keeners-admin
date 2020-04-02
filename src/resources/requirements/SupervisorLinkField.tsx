@@ -16,6 +16,7 @@ const SupervisorLinkField: FC<FieldProps<Requirement>> = props => {
 };
 
 SupervisorLinkField.defaultProps = {
+  addLabel: true,
   resource: 'requirements',
   source: 'supervisor',
   sortable: false,

@@ -14,6 +14,7 @@ const DemandsField: FC<FieldProps<Requirement>> = props => {
 };
 
 DemandsField.defaultProps = {
+  addLabel: true,
   resource: 'requirements',
   source: 'demands',
   sortable: false,
