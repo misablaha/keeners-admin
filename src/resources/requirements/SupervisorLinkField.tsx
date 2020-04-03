@@ -3,7 +3,7 @@ import { ChipField, Link } from 'react-admin';
 import { Requirement } from '../../types/records';
 import { FieldProps } from '../../types/core';
 
-const SupervisorLinkField: FC<FieldProps<Requirement>> = props => {
+const SupervisorLinkField: FC<FieldProps<Requirement>> = (props) => {
   return props.record && props.record.supervisor ? (
     <Link
       key={props.record.supervisor.id}

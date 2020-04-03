@@ -14,7 +14,7 @@ import RecipientRequirementList from '../requirements/RecipientRequirementList';
 import { Recipient } from '../../types/records';
 import IconBar from '../../components/IconBar';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     marginBottom: 0,
     marginTop: 0,
@@ -40,7 +40,7 @@ const RecipientFormLayout: FC<{ record: Partial<Recipient> }> = ({ record, child
   );
 };
 
-const RecipientFormBody: FC<{ record: Partial<Recipient> }> = props => {
+const RecipientFormBody: FC<{ record: Partial<Recipient> }> = (props) => {
   const classes = useStyles();
   const form = useForm();
 
@@ -113,6 +113,6 @@ const RecipientFormBody: FC<{ record: Partial<Recipient> }> = props => {
   );
 };
 
-const RecipientForm: FC = props => <FormWithRedirect {...props} redirect="list" render={RecipientFormBody} />;
+const RecipientForm: FC = (props) => <FormWithRedirect {...props} redirect="list" render={RecipientFormBody} />;
 
 export default RecipientForm;

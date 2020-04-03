@@ -17,7 +17,7 @@ export const changeTheme = (theme: ThemeName): ChangeThemeAction => ({
   payload: theme,
 });
 
-const ThemeSwitchButton: FC = props => {
+const ThemeSwitchButton: FC = (props) => {
   const theme = useSelector((state: AppState) => state.theme);
   const dispatch = useDispatch();
 

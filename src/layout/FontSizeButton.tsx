@@ -16,7 +16,7 @@ export const changeTheme = (size: FontSize): ChangeFontSizeAction => ({
   payload: size,
 });
 
-const FontSizeButton: FC = props => {
+const FontSizeButton: FC = (props) => {
   const fontSize = useSelector((state: AppState) => state.fontSize);
   const dispatch = useDispatch();
 

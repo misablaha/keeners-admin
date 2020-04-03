@@ -10,14 +10,14 @@ import SupervisorLinkField from './SupervisorLinkField';
 import requirementStatuses from './requirementStatuses';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   cell: {
     paddingRight: theme.spacing(1),
     paddingLeft: theme.spacing(1),
   },
 }));
 
-const RequirementShow: FC = props => (
+const RequirementShow: FC = (props) => (
   <Show
     {...props}
     /* disable the app title change when shown */
@@ -46,7 +46,7 @@ const RecipientRequirementList: FC<{ record: Partial<Recipient> }> = ({ record }
         resource={'requirements'}
         title={' '}
         component={'div'}
-        filter={{ 'recipientId||$eq': record.id }}
+        filter={{ recipientId: record.id }}
         sort={{ field: 'createdTime', order: 'DESC' }}
         perPage={15}
         bulkActionButtons={false}

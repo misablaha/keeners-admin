@@ -9,7 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import IconButton from '@material-ui/core/IconButton';
 import CancelIcon from '@material-ui/icons/Cancel';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     marginBottom: 0,
     marginTop: 0,
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const RecipientForm: FC<{ onDrop: () => void }> = props => {
+const RecipientForm: FC<{ onDrop: () => void }> = (props) => {
   const classes = useStyles();
   const form = useForm();
   const { values } = useFormState();

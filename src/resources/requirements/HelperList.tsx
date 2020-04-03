@@ -13,7 +13,7 @@ import HelperLinkField from '../helpers/HelperLinkField';
 import { FieldProps } from '../../types/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   cell: {
     paddingRight: theme.spacing(1),
     paddingLeft: theme.spacing(1),
@@ -34,11 +34,7 @@ const HelperActivityField: FC<FieldProps<Helper>> = ({ record }) => {
     { field: 'id', order: 'ASC' },
     {
       'helperId||$eq': record ? record.id : 0,
-      'createdTime||$gte': moment()
-        .startOf('d')
-        .subtract(7, 'd')
-        .toDate()
-        .toISOString(),
+      'createdTime||$gte': moment().startOf('d').subtract(7, 'd').toDate().toISOString(),
     },
   );
 
@@ -75,9 +71,7 @@ AssignButton.defaultProps = {
 };
 
 function getRandomKey() {
-  return Math.random()
-    .toString(36)
-    .substring(7);
+  return Math.random().toString(36).substring(7);
 }
 
 const HelperList: FC<{ record: RequirementFormState; onSelect: (helper: Helper) => void }> = ({ record, onSelect }) => {
@@ -98,12 +92,12 @@ const HelperList: FC<{ record: RequirementFormState; onSelect: (helper: Helper) 
   const [session, setSession] = React.useState<string>(getRandomKey());
 
   React.useEffect(() => {
-    const required = filter(record.demandIds, id => services.data && services.data[id]);
+    const required = filter(record.demandIds, (id) => services.data && services.data[id]);
     if (required.length === 0 || !record.location) {
       // Nothing is needed ... Do not offer helpers
       setIds([]);
     } else {
-      forEach(helpers.data, h => {
+      forEach(helpers.data, (h) => {
         Object.assign(h, { distance: getDistance(record.location, h.location) });
       });
 
@@ -111,14 +105,14 @@ const HelperList: FC<{ record: RequirementFormState; onSelect: (helper: Helper) 
         // Filter helpers that provide all required services
         // difference([1,2,3], [1,2]) => [ 3 ]
         // difference([1,2,3], [1,2,3,4]) => []
-        filter(helpers.data, h => difference(required, h.provideIds).length === 0)
+        filter(helpers.data, (h) => difference(required, h.provideIds).length === 0)
           .sort((a, b) => a.distance - b.distance)
-          .map(h => h.id)
+          .map((h) => h.id)
           .slice(0, 15),
       );
       setSession(getRandomKey());
     }
-  }, [setIds, setSession, helpers.loaded, services.loaded, record.demandIds, record.location]);
+  }, [setIds, setSession, helpers.loaded, services.loaded, record.demandIds, record.location, services.data, helpers.data]);
 
   return (
     <Datagrid

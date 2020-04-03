@@ -13,13 +13,13 @@ import {
 } from 'ra-core';
 
 export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
-  const composeFilter = paramsFilter => {
+  const composeFilter = (paramsFilter) => {
     if (paramsFilter === '' || (typeof paramsFilter.q !== 'undefined' && paramsFilter.q === '')) {
       paramsFilter = {};
     }
 
     const flatFilter = fetchUtils.flattenObject(paramsFilter);
-    return Object.keys(flatFilter).map(key => {
+    return Object.keys(flatFilter).map((key) => {
       const splitKey = key.split('||');
       const ops = splitKey[1] ? splitKey[1] : CondOperator.CONTAINS;
       let field = splitKey[0];
@@ -133,29 +133,29 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
   return (type, resource, params) => {
     if (type === UPDATE_MANY) {
       return Promise.all(
-        params.ids.map(id =>
+        params.ids.map((id) =>
           httpClient(`${apiUrl}/${resource}/${id}`, {
             method: 'PUT',
             body: JSON.stringify(params.data),
           }),
         ),
-      ).then(responses => ({
-        data: responses.map(response => response.json),
+      ).then((responses) => ({
+        data: responses.map((response) => response.json),
       }));
     }
     if (type === DELETE_MANY) {
       return Promise.all(
-        params.ids.map(id =>
+        params.ids.map((id) =>
           httpClient(`${apiUrl}/${resource}/${id}`, {
             method: 'DELETE',
           }),
         ),
-      ).then(responses => ({
-        data: responses.map(response => response.json),
+      ).then((responses) => ({
+        data: responses.map((response) => response.json),
       }));
     }
 
     const { url, options } = convertDataRequestToHTTP(type, resource, params);
-    return httpClient(url, options).then(response => convertHTTPResponse(response, type, resource, params));
+    return httpClient(url, options).then((response) => convertHTTPResponse(response, type, resource, params));
   };
 };

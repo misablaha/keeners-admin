@@ -3,7 +3,7 @@ import { ChipField, Link } from 'react-admin';
 import { Helper } from '../../types/records';
 import { FieldProps } from '../../types/core';
 
-const HelperLinkField: FC<FieldProps<Helper>> = props => {
+const HelperLinkField: FC<FieldProps<Helper>> = (props) => {
   return props.record ? (
     <Link
       key={props.record.id}

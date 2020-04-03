@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "format": "prettier --write \"src/**/*.js*\" \"src/**/*.ts*\"",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.{js,jsx,ts,tsx}\" --fix",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -54,7 +56,7 @@
     "eslint-plugin-import": "^2.20.1",
     "prettier": "^2.0.2"
   },
-  "proxy": "http://localhost:3000",
+  "proxy": "http://localhost:3001",
   "browserslist": {
     "production": [
       ">0.2%",

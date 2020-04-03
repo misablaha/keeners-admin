@@ -32,7 +32,7 @@ import RecipientRequirementList from './RecipientRequirementList';
 import HelperList from './HelperList';
 import RequirementHistory from './RequirementHistory';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     marginBottom: 0,
     marginTop: 0,
@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const useChipStyles = makeStyles(theme => ({
+const useChipStyles = makeStyles((theme) => ({
   label: {
     fontSize: 16,
   },
@@ -73,7 +73,7 @@ const RequirementFormLayout: FC<{ record: RequirementFormState }> = ({ record, c
   );
 };
 
-const RequirementFormBody: FC<{ record?: Requirement }> = props => {
+const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
   const classes = useStyles();
   const chipClasses = useChipStyles();
   const translate = useTranslate();
@@ -133,7 +133,7 @@ const RequirementFormBody: FC<{ record?: Requirement }> = props => {
     if (!values.supervisorId) {
       form.change('supervisor', null);
     } else if (!values.supervisor || values.supervisor.id !== values.supervisorId) {
-      dataProvider.getOne('supervisors', { id: values.supervisorId }).then(res => {
+      dataProvider.getOne('supervisors', { id: values.supervisorId }).then((res) => {
         const supervisor = res.data as Supervisor;
         form.change('supervisor', supervisor);
       });
@@ -241,6 +241,6 @@ const RequirementFormBody: FC<{ record?: Requirement }> = props => {
   );
 };
 
-const RequirementForm: FC = props => <FormWithRedirect {...props} redirect="list" render={RequirementFormBody} />;
+const RequirementForm: FC = (props) => <FormWithRedirect {...props} redirect="list" render={RequirementFormBody} />;
 
 export default RequirementForm;

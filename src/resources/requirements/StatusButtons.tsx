@@ -29,12 +29,12 @@ const StatusButtons: FC<FieldProps<Requirement>> = ({ record, resource }) => {
   return record && openRequirementStatuses.includes(record.status) ? (
     <Fragment>
       <Tooltip title={translate('resources.requirements.actions.done')}>
-        <IconButton onClick={ev => handleClick(ev, RequirementStatus.DONE)} disabled={loading}>
+        <IconButton onClick={(ev) => handleClick(ev, RequirementStatus.DONE)} disabled={loading}>
           <CheckCircleOutlineIcon color={'secondary'} />
         </IconButton>
       </Tooltip>
       <Tooltip title={translate('resources.requirements.actions.cancel')}>
-        <IconButton onClick={ev => handleClick(ev, RequirementStatus.CANCEL)} disabled={loading}>
+        <IconButton onClick={(ev) => handleClick(ev, RequirementStatus.CANCEL)} disabled={loading}>
           <HighlightOffIcon color={'error'} />
         </IconButton>
       </Tooltip>

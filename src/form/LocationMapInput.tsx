@@ -37,7 +37,7 @@ const nightStyles = [
 ];
  */
 
-const LocationMapInput: FC<InputProps<TextFieldProps>> = props => {
+const LocationMapInput: FC<InputProps<TextFieldProps>> = (props) => {
   const classes = useStyles();
   const { values } = useFormState<AnyObject>();
 

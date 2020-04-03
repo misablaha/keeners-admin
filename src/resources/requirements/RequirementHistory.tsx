@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import HotTubIcon from '@material-ui/icons/HotTub';
 import { Requirement } from '../../types/records';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   cell: {
     paddingRight: theme.spacing(1),
     paddingLeft: theme.spacing(1),

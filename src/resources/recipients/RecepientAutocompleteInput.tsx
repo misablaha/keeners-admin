@@ -10,7 +10,7 @@ import { Box } from '@material-ui/core';
 import Fuse, { IFuseOptions } from 'fuse.js';
 import { Recipient } from '../../types/records';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   icon: {
     color: theme.palette.text.secondary,
     marginLeft: theme.spacing(1),
@@ -42,7 +42,7 @@ function parse(text: string, matches: ReadonlyArray<[number, number]>) {
     }
   }
 
-  matches.forEach(function(match, i) {
+  matches.forEach(function (match, i) {
     const startIndex = match[0];
     const endIndex = match[1] + 1;
 
@@ -72,7 +72,7 @@ function parse(text: string, matches: ReadonlyArray<[number, number]>) {
 type RecipientFuseResult = Fuse.FuseResult<Recipient>;
 
 const Highlight: FC<{ option: RecipientFuseResult; field: string }> = ({ option, field }) => {
-  const match = option.matches && option.matches.find(v => v.key === field);
+  const match = option.matches && option.matches.find((v) => v.key === field);
   const parts = parse(option.item[field], match ? match.indices : []);
   return (
     <span>
@@ -102,7 +102,7 @@ const RecipientAutocompleteInput: FC<Props> = ({ getOptionLabel, freeSolo, onCha
   React.useEffect(() => {
     const data = recipients.data ? Object.values(recipients.data) : [];
     setFuse(new Fuse(data, fuseOptions));
-  }, [recipients.loading, setFuse, setOptions]);
+  }, [recipients.data, recipients.loading, setFuse, setOptions]);
 
   const handleChange = React.useCallback(
     (event: any, value: string) => {
@@ -129,12 +129,12 @@ const RecipientAutocompleteInput: FC<Props> = ({ getOptionLabel, freeSolo, onCha
         getOptionLabel ||
         ((option: RecipientFuseResult | string) => (typeof option === 'string' ? option : option.item.phoneNumber))
       }
-      filterOptions={x => x}
+      filterOptions={(x) => x}
       freeSolo
       multiple={false}
       onInputChange={handleChange}
       onChange={handleSelect}
-      renderInput={params => <TextInput {...params} {...rest} />}
+      renderInput={(params) => <TextInput {...params} {...rest} />}
       renderOption={(option: RecipientFuseResult) => (
         <Box display="flex" alignItems="center">
           <PhoneIcon className={classes.icon} fontSize="small" color="action" />

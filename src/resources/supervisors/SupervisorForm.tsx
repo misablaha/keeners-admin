@@ -22,7 +22,7 @@ const SupervisorFormLayout: FC<{ record: Partial<Supervisor> }> = ({ record, chi
   );
 };
 
-const SupervisorFormBody: FC<{ record: Partial<Supervisor> }> = props => (
+const SupervisorFormBody: FC<{ record: Partial<Supervisor> }> = (props) => (
   <SupervisorFormLayout record={props.record}>
     <Card>
       <CardContent>
@@ -33,6 +33,6 @@ const SupervisorFormBody: FC<{ record: Partial<Supervisor> }> = props => (
   </SupervisorFormLayout>
 );
 
-const SupervisorForm: FC = props => <FormWithRedirect {...props} redirect="list" render={SupervisorFormBody} />;
+const SupervisorForm: FC = (props) => <FormWithRedirect {...props} redirect="list" render={SupervisorFormBody} />;
 
 export default SupervisorForm;

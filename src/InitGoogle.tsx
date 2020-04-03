@@ -3,7 +3,7 @@ import { LoadScript } from '@react-google-maps/api';
 
 const libraries = ['places', 'geometry'];
 
-const InitGoogle: FC = props => (
+const InitGoogle: FC = (props) => (
   <LoadScript
     id="script-loader"
     googleMapsApiKey="AIzaSyBRveOLn4H1lbWtmEiliGwo7s1tHajmhJE"

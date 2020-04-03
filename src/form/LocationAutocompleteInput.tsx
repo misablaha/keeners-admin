@@ -11,7 +11,7 @@ import { TextFieldProps } from '@material-ui/core';
 import parse from 'autosuggest-highlight/parse';
 import debounce from 'lodash/debounce';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   icon: {
     color: theme.palette.text.secondary,
     marginRight: theme.spacing(2),
@@ -83,7 +83,7 @@ const LocationAutocompleteInput: FC<Omit<InputProps<TextFieldProps>, 'onChange'>
       return undefined;
     }
 
-    fetch({ input: inputValue }, results => {
+    fetch({ input: inputValue }, (results) => {
       if (active) {
         setOptions(results || []);
       }
@@ -96,15 +96,15 @@ const LocationAutocompleteInput: FC<Omit<InputProps<TextFieldProps>, 'onChange'>
 
   return (
     <Autocomplete
-      getOptionLabel={option => (typeof option === 'string' ? option : option.description)}
-      filterOptions={x => x}
+      getOptionLabel={(option) => (typeof option === 'string' ? option : option.description)}
+      filterOptions={(x) => x}
       defaultValue={form.getState().values[source]}
       options={options}
       autoComplete
       forcePopupIcon={false}
       includeInputInList
       onChange={handleSelect}
-      renderInput={params => (
+      renderInput={(params) => (
         <TextInput
           {...props}
           {...params}
@@ -114,14 +114,14 @@ const LocationAutocompleteInput: FC<Omit<InputProps<TextFieldProps>, 'onChange'>
           onBlur={console.log}
         />
       )}
-      renderOption={option => {
+      renderOption={(option) => {
         if (typeof option === 'string') {
           return option;
         }
         const matches = option.structured_formatting.main_text_matched_substrings;
         const parts = parse(
           option.structured_formatting.main_text,
-          matches.map(match => [match.offset, match.offset + match.length]),
+          matches.map((match) => [match.offset, match.offset + match.length]),
         );
 
         return (

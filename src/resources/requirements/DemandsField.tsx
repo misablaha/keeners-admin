@@ -3,10 +3,10 @@ import { ChipField } from 'react-admin';
 import { Requirement } from '../../types/records';
 import { FieldProps } from '../../types/core';
 
-const DemandsField: FC<FieldProps<Requirement>> = props => {
+const DemandsField: FC<FieldProps<Requirement>> = (props) => {
   return props.record && props.record.demands ? (
     <Fragment>
-      {props.record.demands.map(s => (
+      {props.record.demands.map((s) => (
         <ChipField key={s.id} record={s} source="name" />
       ))}
     </Fragment>

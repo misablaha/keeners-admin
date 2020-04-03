@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 });
 
-const CustomAppBar: FC = props => {
+const CustomAppBar: FC = (props) => {
   const classes = useStyles();
 
   return (

@@ -22,7 +22,7 @@ import { Helper } from '../../types/records';
 import HelperRequirementList from '../requirements/HelperRequirementList';
 import IconBar from '../../components/IconBar';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     marginBottom: 0,
     marginTop: 0,
@@ -48,7 +48,7 @@ const HelperFormLayout: FC<{ record: Partial<Helper> }> = ({ record, children })
   );
 };
 
-const HelperFormBody: FC<{ record: Partial<Helper> }> = props => {
+const HelperFormBody: FC<{ record: Partial<Helper> }> = (props) => {
   const classes = useStyles();
   const form = useForm();
 
@@ -108,6 +108,6 @@ const HelperFormBody: FC<{ record: Partial<Helper> }> = props => {
   );
 };
 
-const HelperForm: FC = props => <FormWithRedirect {...props} redirect="list" render={HelperFormBody} />;
+const HelperForm: FC = (props) => <FormWithRedirect {...props} redirect="list" render={HelperFormBody} />;
 
 export default HelperForm;
