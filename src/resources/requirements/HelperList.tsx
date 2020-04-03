@@ -43,7 +43,7 @@ const HelperActivityField: FC<FieldProps<Helper>> = ({ record }) => {
   );
 
   return requirements.loading ? (
-    <CircularProgress />
+    <CircularProgress size={24} />
   ) : (
     <Typography variant={'body2'} align={'right'}>
       {requirements.total}
@@ -74,6 +74,12 @@ AssignButton.defaultProps = {
   textAlign: 'right',
 };
 
+function getRandomKey() {
+  return Math.random()
+    .toString(36)
+    .substring(7);
+}
+
 const HelperList: FC<{ record: RequirementFormState; onSelect: (helper: Helper) => void }> = ({ record, onSelect }) => {
   const classes = useStyles();
   const helpers = useGetList<Helper>(
@@ -89,6 +95,7 @@ const HelperList: FC<{ record: RequirementFormState; onSelect: (helper: Helper) 
     { 'isInternal||$eq': false },
   );
   const [ids, setIds] = React.useState<Array<string>>([]);
+  const [session, setSession] = React.useState<string>(getRandomKey());
 
   React.useEffect(() => {
     const required = filter(record.demandIds, id => services.data && services.data[id]);
@@ -109,8 +116,9 @@ const HelperList: FC<{ record: RequirementFormState; onSelect: (helper: Helper) 
           .map(h => h.id)
           .slice(0, 15),
       );
+      setSession(getRandomKey());
     }
-  }, [setIds, helpers.loaded, services.loaded, record.demandIds, record.location]);
+  }, [setIds, setSession, helpers.loaded, services.loaded, record.demandIds, record.location]);
 
   return (
     <Datagrid
@@ -130,7 +138,7 @@ const HelperList: FC<{ record: RequirementFormState; onSelect: (helper: Helper) 
         source="distance"
         sortable={false}
       />
-      <HelperActivityField cellClassName={classes.cell} headerClassName={classes.cell} />
+      <HelperActivityField key={session} cellClassName={classes.cell} headerClassName={classes.cell} />
       <AssignButton cellClassName={classes.cell} headerClassName={classes.cell} onClick={onSelect} />
     </Datagrid>
   );

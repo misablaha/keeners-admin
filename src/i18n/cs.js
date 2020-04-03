@@ -56,8 +56,8 @@ export default defaultsDeep(
         },
         actions: {
           assign: 'Přiřadit',
-          cancel: 'Označit jako zrušeno',
-          done: 'Označit jako vyřešeno',
+          cancel: 'Označit jako zrušené',
+          done: 'Označit jako vyřešené',
         },
         filters: {
           createdTimeGte: 'Ode dne',

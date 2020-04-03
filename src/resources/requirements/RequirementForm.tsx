@@ -30,6 +30,7 @@ import RecipientForm from './RecipientForm';
 import LocationAutocompleteInput from '../../form/LocationAutocompleteInput';
 import RecipientRequirementList from './RecipientRequirementList';
 import HelperList from './HelperList';
+import RequirementHistory from './RequirementHistory';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -56,9 +57,8 @@ interface RequirementFormState extends Requirement {
 }
 
 const RequirementFormLayout: FC<{ record: RequirementFormState }> = ({ record, children }) => {
-  if (record.id) {
-    return <Fragment>{children}</Fragment>;
-  }
+  const isCreateForm = !record.id;
+  const isEditForm = !isCreateForm;
 
   return (
     <Grid container spacing={2}>
@@ -66,7 +66,8 @@ const RequirementFormLayout: FC<{ record: RequirementFormState }> = ({ record, c
         {children}
       </Grid>
       <Grid item xs={12} md={6} lg={4}>
-        {record.recipientId && <RecipientRequirementList record={record.recipient} />}
+        {isCreateForm && record.recipientId && <RecipientRequirementList record={record.recipient} />}
+        {isEditForm && <RequirementHistory record={record} />}
       </Grid>
     </Grid>
   );

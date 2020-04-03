@@ -15,6 +15,7 @@ import RecipientLinkField from './RecipientLinkField';
 import HelperLinkField from './HelperLinkField';
 import SupervisorLinkField from './SupervisorLinkField';
 import requirementStatuses from './requirementStatuses';
+import CompleteButton from './StatusButtons';
 
 const RequirementFilter = (props: any) => (
   <Filter {...props}>
@@ -54,6 +55,7 @@ const RequirementList = (props: any) => (
       <HelperLinkField />
       <SupervisorLinkField />
       <SelectField source="status" choices={requirementStatuses} sortable={false} />
+      <CompleteButton />
     </Datagrid>
   </List>
 );
