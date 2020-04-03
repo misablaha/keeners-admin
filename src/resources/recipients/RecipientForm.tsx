@@ -40,7 +40,7 @@ const RecipientFormLayout: FC<{ record: Partial<Recipient> }> = ({ record, child
   );
 };
 
-const RecipientFormBody: FC<{record: Partial<Recipient>}> = props => {
+const RecipientFormBody: FC<{ record: Partial<Recipient> }> = props => {
   const classes = useStyles();
   const form = useForm();
 

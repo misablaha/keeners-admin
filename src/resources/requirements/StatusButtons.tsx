@@ -4,7 +4,6 @@ import { openRequirementStatuses, Requirement, RequirementStatus } from '../../t
 import { useDataProvider, useTranslate } from 'ra-core';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
@@ -24,7 +23,7 @@ const StatusButtons: FC<FieldProps<Requirement>> = ({ record, resource }) => {
         });
       }
     },
-    [dataProvider, record],
+    [dataProvider, resource, record],
   );
 
   return record && openRequirementStatuses.includes(record.status) ? (

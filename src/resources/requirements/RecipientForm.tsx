@@ -58,7 +58,7 @@ const RecipientForm: FC<{ onDrop: () => void }> = props => {
             />
           </Box>
           {isCreate && (
-            <Box >
+            <Box>
               <FormControl margin={'dense'}>
                 <IconButton color="primary" onClick={props.onDrop}>
                   <CancelIcon />

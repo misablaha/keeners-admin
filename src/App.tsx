@@ -1,5 +1,6 @@
 import React from 'react';
 import { Admin, Resource } from 'react-admin';
+import { createBrowserHistory } from 'history';
 import crudProvider from './NestjsCrudProvider';
 import { i18nProvider } from './i18n';
 import InitGoogle from './InitGoogle';
@@ -14,10 +15,13 @@ import services from './resources/services';
 import supervisors from './resources/supervisors';
 
 const dataProvider = crudProvider('/api');
+const history = createBrowserHistory();
+
 const App = () => (
   <InitGoogle>
     <Admin
       dataProvider={dataProvider}
+      history={history}
       customReducers={{
         theme: themeReducer,
         fontSize: fontSizeReducer,

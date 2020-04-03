@@ -5,7 +5,7 @@ export type FontSize = 'medium' | 'large';
 
 export interface AppState extends ReduxState {
   theme: ThemeName;
-  fontSize:  FontSize;
+  fontSize: FontSize;
 }
 
 export interface AnyObject {

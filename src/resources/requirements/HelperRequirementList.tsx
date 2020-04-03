@@ -1,15 +1,5 @@
 import React, { FC } from 'react';
-import {
-  Datagrid,
-  DateField,
-  List,
-  NumberField,
-  RichTextField,
-  SelectField,
-  Show,
-  ShowButton,
-  SimpleShowLayout,
-} from 'react-admin';
+import { Datagrid, DateField, List, RichTextField, SelectField, Show, ShowButton, SimpleShowLayout } from 'react-admin';
 import DemandsField from './DemandsField';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';

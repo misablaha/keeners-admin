@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from 'react';
+import React, { FC } from 'react';
 import {
   CheckboxGroupInput,
   DateInput,
@@ -138,7 +138,7 @@ const RequirementFormBody: FC<{ record?: Requirement }> = props => {
         form.change('supervisor', supervisor);
       });
     }
-  }, [form, values.supervisor, values.supervisorId]);
+  }, [form, dataProvider, values.supervisor, values.supervisorId]);
 
   const handleHelperSelect = React.useCallback(
     (helper: Helper) => {

@@ -14,6 +14,7 @@ const useStyles = makeStyles({
   },
 });
 
+/*
 const nightStyles = [
   { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
   { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
@@ -34,6 +35,7 @@ const nightStyles = [
   { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: '#515c6d' }] },
   { featureType: 'water', elementType: 'labels.text.stroke', stylers: [{ color: '#17263c' }] },
 ];
+ */
 
 const LocationMapInput: FC<InputProps<TextFieldProps>> = props => {
   const classes = useStyles();

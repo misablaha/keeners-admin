@@ -7,10 +7,7 @@ export enum RequirementStatus {
   CANCEL = 'cancel',
 }
 
-export const openRequirementStatuses = [
-  RequirementStatus.OPEN,
-  RequirementStatus.ASSIGN,
-]
+export const openRequirementStatuses = [RequirementStatus.OPEN, RequirementStatus.ASSIGN];
 
 export interface GpsPoint {
   lat: number;
