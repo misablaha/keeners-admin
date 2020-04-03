@@ -39,7 +39,7 @@ export default defaultsDeep(
         fields: {
           address: 'Adresa',
           createdTime: 'Datum vytvoření',
-          demands: 'Požadavek',
+          demands: 'Poptávka',
           helper: 'Dobrovolník',
           note: 'Poznámka',
           phoneNumber: 'Telefonní číslo',

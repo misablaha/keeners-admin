@@ -192,7 +192,17 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
               <LocationMapInput source="location" />
             </Grid>
             <Grid item xs={12} lg={6} className={classes.item}>
+              <ReferenceArrayInput
+                label={`resources.requirements.fields.demands`}
+                reference="services"
+                resource="requirements"
+                source="demandIds"
+                fullWidth
+              >
+                <CheckboxGroupInput />
+              </ReferenceArrayInput>
               <TextInput resource="requirements" source="note" multiline fullWidth />
+              <DateInput resource="requirements" source="supplyDate" fullWidth />
               <ReferenceInput
                 label={`resources.requirements.fields.supervisor`}
                 reference="supervisors"
@@ -203,17 +213,7 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
               >
                 <RadioButtonGroupInput choices={[]} />
               </ReferenceInput>
-              <ReferenceArrayInput
-                label={`resources.requirements.fields.demands`}
-                reference="services"
-                resource="requirements"
-                source="demandIds"
-                fullWidth
-              >
-                <CheckboxGroupInput />
-              </ReferenceArrayInput>
-              <DateInput resource="requirements" source="supplyDate" fullWidth />
-              {values.helper ? (
+              {values.helper && (
                 <FormControl>
                   <Typography variant={'caption'} color={'textSecondary'} gutterBottom>
                     {translate('resources.requirements.fields.helper')}
@@ -229,9 +229,8 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
                     />
                   </Link>
                 </FormControl>
-              ) : (
-                <HelperList record={values} onSelect={handleHelperSelect} />
               )}
+              {values.id && !values.helper && <HelperList record={values} onSelect={handleHelperSelect} />}
             </Grid>
           </Grid>
         </CardContent>

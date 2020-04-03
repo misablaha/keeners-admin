@@ -47,6 +47,7 @@ const LocationAutocompleteInput: FC<Omit<InputProps<TextFieldProps>, 'onChange'>
         geocoder.geocode({ placeId: value.place_id }, (results, status) => {
           if (status === google.maps.GeocoderStatus.OK) {
             form.change(source, value.description);
+            console.log(results[0]);
             onChange(event, results[0]);
           }
         });
