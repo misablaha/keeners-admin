@@ -8,6 +8,7 @@ export default defaultsDeep(
       helpers: {
         name: 'Dobrovolníci',
         fields: {
+          activity: 'Aktivita',
           name: 'Jméno',
           distance: 'Vzd. (m)',
           firstName: 'Jméno',
@@ -36,8 +37,8 @@ export default defaultsDeep(
       requirements: {
         name: 'Požadavky',
         fields: {
-          createdTime: 'Datum vytvoření',
           address: 'Adresa',
+          createdTime: 'Datum vytvoření',
           demands: 'Požadavek',
           helper: 'Dobrovolník',
           note: 'Poznámka',
@@ -52,6 +53,11 @@ export default defaultsDeep(
           assign: 'Dobrovolník',
           done: 'Vyřešeno',
           cancel: 'Zrušeno',
+        },
+        actions: {
+          assign: 'Přiřadit',
+          cancel: 'Označit jako zrušeno',
+          done: 'Označit jako vyřešeno',
         },
         filters: {
           createdTimeGte: 'Ode dne',

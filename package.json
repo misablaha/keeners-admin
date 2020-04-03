@@ -20,8 +20,10 @@
     "autosuggest-highlight": "^3.1.1",
     "classnames": "^2.2.6",
     "fuse.js": "^5.0.10-beta",
+    "geolib": "^3.2.1",
     "google-libphonenumber": "^3.2.8",
     "lodash": "^4.17.15",
+    "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "ra-core": "^3.3.3",
     "ra-language-czech": "^2.0.0",
@@ -32,9 +34,7 @@
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.1",
-    "typescript": "~3.7.2",
-    "use-places-autocomplete": "^1.0.4",
-    "geolib": "^3.2.1"
+    "typescript": "~3.7.2"
   },
   "devDependencies": {
     "@types/autosuggest-highlight": "^3.1.0",
