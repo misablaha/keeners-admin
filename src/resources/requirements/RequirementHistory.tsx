@@ -24,7 +24,7 @@ const RequirementHistory: FC<{ record: Requirement }> = ({ record }) => {
 
   return (
     <Card>
-      <CardHeader title="Historie požadavku" subheader={record.recipient.name} />
+      <CardHeader title="Historie požadavku" subheader={record.client.name} />
       <Divider />
       <Typography align={'center'} color={'secondary'}>
         <HotTubIcon color={'disabled'} className={classes.icon} />

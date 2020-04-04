@@ -1,13 +1,20 @@
 import { Record } from 'ra-core';
 
 export enum RequirementStatus {
-  OPEN = 'open',
-  ASSIGN = 'assign',
+  NEW = 'new',
+  PROCESSING = 'processing',
   DONE = 'done',
-  CANCEL = 'cancel',
+  CANCELED = 'canceled',
 }
 
-export const openRequirementStatuses = [RequirementStatus.OPEN, RequirementStatus.ASSIGN];
+export enum DemandStatus {
+  NEW = 'new',
+  SUBMITTED = 'submitted',
+  DONE = 'done',
+  CANCELED = 'canceled',
+}
+
+export const openRequirementStatuses = [RequirementStatus.NEW, RequirementStatus.PROCESSING];
 
 export interface GpsPoint {
   lat: number;
@@ -30,7 +37,7 @@ export interface Service extends BaseRecord {
   isInternal: boolean;
 }
 
-export interface Recipient extends BaseRecord {
+export interface Client extends BaseRecord {
   firstName?: string;
   lastName?: string;
   readonly name: string;
@@ -59,14 +66,25 @@ export interface Helper extends BaseRecord {
   requirements: Requirement[];
 }
 
+export interface Demand extends BaseRecord {
+  requirementId: string;
+  requirement: Requirement;
+  serviceId: string;
+  service: Service;
+  status: DemandStatus;
+}
+
 export interface Requirement extends BaseRecord {
-  recipient: Recipient;
   address: string;
-  location: GpsPoint;
-  demands: Service[];
-  note: string;
-  supplyDate: Date;
-  supervisor: Supervisor;
+  client: Client;
+  clientId: string;
+  demands: Demand[];
   helper: Helper;
+  helperId: string;
+  location: GpsPoint;
+  note: string;
   status: RequirementStatus;
+  supervisor: Supervisor;
+  supervisorId: string;
+  supplyDate: Date;
 }

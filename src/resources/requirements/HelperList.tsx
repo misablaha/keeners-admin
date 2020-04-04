@@ -22,9 +22,6 @@ const useStyles = makeStyles((theme) => ({
 
 interface RequirementFormState extends Requirement {
   demandIds: string[];
-  helperId: string;
-  recipientId: string;
-  supervisorId: string;
 }
 
 const HelperActivityField: FC<FieldProps<Helper>> = ({ record }) => {

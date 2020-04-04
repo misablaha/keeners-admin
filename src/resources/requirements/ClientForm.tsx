@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RecipientForm: FC<{ onDrop: () => void }> = (props) => {
+const ClientForm: FC<{ onDrop: () => void }> = (props) => {
   const classes = useStyles();
   const form = useForm();
   const { values } = useFormState();
@@ -28,7 +28,7 @@ const RecipientForm: FC<{ onDrop: () => void }> = (props) => {
   const handleAgeChange = React.useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {
       const year = ev.target.value ? new Date().getFullYear() - parseInt(ev.target.value, 10) : null;
-      form.change('recipient.yearOfBirth', year);
+      form.change('client.yearOfBirth', year);
     },
     [form],
   );
@@ -36,7 +36,7 @@ const RecipientForm: FC<{ onDrop: () => void }> = (props) => {
   const handleYearOfBirthChange = React.useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {
       const age = ev.target.value ? new Date().getFullYear() - parseInt(ev.target.value, 10) : null;
-      form.change('recipient.age', age);
+      form.change('client.age', age);
     },
     [form],
   );
@@ -49,11 +49,11 @@ const RecipientForm: FC<{ onDrop: () => void }> = (props) => {
         <Box display="flex">
           <Box flexGrow={1}>
             <TextInput
-              label={'resources.recipients.fields.phoneNumber'}
-              resource="recipients"
-              source="recipient.phoneNumber"
+              label={'resources.clients.fields.phoneNumber'}
+              resource="clients"
+              source="client.phoneNumber"
               fullWidth
-              disabled={!!values.recipient.id}
+              disabled={!!values.client.id}
               validate={[required(), phone()]}
             />
           </Box>
@@ -70,35 +70,35 @@ const RecipientForm: FC<{ onDrop: () => void }> = (props) => {
       </Grid>
       <Grid item xs={12} className={classes.item}>
         <TextInput
-          label={'resources.recipients.fields.firstName'}
-          resource="recipients"
-          source="recipient.firstName"
+          label={'resources.clients.fields.firstName'}
+          resource="clients"
+          source="client.firstName"
           fullWidth
           autoFocus
         />
       </Grid>
       <Grid item xs={12} className={classes.item}>
         <TextInput
-          label={'resources.recipients.fields.lastName'}
-          resource="recipients"
-          source="recipient.lastName"
+          label={'resources.clients.fields.lastName'}
+          resource="clients"
+          source="client.lastName"
           fullWidth
         />
       </Grid>
       <Grid item xs={12} lg={6} className={classes.item}>
         <NumberInput
-          label={'resources.recipients.fields.age'}
-          resource="recipients"
-          source="recipient.age"
+          label={'resources.clients.fields.age'}
+          resource="clients"
+          source="client.age"
           fullWidth
           onChange={handleAgeChange}
         />
       </Grid>
       <Grid item xs={12} lg={6} className={classes.item}>
         <NumberInput
-          label={'resources.recipients.fields.yearOfBirth'}
-          resource="recipients"
-          source="recipient.yearOfBirth"
+          label={'resources.clients.fields.yearOfBirth'}
+          resource="clients"
+          source="client.yearOfBirth"
           fullWidth
           onChange={handleYearOfBirthChange}
         />
@@ -107,4 +107,4 @@ const RecipientForm: FC<{ onDrop: () => void }> = (props) => {
   );
 };
 
-export default RecipientForm;
+export default ClientForm;

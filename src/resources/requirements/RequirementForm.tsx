@@ -23,12 +23,12 @@ import Grid from '@material-ui/core/Grid';
 import HelperIcon from '@material-ui/icons/SupervisedUserCircle';
 import { formatPhoneNumber, pickToolbarProps } from '../../form/utils';
 import LocationMapInput from '../../form/LocationMapInput';
-import { Helper, Recipient, Requirement, RequirementStatus, Supervisor } from '../../types/records';
-import RecipientAutocompleteInput from '../recipients/RecepientAutocompleteInput';
+import { Helper, Client, Requirement, RequirementStatus, Supervisor } from '../../types/records';
+import ClientAutocompleteInput from '../clients/ClientAutocompleteInput';
 import { phone } from '../../form/validate';
-import RecipientForm from './RecipientForm';
+import ClientForm from './ClientForm';
 import LocationAutocompleteInput from '../../form/LocationAutocompleteInput';
-import RecipientRequirementList from './RecipientRequirementList';
+import ClientRequirementList from './ClientRequirementList';
 import HelperList from './HelperList';
 import RequirementHistory from './RequirementHistory';
 
@@ -51,9 +51,6 @@ const useChipStyles = makeStyles((theme) => ({
 
 interface RequirementFormState extends Requirement {
   demandIds: string[];
-  helperId: string;
-  recipientId: string;
-  supervisorId: string;
 }
 
 const RequirementFormLayout: FC<{ record: RequirementFormState }> = ({ record, children }) => {
@@ -66,7 +63,7 @@ const RequirementFormLayout: FC<{ record: RequirementFormState }> = ({ record, c
         {children}
       </Grid>
       <Grid item xs={12} md={6} lg={4}>
-        {isCreateForm && record.recipientId && <RecipientRequirementList record={record.recipient} />}
+        {isCreateForm && record.clientId && <ClientRequirementList record={record.client} />}
         {isEditForm && <RequirementHistory record={record} />}
       </Grid>
     </Grid>
@@ -81,52 +78,52 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
   const { values } = useFormState<RequirementFormState>();
   const dataProvider = useDataProvider();
 
-  const handleRecipientClean = React.useCallback(() => {
-    form.change('recipient', null);
-    form.change('recipientId', null);
+  const handleClientClean = React.useCallback(() => {
+    form.change('client', null);
+    form.change('clientId', null);
     form.change('address', null);
     form.change('location', null);
   }, [form]);
 
-  const handleRecipientSelect = React.useCallback(
-    (recipient: Recipient | string | null) => {
-      if (!recipient) {
-        form.change('recipient', null);
-        form.change('recipientId', null);
+  const handleClientSelect = React.useCallback(
+    (client: Client | string | null) => {
+      if (!client) {
+        form.change('client', null);
+        form.change('clientId', null);
         form.change('address', null);
         form.change('location', null);
-      } else if (typeof recipient === 'string') {
-        form.change('recipient', {
+      } else if (typeof client === 'string') {
+        form.change('client', {
           firstName: null,
           lastName: null,
           yearOfBirth: null,
           age: null,
           email: null,
-          phoneNumber: formatPhoneNumber(recipient),
+          phoneNumber: formatPhoneNumber(client),
         });
-        form.change('recipientId', null);
+        form.change('clientId', null);
         form.change('address', null);
         form.change('location', null);
       } else {
-        form.change('recipient', recipient);
-        form.change('recipientId', recipient.id);
-        form.change('address', recipient.address);
-        form.change('location', recipient.location);
+        form.change('client', client);
+        form.change('clientId', client.id);
+        form.change('address', client.address);
+        form.change('location', client.location);
       }
     },
     [form],
   );
 
-  // Pass address and location to the new recipient
+  // Pass address and location to the new client
   const handleAddressChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>, result: google.maps.GeocoderResult | null) => {
       form.change('location', result ? result.geometry.location.toJSON() : null);
-      if (!values.recipientId) {
-        form.change('recipient.address', result ? result.formatted_address : null);
-        form.change('recipient.location', result ? result.geometry.location.toJSON() : null);
+      if (!values.clientId) {
+        form.change('client.address', result ? result.formatted_address : null);
+        form.change('client.location', result ? result.geometry.location.toJSON() : null);
       }
     },
-    [form, values.recipientId],
+    [form, values.clientId],
   );
 
   React.useEffect(() => {
@@ -143,9 +140,9 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
   const handleHelperSelect = React.useCallback(
     (helper: Helper) => {
       form.change('helper', helper);
-      if (values.status === RequirementStatus.OPEN) {
+      if (values.status === RequirementStatus.NEW) {
         // Set status to assign if it was opened
-        form.change('status', RequirementStatus.ASSIGN);
+        form.change('status', RequirementStatus.PROCESSING);
       }
     },
     [form, values.status],
@@ -156,9 +153,9 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
       ev.stopPropagation();
       ev.preventDefault();
       form.change('helper', null);
-      if (values.status === RequirementStatus.ASSIGN) {
+      if (values.status === RequirementStatus.PROCESSING) {
         // Set status to assign if it was assigned
-        form.change('status', RequirementStatus.OPEN);
+        form.change('status', RequirementStatus.NEW);
       }
     },
     [form, values.status],
@@ -170,18 +167,18 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
         <CardContent>
           <Grid container spacing={2} className={classes.container}>
             <Grid item xs={12} lg={6} className={classes.item}>
-              {values.recipient ? (
-                <RecipientForm onDrop={handleRecipientClean} />
+              {values.client ? (
+                <ClientForm onDrop={handleClientClean} />
               ) : (
-                <RecipientAutocompleteInput
+                <ClientAutocompleteInput
                   resource="requirements"
                   source="phoneNumber"
-                  onChange={handleRecipientSelect}
+                  onChange={handleClientSelect}
                   autoFocus
                   validate={[required(), phone()]}
                 />
               )}
-              {values.recipient && (
+              {values.client && (
                 <LocationAutocompleteInput
                   resource="helpers"
                   source="address"

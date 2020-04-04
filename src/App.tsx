@@ -9,7 +9,7 @@ import themeReducer from './layout/themeReducer';
 import fontSizeReducer from './layout/fontSizeReducer';
 
 import helpers from './resources/helpers';
-import recipients from './resources/recipients';
+import clients from './resources/clients';
 import requirements from './resources/requirements';
 import services from './resources/services';
 import supervisors from './resources/supervisors';
@@ -31,7 +31,7 @@ const App = () => (
     >
       <Resource {...requirements} />
       <Resource {...helpers} />
-      <Resource {...recipients} />
+      <Resource {...clients} />
       <Resource {...services} />
       <Resource {...supervisors} />
     </Admin>

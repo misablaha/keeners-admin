@@ -10,8 +10,8 @@ import { pickToolbarProps } from '../../form/utils';
 import { phone } from '../../form/validate';
 import LocationAutocompleteInput from '../../form/LocationAutocompleteInput';
 import LocationMapInput from '../../form/LocationMapInput';
-import RecipientRequirementList from '../requirements/RecipientRequirementList';
-import { Recipient } from '../../types/records';
+import ClientRequirementList from '../requirements/ClientRequirementList';
+import { Client } from '../../types/records';
 import IconBar from '../../components/IconBar';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,14 +25,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RecipientFormLayout: FC<{ record: Partial<Recipient> }> = ({ record, children }) => {
+const ClientFormLayout: FC<{ record: Partial<Client> }> = ({ record, children }) => {
   return record.id ? (
     <Grid container spacing={2}>
       <Grid item xs={12} md={6} lg={7}>
         {children}
       </Grid>
       <Grid item xs={12} md={6} lg={5}>
-        <RecipientRequirementList record={record} />
+        <ClientRequirementList record={record} />
       </Grid>
     </Grid>
   ) : (
@@ -40,7 +40,7 @@ const RecipientFormLayout: FC<{ record: Partial<Recipient> }> = ({ record, child
   );
 };
 
-const RecipientFormBody: FC<{ record: Partial<Recipient> }> = (props) => {
+const ClientFormBody: FC<{ record: Partial<Client> }> = (props) => {
   const classes = useStyles();
   const form = useForm();
 
@@ -68,35 +68,35 @@ const RecipientFormBody: FC<{ record: Partial<Recipient> }> = (props) => {
   );
 
   return (
-    <RecipientFormLayout record={props.record}>
+    <ClientFormLayout record={props.record}>
       <Card>
         <IconBar Icon={Icon} bgColor="#ff9800" />
         <CardContent>
           <Grid container spacing={2} className={classes.container}>
             <Grid item xs={12} lg={6} className={classes.item}>
-              <TextInput resource="recipients" source="firstName" fullWidth autoFocus />
+              <TextInput resource="clients" source="firstName" fullWidth autoFocus />
             </Grid>
             <Grid item xs={12} lg={6} className={classes.item}>
-              <TextInput resource="recipients" source="lastName" fullWidth />
+              <TextInput resource="clients" source="lastName" fullWidth />
             </Grid>
             <Grid item xs={12} lg={6} className={classes.item}>
-              <NumberInput resource="recipients" source="age" fullWidth onChange={handleAgeChange} />
+              <NumberInput resource="clients" source="age" fullWidth onChange={handleAgeChange} />
             </Grid>
             <Grid item xs={12} lg={6} className={classes.item}>
-              <NumberInput resource="recipients" source="yearOfBirth" fullWidth onChange={handleYearOfBirthChange} />
+              <NumberInput resource="clients" source="yearOfBirth" fullWidth onChange={handleYearOfBirthChange} />
             </Grid>
             <Grid item xs={12} lg={6} className={classes.item}>
-              <TextInput resource="recipients" source="phoneNumber" fullWidth validate={[required(), phone()]} />
+              <TextInput resource="clients" source="phoneNumber" fullWidth validate={[required(), phone()]} />
             </Grid>
             <Grid item xs={12} lg={6} className={classes.item}>
-              <TextInput resource="recipients" source="email" fullWidth />
+              <TextInput resource="clients" source="email" fullWidth />
             </Grid>
             <Grid item xs={12} className={classes.item}>
               <TextInput resource="helpers" source="note" multiline fullWidth />
             </Grid>
             <Grid item xs={12} className={classes.item}>
               <LocationAutocompleteInput
-                resource="recipients"
+                resource="clients"
                 source="address"
                 fullWidth
                 onChange={handleAddressChange}
@@ -109,10 +109,10 @@ const RecipientFormBody: FC<{ record: Partial<Recipient> }> = (props) => {
         </CardContent>
         <Toolbar {...pickToolbarProps(props)} />
       </Card>
-    </RecipientFormLayout>
+    </ClientFormLayout>
   );
 };
 
-const RecipientForm: FC = (props) => <FormWithRedirect {...props} redirect="list" render={RecipientFormBody} />;
+const ClientForm: FC = (props) => <FormWithRedirect {...props} redirect="list" render={ClientFormBody} />;
 
-export default RecipientForm;
+export default ClientForm;

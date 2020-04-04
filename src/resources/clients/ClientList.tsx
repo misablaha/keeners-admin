@@ -1,7 +1,7 @@
 import React from 'react';
 import { Datagrid, Filter, List, TextField, TextInput } from 'react-admin';
 
-const RecipientFilter = (props: any) => (
+const ClientFilter = (props: any) => (
   <Filter {...props}>
     <TextInput label={`resources.helpers.fields.firstName`} source={'firstName'} alwaysOn />
     <TextInput label={`resources.helpers.fields.lastName`} source={'lastName'} alwaysOn />
@@ -9,10 +9,10 @@ const RecipientFilter = (props: any) => (
   </Filter>
 );
 
-const RecipientList = (props: any) => (
+const ClientList = (props: any) => (
   <List
     {...props}
-    filters={<RecipientFilter />}
+    filters={<ClientFilter />}
     perPage={25}
     sort={{ field: 'createdTime', order: 'ASC' }}
     bulkActionButtons={false}
@@ -27,4 +27,4 @@ const RecipientList = (props: any) => (
   </List>
 );
 
-export default RecipientList;
+export default ClientList;

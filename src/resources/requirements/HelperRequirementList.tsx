@@ -7,7 +7,7 @@ import Divider from '@material-ui/core/Divider';
 import { Helper } from '../../types/records';
 import SupervisorLinkField from './SupervisorLinkField';
 import requirementStatuses from './requirementStatuses';
-import RecipientLinkField from './RecipientLinkField';
+import ClientLinkField from './ClientLinkField';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +27,7 @@ const RequirementShow: FC = (props) => (
       <RichTextField source="note" />
       <DemandsField />
       <DateField source="supplyDate" showTime />
-      <RecipientLinkField />
+      <ClientLinkField />
       <SupervisorLinkField />
       <SelectField source="status" choices={requirementStatuses} sortable={false} />
     </SimpleShowLayout>

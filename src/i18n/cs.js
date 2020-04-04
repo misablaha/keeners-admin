@@ -21,7 +21,7 @@ export default defaultsDeep(
           provideIds: 'Nabízí',
         },
       },
-      recipients: {
+      clients: {
         name: 'Klienti',
         fields: {
           firstName: 'Jméno',
@@ -43,7 +43,7 @@ export default defaultsDeep(
           helper: 'Dobrovolník',
           note: 'Poznámka',
           phoneNumber: 'Telefonní číslo',
-          recipient: 'Klient',
+          client: 'Klient',
           status: 'Stav',
           supervisor: 'Správce',
           supplyDate: 'Termín',

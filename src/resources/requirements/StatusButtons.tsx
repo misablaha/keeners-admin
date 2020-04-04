@@ -34,7 +34,7 @@ const StatusButtons: FC<FieldProps<Requirement>> = ({ record, resource }) => {
         </IconButton>
       </Tooltip>
       <Tooltip title={translate('resources.requirements.actions.cancel')}>
-        <IconButton onClick={(ev) => handleClick(ev, RequirementStatus.CANCEL)} disabled={loading}>
+        <IconButton onClick={(ev) => handleClick(ev, RequirementStatus.CANCELED)} disabled={loading}>
           <HighlightOffIcon color={'error'} />
         </IconButton>
       </Tooltip>

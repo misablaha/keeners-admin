@@ -6,7 +6,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
 import { Supervisor } from '../../types/records';
 import requirementStatuses from './requirementStatuses';
-import RecipientLinkField from './RecipientLinkField';
+import ClientLinkField from './ClientLinkField';
 import HelperLinkField from './HelperLinkField';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -27,7 +27,7 @@ const RequirementShow: FC = (props) => (
       <RichTextField source="note" />
       <DemandsField />
       <DateField source="supplyDate" showTime />
-      <RecipientLinkField />
+      <ClientLinkField />
       <HelperLinkField />
       <SelectField source="status" choices={requirementStatuses} sortable={false} />
     </SimpleShowLayout>
@@ -60,7 +60,7 @@ const SupervisorRequirementList: FC<{ record: Partial<Supervisor> }> = ({ record
         <Datagrid optimized rowClick="expand" expand={<RequirementShow />}>
           <DateField cellClassName={classes.cell} headerClassName={classes.cell} source="createdTime" showTime />
           <DemandsField cellClassName={classes.cell} headerClassName={classes.cell} />
-          <RecipientLinkField cellClassName={classes.cell} headerClassName={classes.cell} />
+          <ClientLinkField cellClassName={classes.cell} headerClassName={classes.cell} />
           <SelectField
             cellClassName={classes.cell}
             headerClassName={classes.cell}

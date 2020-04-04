@@ -8,7 +8,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
 import Fuse, { IFuseOptions } from 'fuse.js';
-import { Recipient } from '../../types/records';
+import { Client } from '../../types/records';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const fuseOptions: IFuseOptions<Recipient> = {
+const fuseOptions: IFuseOptions<Client> = {
   includeMatches: true,
   includeScore: false,
   minMatchCharLength: 3,
@@ -69,9 +69,9 @@ function parse(text: string, matches: ReadonlyArray<[number, number]>) {
   return result;
 }
 
-type RecipientFuseResult = Fuse.FuseResult<Recipient>;
+type ClientFuseResult = Fuse.FuseResult<Client>;
 
-const Highlight: FC<{ option: RecipientFuseResult; field: string }> = ({ option, field }) => {
+const Highlight: FC<{ option: ClientFuseResult; field: string }> = ({ option, field }) => {
   const match = option.matches && option.matches.find((v) => v.key === field);
   const parts = parse(option.item[field], match ? match.indices : []);
   return (
@@ -89,20 +89,20 @@ type Props = Omit<InputProps<TextFieldProps> & TextFieldProps, 'label' | 'helper
   resource?: string;
   source?: string;
   freeSolo?: boolean;
-  onChange: (selected: Recipient | string | null) => void;
-  getOptionLabel?: (option: RecipientFuseResult | string) => string;
+  onChange: (selected: Client | string | null) => void;
+  getOptionLabel?: (option: ClientFuseResult | string) => string;
 };
 
-const RecipientAutocompleteInput: FC<Props> = ({ getOptionLabel, freeSolo, onChange, ...rest }) => {
+const ClientAutocompleteInput: FC<Props> = ({ getOptionLabel, freeSolo, onChange, ...rest }) => {
   const classes = useStyles();
-  const recipients = useGetList<Recipient>('recipients', { perPage: 5000, page: 1 }, { field: 'id', order: 'ASC' }, {});
-  const [fuse, setFuse] = React.useState<Fuse<Recipient, typeof fuseOptions>>(new Fuse([], fuseOptions));
-  const [options, setOptions] = React.useState<RecipientFuseResult[]>([]);
+  const clients = useGetList<Client>('clients', { perPage: 5000, page: 1 }, { field: 'id', order: 'ASC' }, {});
+  const [fuse, setFuse] = React.useState<Fuse<Client, typeof fuseOptions>>(new Fuse([], fuseOptions));
+  const [options, setOptions] = React.useState<ClientFuseResult[]>([]);
 
   React.useEffect(() => {
-    const data = recipients.data ? Object.values(recipients.data) : [];
+    const data = clients.data ? Object.values(clients.data) : [];
     setFuse(new Fuse(data, fuseOptions));
-  }, [recipients.data, recipients.loading, setFuse, setOptions]);
+  }, [clients.data, clients.loading, setFuse, setOptions]);
 
   const handleChange = React.useCallback(
     (event: any, value: string) => {
@@ -112,7 +112,7 @@ const RecipientAutocompleteInput: FC<Props> = ({ getOptionLabel, freeSolo, onCha
   );
 
   const handleSelect = React.useCallback(
-    (ev: any, value: RecipientFuseResult | null | string) => {
+    (ev: any, value: ClientFuseResult | null | string) => {
       if (value && typeof value === 'object') {
         onChange(value.item);
       } else {
@@ -127,7 +127,7 @@ const RecipientAutocompleteInput: FC<Props> = ({ getOptionLabel, freeSolo, onCha
       options={options}
       getOptionLabel={
         getOptionLabel ||
-        ((option: RecipientFuseResult | string) => (typeof option === 'string' ? option : option.item.phoneNumber))
+        ((option: ClientFuseResult | string) => (typeof option === 'string' ? option : option.item.phoneNumber))
       }
       filterOptions={(x) => x}
       freeSolo
@@ -135,7 +135,7 @@ const RecipientAutocompleteInput: FC<Props> = ({ getOptionLabel, freeSolo, onCha
       onInputChange={handleChange}
       onChange={handleSelect}
       renderInput={(params) => <TextInput {...params} {...rest} />}
-      renderOption={(option: RecipientFuseResult) => (
+      renderOption={(option: ClientFuseResult) => (
         <Box display="flex" alignItems="center">
           <PhoneIcon className={classes.icon} fontSize="small" color="action" />
           <Highlight option={option} field={'phoneNumber'} />
@@ -147,4 +147,4 @@ const RecipientAutocompleteInput: FC<Props> = ({ getOptionLabel, freeSolo, onCha
   );
 };
 
-export default RecipientAutocompleteInput;
+export default ClientAutocompleteInput;

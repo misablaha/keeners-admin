@@ -11,7 +11,7 @@ import {
   TextField,
 } from 'react-admin';
 import DemandsField from './DemandsField';
-import RecipientLinkField from './RecipientLinkField';
+import ClientLinkField from './ClientLinkField';
 import HelperLinkField from './HelperLinkField';
 import SupervisorLinkField from './SupervisorLinkField';
 import requirementStatuses from './requirementStatuses';
@@ -47,9 +47,9 @@ const RequirementList = (props: any) => (
   >
     <Datagrid optimized rowClick="edit">
       <DateField source="createdTime" showTime />
-      <RecipientLinkField />
-      <TextField label={`resources.recipients.fields.age`} source="recipient.age" sortable={false} noWrap />
-      <TextField label={`resources.recipients.fields.phoneNumber`} source="recipient.phoneNumber" sortable={false} />
+      <ClientLinkField />
+      <TextField label={`resources.clients.fields.age`} source="client.age" sortable={false} noWrap />
+      <TextField label={`resources.clients.fields.phoneNumber`} source="client.phoneNumber" sortable={false} />
       <DemandsField />
       <DateField source="supplyDate" />
       <HelperLinkField />

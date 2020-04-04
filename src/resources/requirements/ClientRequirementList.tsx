@@ -4,7 +4,7 @@ import DemandsField from './DemandsField';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
-import { Recipient } from '../../types/records';
+import { Client } from '../../types/records';
 import HelperLinkField from './HelperLinkField';
 import SupervisorLinkField from './SupervisorLinkField';
 import requirementStatuses from './requirementStatuses';
@@ -34,7 +34,7 @@ const RequirementShow: FC = (props) => (
   </Show>
 );
 
-const RecipientRequirementList: FC<{ record: Partial<Recipient> }> = ({ record }) => {
+const ClientRequirementList: FC<{ record: Partial<Client> }> = ({ record }) => {
   const classes = useStyles();
 
   return (
@@ -46,7 +46,7 @@ const RecipientRequirementList: FC<{ record: Partial<Recipient> }> = ({ record }
         resource={'requirements'}
         title={' '}
         component={'div'}
-        filter={{ recipientId: record.id }}
+        filter={{ clientId: record.id }}
         sort={{ field: 'createdTime', order: 'DESC' }}
         perPage={15}
         bulkActionButtons={false}
@@ -75,4 +75,4 @@ const RecipientRequirementList: FC<{ record: Partial<Recipient> }> = ({ record }
   );
 };
 
-export default RecipientRequirementList;
+export default ClientRequirementList;
