@@ -16,7 +16,7 @@ import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/icons/SupervisedUserCircle';
 import { pickToolbarProps } from '../../form/utils';
 import { phone } from '../../form/validate';
-import LocationAutocompleteInput from '../../form/LocationAutocompleteInput';
+import LocationAutocompleteInput, { LocationAutocompleteResult } from '../../form/LocationAutocompleteInput';
 import LocationMapInput from '../../form/LocationMapInput';
 import { Helper } from '../../types/records';
 import HelperRequirementList from '../requirements/HelperRequirementList';
@@ -53,7 +53,9 @@ const HelperFormBody: FC<{ record: Partial<Helper> }> = (props) => {
   const form = useForm();
 
   const handleAddressChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>, result: google.maps.GeocoderResult | null) => {
+    (event: React.ChangeEvent<HTMLInputElement>, result: LocationAutocompleteResult | null) => {
+      form.change('address', result ? result.formatted_address : null);
+      form.change('region', result ? result.region : null);
       form.change('location', result ? result.geometry.location.toJSON() : null);
     },
     [form],
@@ -99,6 +101,9 @@ const HelperFormBody: FC<{ record: Partial<Helper> }> = (props) => {
             </Grid>
             <Grid item xs={12} className={classes.item}>
               <LocationAutocompleteInput resource="helpers" source="address" fullWidth onChange={handleAddressChange} />
+            </Grid>
+            <Grid item xs={12} className={classes.item}>
+              <TextInput resource="clients" source="region" disabled fullWidth />
             </Grid>
             <Grid item xs={12} className={classes.item}>
               <LocationMapInput source="location" />

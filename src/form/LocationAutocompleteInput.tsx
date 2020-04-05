@@ -1,3 +1,4 @@
+import { trim } from 'lodash';
 import React, { FC } from 'react';
 import { TextInput } from 'react-admin';
 import { InputProps } from 'ra-core';
@@ -18,8 +19,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getProp = (
+  components: google.maps.GeocoderAddressComponent[],
+  type: string,
+  variant: 'long_name' | 'short_name',
+): string | undefined => {
+  const component = components.find((c) => c.types.includes(type));
+  return component ? component[variant] : undefined;
+};
+
+export type LocationAutocompleteResult = google.maps.GeocoderResult & {
+  address?: string;
+  postal_code?: string;
+  region?: string;
+};
+
 interface LocationAutocompleteInputProps {
-  onChange: (event: React.ChangeEvent<HTMLInputElement>, value: google.maps.GeocoderResult | null) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>, value: LocationAutocompleteResult | null) => void;
 }
 
 const LocationAutocompleteInput: FC<Omit<InputProps<TextFieldProps>, 'onChange'> & LocationAutocompleteInputProps> = ({
@@ -43,12 +59,49 @@ const LocationAutocompleteInput: FC<Omit<InputProps<TextFieldProps>, 'onChange'>
 
   const handleSelect = React.useCallback(
     (event: React.ChangeEvent<any>, value: google.maps.places.AutocompletePrediction | string | null) => {
-      if (value && typeof value !== 'string') {
-        geocoder.geocode({ placeId: value.place_id }, (results, status) => {
+      event.stopPropagation();
+      event.preventDefault();
+      if (value) {
+        const address = typeof value === 'string' ? value : value.description;
+        geocoder.geocode({ address }, (results, status) => {
           if (status === google.maps.GeocoderStatus.OK) {
-            form.change(source, value.description);
-            console.log(results[0]);
-            onChange(event, results[0]);
+            const geocoderResult = results[0];
+
+            const town = getProp(geocoderResult.address_components, 'locality', 'long_name');
+            const route = getProp(geocoderResult.address_components, 'route', 'long_name');
+            const streetNumber =
+              getProp(geocoderResult.address_components, 'street_number', 'long_name') ||
+              getProp(geocoderResult.address_components, 'premise', 'long_name');
+
+            let addressPart = '';
+            if (streetNumber) {
+              addressPart = `${route || town} ${streetNumber}`;
+            } else if (route) {
+              addressPart = route;
+            }
+
+            // do not want postal code without address
+            const postalCode = addressPart
+              ? getProp(geocoderResult.address_components, 'postal_code', 'long_name')
+              : '';
+
+            const region =
+              getProp(geocoderResult.address_components, 'sublocality_level_1', 'long_name') ||
+              getProp(geocoderResult.address_components, 'neighborhood', 'long_name') ||
+              town ||
+              getProp(geocoderResult.address_components, 'administrative_area_level_2', 'long_name');
+
+            const formattedAddress = trim(`${addressPart}, ${postalCode} ${region}`, ', ').replace(/\s+/g, ' ');
+
+            form.change(source, formattedAddress);
+
+            onChange(event, {
+              ...geocoderResult,
+              formatted_address: formattedAddress,
+              address: addressPart,
+              postal_code: postalCode,
+              region,
+            });
           }
         });
       } else {
@@ -102,6 +155,7 @@ const LocationAutocompleteInput: FC<Omit<InputProps<TextFieldProps>, 'onChange'>
       defaultValue={form.getState().values[source]}
       options={options}
       autoComplete
+      freeSolo
       forcePopupIcon={false}
       includeInputInList
       onChange={handleSelect}

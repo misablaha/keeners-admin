@@ -46,7 +46,7 @@ const HelperRequirementList: FC<{ record: Partial<Helper> }> = ({ record }) => {
         component={'div'}
         filter={{ helperId: record.id }}
         sort={{ field: 'createdTime', order: 'DESC' }}
-        perPage={15}
+        perPage={10}
         bulkActionButtons={false}
         exporter={false}
         actions={null}

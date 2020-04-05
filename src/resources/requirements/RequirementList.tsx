@@ -47,6 +47,7 @@ const RequirementList = (props: any) => (
       <ClientLinkField />
       <TextField label={`resources.clients.fields.age`} source="client.age" sortable={false} noWrap />
       <TextField label={`resources.clients.fields.phoneNumber`} source="client.phoneNumber" sortable={false} />
+      <TextField label={`resources.clients.fields.region`} source="region" sortable={false} />
       <DemandsField />
       <DateField source="supplyDate" />
       <HelperLinkField />

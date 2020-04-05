@@ -20,7 +20,7 @@ import { Client, Demand, DemandStatus, Helper, Requirement, Supervisor } from '.
 import ClientAutocompleteInput from '../../clients/ClientAutocompleteInput';
 import { phone } from '../../../form/validate';
 import ClientForm from './ClientForm';
-import LocationAutocompleteInput from '../../../form/LocationAutocompleteInput';
+import LocationAutocompleteInput, { LocationAutocompleteResult } from '../../../form/LocationAutocompleteInput';
 import ClientRequirementList from '../ClientRequirementList';
 import HelperList from './HelperList';
 import HelperLabel from './HelperLabel';
@@ -103,10 +103,13 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
 
   // Pass address and location to the new client
   const handleAddressChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>, result: google.maps.GeocoderResult | null) => {
+    (event: React.ChangeEvent<HTMLInputElement>, result: LocationAutocompleteResult | null) => {
+      form.change('address', result ? result.formatted_address : null);
+      form.change('region', result ? result.region : null);
       form.change('location', result ? result.geometry.location.toJSON() : null);
       if (!values.clientId) {
         form.change('client.address', result ? result.formatted_address : null);
+        form.change('client.region', result ? result.region : null);
         form.change('client.location', result ? result.geometry.location.toJSON() : null);
       }
     },
@@ -175,6 +178,7 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
                   onChange={handleAddressChange}
                 />
               )}
+              {values.location && <TextInput resource="requirements" source="region" disabled fullWidth />}
               {values.location && <LocationMapInput source="location" />}
             </Grid>
             <Grid item xs={12} lg={6} className={classes.item}>

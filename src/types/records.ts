@@ -37,6 +37,7 @@ export interface Client extends BaseRecord {
   email?: string;
   phoneNumber: string;
   address: string;
+  region: string;
   location: GpsPoint;
   note: string;
   requirements: Requirement[];
@@ -51,6 +52,7 @@ export interface Helper extends BaseRecord {
   phoneNumber: string;
   isActive: boolean;
   address: string;
+  region: string;
   location: GpsPoint;
   note: string;
   provide: Service[];
@@ -75,6 +77,7 @@ export interface Requirement extends BaseRecord {
   helperId: string;
   location: GpsPoint;
   note: string;
+  region: string;
   supervisor: Supervisor;
   supervisorId: string;
   supplyDate: Date;

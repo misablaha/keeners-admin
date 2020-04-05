@@ -46,7 +46,7 @@ const ClientRequirementList: FC<{ record: Partial<Client> }> = ({ record }) => {
         component={'div'}
         filter={{ clientId: record.id }}
         sort={{ field: 'createdTime', order: 'DESC' }}
-        perPage={15}
+        perPage={10}
         bulkActionButtons={false}
         exporter={false}
         actions={null}
