@@ -3,11 +3,11 @@ import { NumberInput, required, TextInput } from 'react-admin';
 import { useForm, useFormState } from 'react-final-form';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import { phone } from '../../form/validate';
-import FormControl from '@material-ui/core/FormControl';
-import IconButton from '@material-ui/core/IconButton';
 import CancelIcon from '@material-ui/icons/Cancel';
+import FormControl from '@material-ui/core/FormControl';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import { phone } from '../../../form/validate';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -78,12 +78,7 @@ const ClientForm: FC<{ onDrop: () => void }> = (props) => {
         />
       </Grid>
       <Grid item xs={12} className={classes.item}>
-        <TextInput
-          label={'resources.clients.fields.lastName'}
-          resource="clients"
-          source="client.lastName"
-          fullWidth
-        />
+        <TextInput label={'resources.clients.fields.lastName'} resource="clients" source="client.lastName" fullWidth />
       </Grid>
       <Grid item xs={12} lg={6} className={classes.item}>
         <NumberInput

@@ -95,12 +95,7 @@ const ClientFormBody: FC<{ record: Partial<Client> }> = (props) => {
               <TextInput resource="helpers" source="note" multiline fullWidth />
             </Grid>
             <Grid item xs={12} className={classes.item}>
-              <LocationAutocompleteInput
-                resource="clients"
-                source="address"
-                fullWidth
-                onChange={handleAddressChange}
-              />
+              <LocationAutocompleteInput resource="clients" source="address" fullWidth onChange={handleAddressChange} />
             </Grid>
             <Grid item xs={12} className={classes.item}>
               <LocationMapInput source="location" />

@@ -85,7 +85,7 @@ const Highlight: FC<{ option: ClientFuseResult; field: string }> = ({ option, fi
   );
 };
 
-type Props = Omit<InputProps<TextFieldProps> & TextFieldProps, 'label' | 'helperText' | 'onChange'> & {
+type Props = Partial<Omit<InputProps<TextFieldProps> & TextFieldProps, 'label' | 'helperText' | 'onChange'>> & {
   resource?: string;
   source?: string;
   freeSolo?: boolean;
@@ -102,7 +102,7 @@ const ClientAutocompleteInput: FC<Props> = ({ getOptionLabel, freeSolo, onChange
   React.useEffect(() => {
     const data = clients.data ? Object.values(clients.data) : [];
     setFuse(new Fuse(data, fuseOptions));
-  }, [clients.data, clients.loading, setFuse, setOptions]);
+  }, [clients.loading, setFuse, setOptions]);
 
   const handleChange = React.useCallback(
     (event: any, value: string) => {

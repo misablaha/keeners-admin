@@ -6,8 +6,8 @@ import { FieldProps } from '../../types/core';
 const DemandsField: FC<FieldProps<Requirement>> = (props) => {
   return props.record && props.record.demands ? (
     <Fragment>
-      {props.record.demands.map((s) => (
-        <ChipField key={s.id} record={s} source="name" />
+      {props.record.demands.map((d) => (
+        <ChipField key={d.id} record={d.service} source="name" />
       ))}
     </Fragment>
   ) : null;

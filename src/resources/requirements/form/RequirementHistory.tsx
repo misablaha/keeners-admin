@@ -5,7 +5,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import HotTubIcon from '@material-ui/icons/HotTub';
-import { Requirement } from '../../types/records';
+import { Requirement } from '../../../types/records';
 
 const useStyles = makeStyles((theme) => ({
   cell: {

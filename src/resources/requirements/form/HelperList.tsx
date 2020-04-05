@@ -2,16 +2,16 @@ import { difference, filter, forEach } from 'lodash';
 import moment from 'moment';
 import { getDistance } from 'geolib';
 import React, { FC } from 'react';
+import { useGetList } from 'ra-core';
 import { Datagrid, NumberField } from 'react-admin';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import { Helper, Requirement, Service } from '../../types/records';
-import { useGetList, useTranslate } from 'ra-core';
-import HelperLinkField from '../helpers/HelperLinkField';
-import { FieldProps } from '../../types/core';
 import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
+import { Helper, Requirement } from '../../../types/records';
+import HelperLinkField from '../../helpers/HelperLinkField';
+import { FieldProps } from '../../../types/core';
+import AssignButton from './AssignButton';
+import { RecordMap } from 'ra-core/esm/types';
 
 const useStyles = makeStyles((theme) => ({
   cell: {
@@ -19,10 +19,6 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(1),
   },
 }));
-
-interface RequirementFormState extends Requirement {
-  demandIds: string[];
-}
 
 const HelperActivityField: FC<FieldProps<Helper>> = ({ record }) => {
   const requirements = useGetList<Helper>(
@@ -50,28 +46,10 @@ HelperActivityField.defaultProps = {
   label: 'resources.helpers.fields.activity',
 };
 
-const AssignButton: FC<FieldProps<Helper> & { onClick: (record: Helper) => void }> = ({ record, onClick }) => {
-  const translate = useTranslate();
-  const handleClick = React.useCallback(() => {
-    record && onClick(record);
-  }, [onClick, record]);
-
-  return (
-    <Button color={'primary'} startIcon={<AssignmentIndIcon />} onClick={handleClick}>
-      {translate('resources.requirements.actions.assign')}
-    </Button>
-  );
-};
-
-AssignButton.defaultProps = {
-  textAlign: 'right',
-};
-
-function getRandomKey() {
-  return Math.random().toString(36).substring(7);
-}
-
-const HelperList: FC<{ record: RequirementFormState; onSelect: (helper: Helper) => void }> = ({ record, onSelect }) => {
+const HelperList: FC<{ record: Requirement; onSelect: (ev: React.MouseEvent, helper: Helper) => void }> = ({
+  record,
+  onSelect,
+}) => {
   const classes = useStyles();
   const helpers = useGetList<Helper>(
     'helpers',
@@ -79,22 +57,24 @@ const HelperList: FC<{ record: RequirementFormState; onSelect: (helper: Helper) 
     { field: 'id', order: 'ASC' },
     { 'isActive||$eq': true },
   );
-  const services = useGetList<Service>(
-    'services',
-    { perPage: 5000, page: 1 },
-    { field: 'id', order: 'ASC' },
-    { 'isInternal||$eq': false },
-  );
   const [ids, setIds] = React.useState<Array<string>>([]);
-  const [session, setSession] = React.useState<string>(getRandomKey());
+  const [data, setData] = React.useState<RecordMap<Helper>>({});
 
   React.useEffect(() => {
-    const required = filter(record.demandIds, (id) => services.data && services.data[id]);
+    setData(helpers.data || {});
+  }, [helpers.loaded, setData]);
+
+  React.useEffect(() => {
+    const required: string[] = (record.demands || [])
+      .map((d) => d.service)
+      .filter((s) => !s.isInternal)
+      .map((s) => s.id);
+
     if (required.length === 0 || !record.location) {
       // Nothing is needed ... Do not offer helpers
       setIds([]);
     } else {
-      forEach(helpers.data, (h) => {
+      forEach(data, (h) => {
         Object.assign(h, { distance: getDistance(record.location, h.location) });
       });
 
@@ -102,18 +82,18 @@ const HelperList: FC<{ record: RequirementFormState; onSelect: (helper: Helper) 
         // Filter helpers that provide all required services
         // difference([1,2,3], [1,2]) => [ 3 ]
         // difference([1,2,3], [1,2,3,4]) => []
-        filter(helpers.data, (h) => difference(required, h.provideIds).length === 0)
+        filter(data, (h) => difference(required, h.provideIds).length === 0)
           .sort((a, b) => a.distance - b.distance)
           .map((h) => h.id)
           .slice(0, 15),
       );
-      setSession(getRandomKey());
     }
-  }, [setIds, setSession, helpers.loaded, services.loaded, record.demandIds, record.location, services.data, helpers.data]);
+  }, [data, record.demands, record.location, setIds]);
 
   return (
     <Datagrid
       {...helpers}
+      data={data}
       ids={ids}
       currentSort={{ field: 'distance', order: 'ASC' }}
       optimized
@@ -129,7 +109,7 @@ const HelperList: FC<{ record: RequirementFormState; onSelect: (helper: Helper) 
         source="distance"
         sortable={false}
       />
-      <HelperActivityField key={session} cellClassName={classes.cell} headerClassName={classes.cell} />
+      <HelperActivityField cellClassName={classes.cell} headerClassName={classes.cell} />
       <AssignButton cellClassName={classes.cell} headerClassName={classes.cell} onClick={onSelect} />
     </Datagrid>
   );

@@ -49,12 +49,14 @@ export default defaultsDeep(
           supplyDate: 'Termín',
         },
         statuses: {
-          open: 'Otevřeno',
-          assign: 'Dobrovolník',
+          new: 'Otevřeno',
+          processing: 'Dobrovolník',
           done: 'Vyřešeno',
-          cancel: 'Zrušeno',
+          canceled: 'Zrušeno',
         },
         actions: {
+          addDemand: 'Přidat poptávku',
+          removeDemand: 'Odebrat poptávku',
           assign: 'Přiřadit',
           cancel: 'Označit jako zrušené',
           done: 'Označit jako vyřešené',

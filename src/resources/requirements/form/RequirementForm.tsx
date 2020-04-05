@@ -3,7 +3,6 @@ import {
   CheckboxGroupInput,
   DateInput,
   FormWithRedirect,
-  Link,
   RadioButtonGroupInput,
   ReferenceArrayInput,
   ReferenceInput,
@@ -11,26 +10,24 @@ import {
   TextInput,
   Toolbar,
 } from 'react-admin';
-import { useDataProvider, useTranslate } from 'ra-core';
+import { useDataProvider } from 'ra-core';
 import { useForm, useFormState } from 'react-final-form';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import Chip from '@material-ui/core/Chip';
-import FormControl from '@material-ui/core/FormControl';
-import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import HelperIcon from '@material-ui/icons/SupervisedUserCircle';
-import { formatPhoneNumber, pickToolbarProps } from '../../form/utils';
-import LocationMapInput from '../../form/LocationMapInput';
-import { Helper, Client, Requirement, RequirementStatus, Supervisor } from '../../types/records';
-import ClientAutocompleteInput from '../clients/ClientAutocompleteInput';
-import { phone } from '../../form/validate';
+import { formatPhoneNumber, pickToolbarProps } from '../../../form/utils';
+import LocationMapInput from '../../../form/LocationMapInput';
+import { Client, Demand, Helper, Requirement, RequirementStatus, Supervisor } from '../../../types/records';
+import ClientAutocompleteInput from '../../clients/ClientAutocompleteInput';
+import { phone } from '../../../form/validate';
 import ClientForm from './ClientForm';
-import LocationAutocompleteInput from '../../form/LocationAutocompleteInput';
-import ClientRequirementList from './ClientRequirementList';
+import LocationAutocompleteInput from '../../../form/LocationAutocompleteInput';
+import ClientRequirementList from '../ClientRequirementList';
 import HelperList from './HelperList';
+import HelperLabel from './HelperLabel';
 import RequirementHistory from './RequirementHistory';
+import DemandList from './DemandList';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -40,12 +37,6 @@ const useStyles = makeStyles((theme) => ({
   item: {
     paddingBottom: '0!important',
     paddingTop: '0!important',
-  },
-}));
-
-const useChipStyles = makeStyles((theme) => ({
-  label: {
-    fontSize: 16,
   },
 }));
 
@@ -72,8 +63,6 @@ const RequirementFormLayout: FC<{ record: RequirementFormState }> = ({ record, c
 
 const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
   const classes = useStyles();
-  const chipClasses = useChipStyles();
-  const translate = useTranslate();
   const form = useForm();
   const { values } = useFormState<RequirementFormState>();
   const dataProvider = useDataProvider();
@@ -137,23 +126,25 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
     }
   }, [form, dataProvider, values.supervisor, values.supervisorId]);
 
-  const handleHelperSelect = React.useCallback(
-    (helper: Helper) => {
-      form.change('helper', helper);
-      if (values.status === RequirementStatus.NEW) {
+  const handleDemandsChange = React.useCallback(
+    (demands: Partial<Demand>[]) => {
+      form.change('demands', demands);
+    },
+    [form],
+  );
+
+  const handleHelperChange = React.useCallback(
+    (ev: React.MouseEvent, helper?: Helper) => {
+      ev.stopPropagation();
+      ev.preventDefault();
+
+      form.change('helperId', helper ? helper.id : null);
+      form.change('helper', helper ? helper : null);
+      if (helper && values.status === RequirementStatus.NEW) {
         // Set status to assign if it was opened
         form.change('status', RequirementStatus.PROCESSING);
       }
-    },
-    [form, values.status],
-  );
-
-  const handleHelperRemove = React.useCallback(
-    (ev: React.MouseEvent) => {
-      ev.stopPropagation();
-      ev.preventDefault();
-      form.change('helper', null);
-      if (values.status === RequirementStatus.PROCESSING) {
+      if (!helper && values.status === RequirementStatus.PROCESSING) {
         // Set status to assign if it was assigned
         form.change('status', RequirementStatus.NEW);
       }
@@ -186,19 +177,11 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
                   onChange={handleAddressChange}
                 />
               )}
-              <LocationMapInput source="location" />
+              {values.location && <LocationMapInput source="location" />}
             </Grid>
             <Grid item xs={12} lg={6} className={classes.item}>
-              <ReferenceArrayInput
-                label={`resources.requirements.fields.demands`}
-                reference="services"
-                resource="requirements"
-                source="demandIds"
-                fullWidth
-              >
-                <CheckboxGroupInput />
-              </ReferenceArrayInput>
-              <TextInput resource="requirements" source="note" multiline fullWidth />
+              <DemandList demands={values.demands} onChange={handleDemandsChange} />
+              <TextInput resource="requirements" source="note" multiline rows="3" fullWidth />
               <DateInput resource="requirements" source="supplyDate" fullWidth />
               <ReferenceInput
                 label={`resources.requirements.fields.supervisor`}
@@ -210,24 +193,8 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
               >
                 <RadioButtonGroupInput choices={[]} />
               </ReferenceInput>
-              {values.helper && (
-                <FormControl>
-                  <Typography variant={'caption'} color={'textSecondary'} gutterBottom>
-                    {translate('resources.requirements.fields.helper')}
-                  </Typography>
-                  <Link to={`/helpers/${values.helper.id}`} onClick={(ev: React.MouseEvent) => ev.stopPropagation()}>
-                    <Chip
-                      classes={chipClasses}
-                      icon={<HelperIcon />}
-                      color={'primary'}
-                      label={values.helper.name}
-                      clickable
-                      onDelete={handleHelperRemove}
-                    />
-                  </Link>
-                </FormControl>
-              )}
-              {values.id && !values.helper && <HelperList record={values} onSelect={handleHelperSelect} />}
+              {values.helper && <HelperLabel record={values.helper} onDelete={handleHelperChange} />}
+              {values.id && !values.helper && <HelperList record={values} onSelect={handleHelperChange} />}
             </Grid>
           </Grid>
         </CardContent>
