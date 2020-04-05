@@ -7,8 +7,8 @@ import Divider from '@material-ui/core/Divider';
 import { Client } from '../../types/records';
 import HelperLinkField from './HelperLinkField';
 import SupervisorLinkField from './SupervisorLinkField';
-import requirementStatuses from './requirementStatuses';
 import { makeStyles } from '@material-ui/core/styles';
+import ClientLinkField from './ClientLinkField';
 
 const useStyles = makeStyles((theme) => ({
   cell: {
@@ -29,7 +29,6 @@ const RequirementShow: FC = (props) => (
       <DateField source="supplyDate" showTime />
       <HelperLinkField />
       <SupervisorLinkField />
-      <SelectField source="status" choices={requirementStatuses} sortable={false} />
     </SimpleShowLayout>
   </Show>
 );
@@ -61,13 +60,7 @@ const ClientRequirementList: FC<{ record: Partial<Client> }> = ({ record }) => {
         <Datagrid optimized rowClick="expand" expand={<RequirementShow />}>
           <DateField cellClassName={classes.cell} headerClassName={classes.cell} source="createdTime" showTime />
           <DemandsField cellClassName={classes.cell} headerClassName={classes.cell} />
-          <SelectField
-            cellClassName={classes.cell}
-            headerClassName={classes.cell}
-            source="status"
-            choices={requirementStatuses}
-            sortable={false}
-          />
+          <HelperLinkField cellClassName={classes.cell} headerClassName={classes.cell} />
           <ShowButton cellClassName={classes.cell} headerClassName={classes.cell} />
         </Datagrid>
       </List>

@@ -1,10 +1,8 @@
 import React, { FC } from 'react';
 import {
-  CheckboxGroupInput,
   DateInput,
   FormWithRedirect,
   RadioButtonGroupInput,
-  ReferenceArrayInput,
   ReferenceInput,
   required,
   TextInput,
@@ -18,15 +16,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import { formatPhoneNumber, pickToolbarProps } from '../../../form/utils';
 import LocationMapInput from '../../../form/LocationMapInput';
-import {
-  Client,
-  Demand,
-  DemandStatus,
-  Helper,
-  Requirement,
-  RequirementStatus,
-  Supervisor,
-} from '../../../types/records';
+import { Client, Demand, DemandStatus, Helper, Requirement, Supervisor } from '../../../types/records';
 import ClientAutocompleteInput from '../../clients/ClientAutocompleteInput';
 import { phone } from '../../../form/validate';
 import ClientForm from './ClientForm';
@@ -155,15 +145,6 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
             helper.provideIds.includes(d.serviceId) ? { ...d, status: DemandStatus.SUBMITTED } : d,
           ),
         );
-      }
-
-      if (helper && values.status === RequirementStatus.NEW) {
-        // Set status to assign if it was opened
-        form.change('status', RequirementStatus.PROCESSING);
-      }
-      if (!helper && values.status === RequirementStatus.PROCESSING) {
-        // Set status to assign if it was assigned
-        form.change('status', RequirementStatus.NEW);
       }
     },
     [form, values.status, values.demands, handleDemandsChange],

@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
-import { Datagrid, DateField, List, RichTextField, SelectField, Show, ShowButton, SimpleShowLayout } from 'react-admin';
+import { Datagrid, DateField, List, RichTextField, Show, ShowButton, SimpleShowLayout } from 'react-admin';
 import DemandsField from './DemandsField';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
 import { Supervisor } from '../../types/records';
-import requirementStatuses from './requirementStatuses';
 import ClientLinkField from './ClientLinkField';
 import HelperLinkField from './HelperLinkField';
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,7 +28,6 @@ const RequirementShow: FC = (props) => (
       <DateField source="supplyDate" showTime />
       <ClientLinkField />
       <HelperLinkField />
-      <SelectField source="status" choices={requirementStatuses} sortable={false} />
     </SimpleShowLayout>
   </Show>
 );
@@ -61,13 +59,6 @@ const SupervisorRequirementList: FC<{ record: Partial<Supervisor> }> = ({ record
           <DateField cellClassName={classes.cell} headerClassName={classes.cell} source="createdTime" showTime />
           <DemandsField cellClassName={classes.cell} headerClassName={classes.cell} />
           <ClientLinkField cellClassName={classes.cell} headerClassName={classes.cell} />
-          <SelectField
-            cellClassName={classes.cell}
-            headerClassName={classes.cell}
-            source="status"
-            choices={requirementStatuses}
-            sortable={false}
-          />
           <ShowButton cellClassName={classes.cell} headerClassName={classes.cell} />
         </Datagrid>
       </List>

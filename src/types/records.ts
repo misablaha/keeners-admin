@@ -1,20 +1,11 @@
 import { Record } from 'ra-core';
 
-export enum RequirementStatus {
-  NEW = 'new',
-  PROCESSING = 'processing',
-  DONE = 'done',
-  CANCELED = 'canceled',
-}
-
 export enum DemandStatus {
   NEW = 'new',
   SUBMITTED = 'submitted',
   DONE = 'done',
   CANCELED = 'canceled',
 }
-
-export const openRequirementStatuses = [RequirementStatus.NEW, RequirementStatus.PROCESSING];
 
 export interface GpsPoint {
   lat: number;
@@ -83,7 +74,6 @@ export interface Requirement extends BaseRecord {
   helperId: string;
   location: GpsPoint;
   note: string;
-  status: RequirementStatus;
   supervisor: Supervisor;
   supervisorId: string;
   supplyDate: Date;
