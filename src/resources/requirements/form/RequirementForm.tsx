@@ -18,7 +18,15 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import { formatPhoneNumber, pickToolbarProps } from '../../../form/utils';
 import LocationMapInput from '../../../form/LocationMapInput';
-import { Client, Demand, Helper, Requirement, RequirementStatus, Supervisor } from '../../../types/records';
+import {
+  Client,
+  Demand,
+  DemandStatus,
+  Helper,
+  Requirement,
+  RequirementStatus,
+  Supervisor,
+} from '../../../types/records';
 import ClientAutocompleteInput from '../../clients/ClientAutocompleteInput';
 import { phone } from '../../../form/validate';
 import ClientForm from './ClientForm';
@@ -140,6 +148,15 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
 
       form.change('helperId', helper ? helper.id : null);
       form.change('helper', helper ? helper : null);
+
+      if (helper) {
+        handleDemandsChange(
+          values.demands.map((d) =>
+            helper.provideIds.includes(d.serviceId) ? { ...d, status: DemandStatus.SUBMITTED } : d,
+          ),
+        );
+      }
+
       if (helper && values.status === RequirementStatus.NEW) {
         // Set status to assign if it was opened
         form.change('status', RequirementStatus.PROCESSING);
@@ -149,7 +166,7 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
         form.change('status', RequirementStatus.NEW);
       }
     },
-    [form, values.status],
+    [form, values.status, values.demands, handleDemandsChange],
   );
 
   return (
