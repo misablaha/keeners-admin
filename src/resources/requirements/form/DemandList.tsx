@@ -59,14 +59,14 @@ const DemandList: FC<{ demands: DemandTmp[]; onChange: (demands: DemandTmp[]) =>
         onChange(demands.filter((d) => d.serviceId !== serviceId));
       }
     },
-    [services, onChange],
+    [services, demands, onChange],
   );
 
   const handleStatusChange = React.useCallback(
     (serviceId: React.ReactText) => (ev: React.ChangeEvent<{ name?: string; value: unknown }>) => {
       onChange(demands.map((d) => (d.serviceId === serviceId ? { ...d, status: ev.target.value as DemandStatus } : d)));
     },
-    [services, onChange],
+    [demands, onChange],
   );
 
   return (

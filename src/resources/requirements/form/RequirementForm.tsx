@@ -147,7 +147,7 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
         );
       }
     },
-    [form, values.status, values.demands, handleDemandsChange],
+    [form, values.demands, handleDemandsChange],
   );
 
   return (

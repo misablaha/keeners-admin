@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Datagrid, DateField, List, RichTextField, SelectField, Show, ShowButton, SimpleShowLayout } from 'react-admin';
+import { Datagrid, DateField, List, RichTextField, Show, ShowButton, SimpleShowLayout } from 'react-admin';
 import DemandsField from './DemandsField';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -8,7 +8,6 @@ import { Client } from '../../types/records';
 import HelperLinkField from './HelperLinkField';
 import SupervisorLinkField from './SupervisorLinkField';
 import { makeStyles } from '@material-ui/core/styles';
-import ClientLinkField from './ClientLinkField';
 
 const useStyles = makeStyles((theme) => ({
   cell: {

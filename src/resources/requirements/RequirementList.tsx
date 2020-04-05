@@ -6,8 +6,6 @@ import {
   Filter,
   List,
   ReferenceInput,
-  SelectField,
-  SelectArrayInput,
   SelectInput,
   TextField,
 } from 'react-admin';
