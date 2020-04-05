@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
   callSign: {
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: theme.palette.primary.contrastText,
     borderRadius: 12,
     color: theme.palette.primary.main,
     display: 'flex',
