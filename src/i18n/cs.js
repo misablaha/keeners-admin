@@ -8,6 +8,7 @@ export default defaultsDeep(
       helpers: {
         name: 'Dobrovolníci',
         fields: {
+          callSign: 'Číslo',
           activity: 'Aktivita',
           name: 'Jméno',
           distance: 'Vzd. (m)',

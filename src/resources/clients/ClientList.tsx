@@ -1,5 +1,5 @@
 import React from 'react';
-import { Datagrid, Filter, List, TextField, TextInput } from 'react-admin';
+import { Datagrid, Filter, List, Pagination, TextField, TextInput } from 'react-admin';
 
 const ClientFilter = (props: any) => (
   <Filter {...props}>
@@ -14,6 +14,7 @@ const ClientList = (props: any) => (
     {...props}
     filters={<ClientFilter />}
     perPage={25}
+    pagination={<Pagination rowsPerPageOptions={[25, 50, 100, 250]} />}
     sort={{ field: 'createdTime', order: 'ASC' }}
     bulkActionButtons={false}
   >

@@ -77,7 +77,10 @@ const HelperFormBody: FC<{ record: Partial<Helper> }> = (props) => {
             <Grid item xs={12} lg={6} className={classes.item}>
               <TextInput resource="helpers" source="email" fullWidth />
             </Grid>
-            <Grid item xs={12} className={classes.item}>
+            <Grid item xs={12} lg={6} className={classes.item}>
+              <TextInput resource="helpers" source="callSign" fullWidth />
+            </Grid>
+            <Grid item xs={12} lg={6} className={classes.item}>
               <BooleanInput resource="helpers" source="isActive" defaultValue={true} />
             </Grid>
             <Grid item xs={12} className={classes.item}>

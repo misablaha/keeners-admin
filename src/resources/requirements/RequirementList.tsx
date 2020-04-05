@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Datagrid,
-  DateField,
-  DateInput,
-  Filter,
-  List,
-  ReferenceInput,
-  SelectInput,
-  TextField,
-} from 'react-admin';
+import { Datagrid, DateField, DateInput, Filter, List, ReferenceInput, SelectInput, TextField } from 'react-admin';
 import DemandsField from './DemandsField';
 import ClientLinkField from './ClientLinkField';
 import HelperLinkField from './HelperLinkField';

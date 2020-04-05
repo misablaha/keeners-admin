@@ -1,22 +1,56 @@
 import React, { FC } from 'react';
-import { ChipField, Link } from 'react-admin';
+import { Link } from 'react-admin';
+import Chip from '@material-ui/core/Chip';
 import { Requirement } from '../../types/records';
 import { FieldProps } from '../../types/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-const HelperLinkField: FC<FieldProps<Requirement>> = (props) => {
-  return props.record && props.record.helper ? (
+const useStyles = makeStyles((theme) => ({
+  label: {
+    alignItems: 'center',
+    display: 'flex',
+  },
+  callSign: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 12,
+    color: theme.palette.primary.main,
+    display: 'flex',
+    fontWeight: 'bold',
+    height: 24,
+    marginLeft: -8,
+    marginRight: 4,
+    paddingLeft: '0.5em',
+    paddingRight: '0.5em',
+  },
+}));
+
+const HelperLinkField: FC<FieldProps<Requirement>> = ({ record }) => {
+  const classes = useStyles();
+
+  return record && record.helper ? (
     <Link
-      key={props.record.helper.id}
-      to={`/helpers/${props.record.helper.id}`}
+      key={record.helper.id}
+      to={`/helpers/${record.helper.id}`}
       onClick={(ev: React.MouseEvent) => ev.stopPropagation()}
     >
-      <ChipField record={props.record.helper} source="name" clickable color={'primary'} />
+      <Chip
+        color={'primary'}
+        label={
+          <span className={classes.label}>
+            {record.helper.callSign && <span className={classes.callSign}>{record.helper.callSign}</span>}
+            {record.helper.name}
+          </span>
+        }
+        clickable
+      />
     </Link>
   ) : null;
 };
 
 HelperLinkField.defaultProps = {
   addLabel: true,
+  label: `resources.requirements.fields.helper`,
   resource: 'requirements',
   source: 'helper',
   sortable: false,

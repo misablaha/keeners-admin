@@ -43,6 +43,7 @@ export interface Client extends BaseRecord {
 }
 
 export interface Helper extends BaseRecord {
+  callSign: string;
   firstName: string;
   lastName: string;
   readonly name: string;

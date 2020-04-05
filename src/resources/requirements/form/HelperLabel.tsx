@@ -5,12 +5,25 @@ import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
-import HelperIcon from '@material-ui/icons/SupervisedUserCircle';
 import { Helper } from '../../../types/records';
 
 const useStyles = makeStyles((theme) => ({
   label: {
-    fontSize: 16,
+    alignItems: 'center',
+    display: 'flex',
+  },
+  callSign: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 12,
+    color: theme.palette.primary.main,
+    display: 'flex',
+    fontWeight: 'bold',
+    height: 24,
+    marginLeft: -8,
+    marginRight: 4,
+    paddingLeft: '0.5em',
+    paddingRight: '0.5em',
   },
 }));
 
@@ -26,9 +39,13 @@ const HelperLabel: FC<{ record: Helper; onDelete?: React.EventHandler<any> }> = 
       <Link to={`/helpers/${record.id}`} onClick={(ev: React.MouseEvent) => ev.stopPropagation()}>
         <Chip
           classes={classes}
-          icon={<HelperIcon />}
           color={'primary'}
-          label={record.name}
+          label={
+            <span className={classes.label}>
+              {record.callSign && <span className={classes.callSign}>{record.callSign}</span>}
+              {record.name}
+            </span>
+          }
           clickable
           onDelete={onDelete}
         />
