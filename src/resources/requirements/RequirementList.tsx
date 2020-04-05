@@ -7,6 +7,7 @@ import {
   List,
   ReferenceInput,
   SelectField,
+  SelectArrayInput,
   SelectInput,
   TextField,
 } from 'react-admin';
@@ -14,26 +15,33 @@ import DemandsField from './DemandsField';
 import ClientLinkField from './ClientLinkField';
 import HelperLinkField from './HelperLinkField';
 import SupervisorLinkField from './SupervisorLinkField';
-import requirementStatuses from './requirementStatuses';
-import CompleteButton from './StatusButtons';
+import demandStatuses from './form/demandStatuses';
 
 const RequirementFilter = (props: any) => (
   <Filter {...props}>
-    <DateInput label={`resources.requirements.filters.createdTimeGte`} source="createdTime||gte" alwaysOn />
+    <DateInput label={`resources.requirements.filters.createdTimeGte`} source="createdTime||$gte" alwaysOn />
     <ReferenceInput
-      label={`resources.requirements.fields.supervisor`}
-      reference="supervisors"
-      source="supervisorId"
+      label={`resources.requirements.fields.demands`}
+      reference="services"
+      source="demands.serviceId||$eq"
       alwaysOn
     >
       <SelectInput source={'name'} />
     </ReferenceInput>
     <SelectInput
       label={`resources.requirements.fields.status`}
-      source={'status'}
-      choices={requirementStatuses}
+      source={'demands.status||$eq'}
+      choices={demandStatuses}
       alwaysOn
     />
+    <ReferenceInput
+      label={`resources.requirements.fields.supervisor`}
+      reference="supervisors"
+      source="supervisorId||$eq"
+      alwaysOn
+    >
+      <SelectInput source={'name'} />
+    </ReferenceInput>
   </Filter>
 );
 
@@ -54,7 +62,6 @@ const RequirementList = (props: any) => (
       <DateField source="supplyDate" />
       <HelperLinkField />
       <SupervisorLinkField />
-      <SelectField source="status" choices={requirementStatuses} sortable={false} />
     </Datagrid>
   </List>
 );
