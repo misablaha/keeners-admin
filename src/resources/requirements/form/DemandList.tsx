@@ -4,12 +4,16 @@ import { useGetList, useTranslate } from 'ra-core';
 import Checkbox from '@material-ui/core/Checkbox';
 import Chip from '@material-ui/core/Chip';
 import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Input from '@material-ui/core/Input';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import { Demand, DemandStatus, Service } from '../../../types/records';
+import demandStatuses from './demandStatuses';
 
 type ServiceState = {
   demandId?: string;
@@ -58,6 +62,13 @@ const DemandList: FC<{ demands: DemandTmp[]; onChange: (demands: DemandTmp[]) =>
     [services, onChange],
   );
 
+  const handleStatusChange = React.useCallback(
+    (serviceId: React.ReactText) => (ev: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+      onChange(demands.map((d) => (d.serviceId === serviceId ? { ...d, status: ev.target.value as DemandStatus } : d)));
+    },
+    [services, onChange],
+  );
+
   return (
     <FormControl margin={'dense'} fullWidth>
       <Typography variant={'caption'} color={'textSecondary'} gutterBottom>
@@ -83,7 +94,21 @@ const DemandList: FC<{ demands: DemandTmp[]; onChange: (demands: DemandTmp[]) =>
                   <Chip disabled label={data[id].name} />
                 )}
               </TableCell>
-              <TableCell align={'right'}>{}</TableCell>
+              <TableCell padding={'checkbox'} align={'right'}>
+                {services[id] && (
+                  <Select
+                    value={services[id].status}
+                    onChange={handleStatusChange(id)}
+                    input={<Input disableUnderline margin={'none'} />}
+                  >
+                    {demandStatuses.map((ds) => (
+                      <MenuItem key={ds.id} value={ds.id}>
+                        {translate(ds.name)}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

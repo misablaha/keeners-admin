@@ -65,6 +65,14 @@ export default defaultsDeep(
           createdTimeGte: 'Ode dne',
         },
       },
+      demands: {
+        statuses: {
+          new: 'Požadavek',
+          submitted: 'Řeší se',
+          done: 'Hotovo',
+          canceled: 'Zrušeno',
+        },
+      },
       services: {
         name: 'Služby',
         fields: {

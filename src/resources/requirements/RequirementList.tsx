@@ -55,7 +55,6 @@ const RequirementList = (props: any) => (
       <HelperLinkField />
       <SupervisorLinkField />
       <SelectField source="status" choices={requirementStatuses} sortable={false} />
-      <CompleteButton />
     </Datagrid>
   </List>
 );
