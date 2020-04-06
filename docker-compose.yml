@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  keeners-admin:
+    build:
+      context: .
+    ports:
+      - ${PORT}:80
+    networks:
+      - proxy
+    labels:
+      - traefik.http.routers.keeners-admin.priority=1
+      - traefik.http.routers.keeners-admin.rule=PathPrefix(`/`)
+
+networks:
+  proxy:
+    external: true
