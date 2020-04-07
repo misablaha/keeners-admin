@@ -28,7 +28,7 @@ const SupervisorFormBody: FC<{ record: Partial<Supervisor> }> = (props) => (
       <CardContent>
         <TextInput resource="supervisors" source="name" validate={required()} autoFocus fullWidth />
       </CardContent>
-      <Toolbar {...pickToolbarProps(props)} />
+      <Toolbar {...pickToolbarProps(props)} submitOnEnter={false} />
     </Card>
   </SupervisorFormLayout>
 );

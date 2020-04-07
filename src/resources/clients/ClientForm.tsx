@@ -107,7 +107,7 @@ const ClientFormBody: FC<{ record: Partial<Client> }> = (props) => {
             </Grid>
           </Grid>
         </CardContent>
-        <Toolbar {...pickToolbarProps(props)} />
+        <Toolbar {...pickToolbarProps(props)} submitOnEnter={false} />
       </Card>
     </ClientFormLayout>
   );

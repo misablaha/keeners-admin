@@ -200,7 +200,7 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
             </Grid>
           </Grid>
         </CardContent>
-        <Toolbar {...pickToolbarProps(props)} />
+        <Toolbar {...pickToolbarProps(props)} submitOnEnter={false} />
       </Card>
     </RequirementFormLayout>
   );

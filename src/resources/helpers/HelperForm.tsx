@@ -110,7 +110,7 @@ const HelperFormBody: FC<{ record: Partial<Helper> }> = (props) => {
             </Grid>
           </Grid>
         </CardContent>
-        <Toolbar {...pickToolbarProps(props)} />
+        <Toolbar {...pickToolbarProps(props)} submitOnEnter={false} />
       </Card>
     </HelperFormLayout>
   );
