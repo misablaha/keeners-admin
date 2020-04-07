@@ -85,7 +85,7 @@ const HelperList: FC<{ record: Requirement; onSelect: (ev: React.MouseEvent, hel
         filter(data, (h) => difference(required, h.provideIds).length === 0)
           .sort((a, b) => a.distance - b.distance)
           .map((h) => h.id)
-          .slice(0, 15),
+          .slice(0, 50),
       );
     }
   }, [data, record.demands, record.location, setIds]);

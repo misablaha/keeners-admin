@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import {
-  DateInput,
   FormWithRedirect,
+  NumberInput,
   RadioButtonGroupInput,
   ReferenceInput,
   required,
@@ -26,6 +26,7 @@ import HelperList from './HelperList';
 import HelperLabel from './HelperLabel';
 import RequirementHistory from './RequirementHistory';
 import DemandList from './DemandList';
+import SupplyDateInput from './SupplyDateInput';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -186,7 +187,7 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
             <Grid item xs={12} lg={6} className={classes.item}>
               <DemandList demands={values.demands} onChange={handleDemandsChange} />
               <TextInput resource="requirements" source="note" multiline rows="3" fullWidth />
-              <DateInput resource="requirements" source="supplyDate" fullWidth />
+              <SupplyDateInput resource="requirements" source="supplyDate" fullWidth />
               <ReferenceInput
                 label={`resources.requirements.fields.supervisor`}
                 reference="supervisors"
@@ -197,6 +198,7 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
               >
                 <RadioButtonGroupInput choices={[]} />
               </ReferenceInput>
+              <NumberInput resource="requirements" source="traveledDistance" defaultValue={0} fullWidth />
               {values.helper && <HelperLabel record={values.helper} onDelete={handleHelperChange} />}
               {values.id && !values.helper && <HelperList record={values} onSelect={handleHelperChange} />}
             </Grid>

@@ -51,12 +51,19 @@ export default defaultsDeep(
           status: 'Stav',
           supervisor: 'Správce',
           supplyDate: 'Termín',
+          supplyDateDelay: 'Termín',
+          traveledDistance: 'Ujeté kilometry',
         },
         statuses: {
           new: 'Otevřeno',
           processing: 'Dobrovolník',
           done: 'Vyřešeno',
           canceled: 'Zrušeno',
+        },
+        supplyDateDelays: {
+          today: 'Dnes',
+          tomorrow: 'Zítra',
+          later: 'Jindy',
         },
         actions: {
           addDemand: 'Přidat poptávku',

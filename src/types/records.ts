@@ -82,4 +82,5 @@ export interface Requirement extends BaseRecord {
   supervisor: Supervisor;
   supervisorId: string;
   supplyDate: Date;
+  traveledDistance: number;
 }
