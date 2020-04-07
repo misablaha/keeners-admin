@@ -14,10 +14,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import { Demand, DemandStatus, Service } from '../../../types/records';
 import demandStatuses from './demandStatuses';
+import DemandChip from '../DemandChip';
 
 type ServiceState = {
   demandId?: string;
   serviceId: string;
+  service: Service;
   status: DemandStatus;
 };
 
@@ -30,7 +32,7 @@ type DemandTmp = Partial<Demand> & Pick<Demand, 'serviceId' | 'status'>;
 const DemandList: FC<{ demands: DemandTmp[]; onChange: (demands: DemandTmp[]) => void }> = ({ demands, onChange }) => {
   const translate = useTranslate();
   const [services, setServices] = React.useState<ServiceStateMap>({});
-  const { data = {}, ids = [], loading } = useGetList<Service>(
+  const { data = {}, ids = [], loaded } = useGetList<Service>(
     'services',
     { perPage: 5000, page: 1 },
     { field: 'name', order: 'ASC' },
@@ -39,16 +41,19 @@ const DemandList: FC<{ demands: DemandTmp[]; onChange: (demands: DemandTmp[]) =>
 
   React.useEffect(() => {
     setServices(
-      keyBy(
-        demands.map<ServiceState>((d) => ({
-          demandId: d.id,
-          serviceId: d.serviceId,
-          status: d.status,
-        })),
-        'serviceId',
-      ),
+      loaded
+        ? keyBy(
+            demands.map<ServiceState>((d) => ({
+              demandId: d.id,
+              serviceId: d.serviceId,
+              service: data[d.serviceId],
+              status: d.status,
+            })),
+            'serviceId',
+          )
+        : {},
     );
-  }, [setServices, loading, demands]);
+  }, [setServices, loaded, demands]);
 
   const handleServiceToggle = React.useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
@@ -88,11 +93,7 @@ const DemandList: FC<{ demands: DemandTmp[]; onChange: (demands: DemandTmp[]) =>
                 />
               </TableCell>
               <TableCell padding={'none'}>
-                {services[id] ? (
-                  <Chip color={'secondary'} label={data[id].name} />
-                ) : (
-                  <Chip disabled label={data[id].name} />
-                )}
+                {services[id] ? <DemandChip record={services[id]} /> : <Chip disabled label={data[id].name} />}
               </TableCell>
               <TableCell padding={'checkbox'} align={'right'}>
                 {services[id] && (

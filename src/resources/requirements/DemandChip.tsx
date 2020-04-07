@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DemandChip: FC<FieldProps<Demand> & ChipProps> = ({ record, ...rest }) => {
+const DemandChip: FC<{ record: Pick<Demand, 'status' | 'service'> } & ChipProps> = ({ record, ...rest }) => {
   const classes = useStyles();
 
   if (!record) {
