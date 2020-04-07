@@ -90,11 +90,13 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
         });
         form.change('clientId', null);
         form.change('address', null);
+        form.change('region', null);
         form.change('location', null);
       } else {
         form.change('client', client);
         form.change('clientId', client.id);
         form.change('address', client.address);
+        form.change('region', client.region);
         form.change('location', client.location);
       }
     },

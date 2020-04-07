@@ -22,6 +22,7 @@ const fuseOptions: IFuseOptions<Client> = {
   includeMatches: true,
   includeScore: false,
   minMatchCharLength: 3,
+  threshold: 0.4,
   keys: ['name', 'firstName', 'lastName', 'phoneNumber'],
 };
 
@@ -131,7 +132,7 @@ const ClientAutocompleteInput: FC<Props> = ({ getOptionLabel, freeSolo, onChange
       }
       filterOptions={(x) => x}
       freeSolo
-      multiple={false}
+      autoSelect
       onInputChange={handleChange}
       onChange={handleSelect}
       renderInput={(params) => <TextInput {...params} {...rest} />}
