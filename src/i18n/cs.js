@@ -42,7 +42,7 @@ export default defaultsDeep(
         fields: {
           address: 'Adresa',
           client: 'Klient',
-          createdTime: 'Datum vytvoření',
+          createdAt: 'Datum vytvoření',
           demands: 'Poptávka',
           helper: 'Dobrovolník',
           note: 'Poznámka',
@@ -64,9 +64,6 @@ export default defaultsDeep(
           assign: 'Přiřadit',
           cancel: 'Označit jako zrušené',
           done: 'Označit jako vyřešené',
-        },
-        filters: {
-          createdTimeGte: 'Ode dne',
         },
       },
       demands: {

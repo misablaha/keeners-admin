@@ -8,6 +8,7 @@ const HelperFilter = (props: any) => (
     <TextInput label={`resources.helpers.fields.firstName`} source={'firstName'} alwaysOn />
     <TextInput label={`resources.helpers.fields.lastName`} source={'lastName'} alwaysOn />
     <TextInput label={`resources.helpers.fields.phoneNumber`} source={'phoneNumber'} alwaysOn />
+    <TextInput label={`resources.helpers.fields.note`} source={'note'} alwaysOn />
     <BooleanInput label={`resources.helpers.fields.isActive`} source={`isActive||${CondOperator.EQUALS}`} />
   </Filter>
 );
@@ -25,9 +26,10 @@ const HelperList = (props: any) => (
       <TextField source="callSign" />
       <TextField source="firstName" />
       <TextField source="lastName" />
-      <TextField source="phoneNumber" />
-      <TextField source="email" />
+      <TextField source="phoneNumber" noWrap />
+      <TextField source="email" noWrap />
       <TextField source="address" />
+      <TextField source="note" />
       <BooleanField source="isActive" />
     </Datagrid>
   </List>

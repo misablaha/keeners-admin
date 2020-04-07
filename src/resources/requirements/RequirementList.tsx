@@ -8,7 +8,7 @@ import demandStatuses from './form/demandStatuses';
 
 const RequirementFilter = (props: any) => (
   <Filter {...props}>
-    <DateInput label={`resources.requirements.filters.createdAtGte`} source="createdAt||$gte" alwaysOn />
+    <DateInput label={`resources.requirements.fields.createdAt`} source="createdAt||$gte" alwaysOn />
     <ReferenceInput
       label={`resources.requirements.fields.demands`}
       reference="services"
@@ -46,10 +46,10 @@ const RequirementList = (props: any) => (
       <DateField source="createdAt" showTime />
       <ClientLinkField />
       <TextField label={`resources.clients.fields.age`} source="client.age" sortable={false} noWrap />
-      <TextField label={`resources.clients.fields.phoneNumber`} source="client.phoneNumber" sortable={false} />
-      <TextField label={`resources.clients.fields.region`} source="region" sortable={false} />
+      <TextField label={`resources.clients.fields.phoneNumber`} source="client.phoneNumber" sortable={false} noWrap />
+      <TextField label={`resources.clients.fields.region`} source="region" sortable={false} noWrap />
       <DemandsField />
-      <DateField source="supplyDate" />
+      <DateField source="supplyDate" noWrap />
       <HelperLinkField />
       <SupervisorLinkField />
     </Datagrid>
