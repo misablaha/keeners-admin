@@ -39,6 +39,11 @@ interface LocationAutocompleteInputProps {
 }
 
 function formateocoderResult(geocoderResult: google.maps.GeocoderResult): LocationAutocompleteResult {
+  const aa2 = getProp(geocoderResult.address_components, 'administrative_area_level_2', 'long_name');
+  const sl1 = getProp(geocoderResult.address_components, 'sublocality_level_1', 'long_name'); // "Plzeň 1"
+  const neighborhood =
+    getProp(geocoderResult.address_components, 'point_of_interest', 'long_name') ||
+    getProp(geocoderResult.address_components, 'neighborhood', 'long_name');
   const town = getProp(geocoderResult.address_components, 'locality', 'long_name');
   const route = getProp(geocoderResult.address_components, 'route', 'long_name');
   const streetNumber =
@@ -46,20 +51,25 @@ function formateocoderResult(geocoderResult: google.maps.GeocoderResult): Locati
     getProp(geocoderResult.address_components, 'premise', 'long_name');
 
   let addressPart = '';
+  let postalCode = '';
+  let region = '';
+
+  console.log(geocoderResult.address_components);
+
   if (streetNumber) {
     addressPart = `${route || town} ${streetNumber}`;
+    postalCode = getProp(geocoderResult.address_components, 'postal_code', 'long_name') || '';
+    region = sl1 || neighborhood || town || aa2 || '';
   } else if (route) {
     addressPart = route;
+    postalCode = getProp(geocoderResult.address_components, 'postal_code', 'long_name') || '';
+    region = sl1 || neighborhood || town || aa2 || '';
+  } else if (neighborhood) {
+    addressPart = neighborhood;
+    region = sl1 || town || aa2 || '';
+  } else {
+    region = sl1 || town || aa2 || '';
   }
-
-  // do not want postal code without address
-  const postalCode = addressPart ? getProp(geocoderResult.address_components, 'postal_code', 'long_name') : '';
-
-  const region =
-    getProp(geocoderResult.address_components, 'sublocality_level_1', 'long_name') ||
-    getProp(geocoderResult.address_components, 'neighborhood', 'long_name') ||
-    town ||
-    getProp(geocoderResult.address_components, 'administrative_area_level_2', 'long_name');
 
   const formattedAddress = trim(`${addressPart}, ${postalCode} ${region}`, ', ').replace(/\s+/g, ' ');
 
