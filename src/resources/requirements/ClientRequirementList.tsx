@@ -45,7 +45,7 @@ const ClientRequirementList: FC<{ record: Partial<Client> }> = ({ record }) => {
         title={' '}
         component={'div'}
         filter={{ clientId: record.id }}
-        sort={{ field: 'createdTime', order: 'DESC' }}
+        sort={{ field: 'createdAt', order: 'DESC' }}
         perPage={10}
         bulkActionButtons={false}
         exporter={false}
@@ -57,7 +57,7 @@ const ClientRequirementList: FC<{ record: Partial<Client> }> = ({ record }) => {
         hasList={true}
       >
         <Datagrid optimized rowClick="expand" expand={<RequirementShow />}>
-          <DateField cellClassName={classes.cell} headerClassName={classes.cell} source="createdTime" showTime />
+          <DateField cellClassName={classes.cell} headerClassName={classes.cell} source="createdAt" showTime />
           <DemandsField cellClassName={classes.cell} headerClassName={classes.cell} />
           <HelperLinkField cellClassName={classes.cell} headerClassName={classes.cell} />
           <ShowButton cellClassName={classes.cell} headerClassName={classes.cell} />

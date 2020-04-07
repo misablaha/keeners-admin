@@ -14,8 +14,9 @@ export interface GpsPoint {
 
 export interface BaseRecord extends Record {
   id: string;
-  createdTime: Date;
-  updatedTime: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt?: Date;
 }
 
 export interface Supervisor extends BaseRecord {

@@ -45,7 +45,7 @@ const SupervisorRequirementList: FC<{ record: Partial<Supervisor> }> = ({ record
         title={' '}
         component={'div'}
         filter={{ supervisorId: record.id }}
-        sort={{ field: 'createdTime', order: 'DESC' }}
+        sort={{ field: 'createdAt', order: 'DESC' }}
         perPage={10}
         bulkActionButtons={false}
         exporter={false}
@@ -56,7 +56,7 @@ const SupervisorRequirementList: FC<{ record: Partial<Supervisor> }> = ({ record
         hasList={true}
       >
         <Datagrid optimized rowClick="expand" expand={<RequirementShow />}>
-          <DateField cellClassName={classes.cell} headerClassName={classes.cell} source="createdTime" showTime />
+          <DateField cellClassName={classes.cell} headerClassName={classes.cell} source="createdAt" showTime />
           <DemandsField cellClassName={classes.cell} headerClassName={classes.cell} />
           <ClientLinkField cellClassName={classes.cell} headerClassName={classes.cell} />
           <ShowButton cellClassName={classes.cell} headerClassName={classes.cell} />

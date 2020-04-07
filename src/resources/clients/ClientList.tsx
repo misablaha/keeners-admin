@@ -15,7 +15,7 @@ const ClientList = (props: any) => (
     filters={<ClientFilter />}
     perPage={25}
     pagination={<Pagination rowsPerPageOptions={[25, 50, 100, 250]} />}
-    sort={{ field: 'createdTime', order: 'ASC' }}
+    sort={{ field: 'createdAt', order: 'ASC' }}
     bulkActionButtons={false}
   >
     <Datagrid optimized rowClick="edit">
