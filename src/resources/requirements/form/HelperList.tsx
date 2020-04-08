@@ -75,7 +75,7 @@ const HelperList: FC<{ record: Requirement; onSelect: (ev: React.MouseEvent, hel
       setIds([]);
     } else {
       forEach(data, (h) => {
-        Object.assign(h, { distance: getDistance(record.location, h.location) });
+        Object.assign(h, { distance: h.location ? getDistance(record.location, h.location) : Number.NaN });
       });
 
       setIds(
@@ -83,7 +83,7 @@ const HelperList: FC<{ record: Requirement; onSelect: (ev: React.MouseEvent, hel
         // difference([1,2,3], [1,2]) => [ 3 ]
         // difference([1,2,3], [1,2,3,4]) => []
         filter(data, (h) => difference(required, h.provideIds).length === 0)
-          .sort((a, b) => a.distance - b.distance)
+          .sort((a, b) => (a.distance || 0) - (b.distance || 0))
           .map((h) => h.id)
           .slice(0, 50),
       );
