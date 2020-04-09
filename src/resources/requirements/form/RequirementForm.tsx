@@ -22,7 +22,7 @@ import { phone } from '../../../form/validate';
 import ClientForm from './ClientForm';
 import LocationAutocompleteInput, { LocationAutocompleteResult } from '../../../form/LocationAutocompleteInput';
 import ClientRequirementList from '../ClientRequirementList';
-import HelperList from './HelperList';
+import HelperAssignInput from './HelperAssignInput';
 import HelperLabel from './HelperLabel';
 import RequirementHistory from './RequirementHistory';
 import DemandList from './DemandList';
@@ -200,7 +200,7 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
               </ReferenceInput>
               <NumberInput resource="requirements" source="traveledDistance" defaultValue={0} fullWidth />
               {values.helper && <HelperLabel record={values.helper} onDelete={handleHelperChange} />}
-              {values.id && !values.helper && <HelperList record={values} onSelect={handleHelperChange} />}
+              {values.id && !values.helper && <HelperAssignInput record={values} onSelect={handleHelperChange} />}
             </Grid>
           </Grid>
         </CardContent>

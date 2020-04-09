@@ -69,6 +69,7 @@ export default defaultsDeep(
           addDemand: 'Přidat poptávku',
           removeDemand: 'Odebrat poptávku',
           assign: 'Přiřadit',
+          chooseHelper: 'Vybrat dobrovolníka',
           cancel: 'Označit jako zrušené',
           done: 'Označit jako vyřešené',
         },
@@ -99,6 +100,7 @@ export default defaultsDeep(
     ra: {
       action: {
         search: 'Hledat',
+        close: 'Zavřít',
       },
       validation: {
         phone: 'Musí být platné telefonní číslo',
