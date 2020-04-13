@@ -19,11 +19,11 @@ const ClientList = (props: any) => (
     bulkActionButtons={false}
   >
     <Datagrid optimized rowClick="edit">
-      <TextField source="firstName" />
-      <TextField source="lastName" />
-      <TextField source="age" />
-      <TextField source="phoneNumber" />
-      <TextField source="address" />
+      <TextField source="firstName" emptyText={' '} />
+      <TextField source="lastName" emptyText={' '} />
+      <TextField source="age" emptyText={' '} />
+      <TextField source="phoneNumber" emptyText={' '} />
+      <TextField source="address" emptyText={' '} />
     </Datagrid>
   </List>
 );

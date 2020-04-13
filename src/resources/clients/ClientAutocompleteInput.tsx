@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
 import Fuse, { IFuseOptions } from 'fuse.js';
 import { Client } from '../../types/records';
+import { debounce } from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -23,7 +24,7 @@ const fuseOptions: IFuseOptions<Client> = {
   includeScore: false,
   minMatchCharLength: 3,
   threshold: 0.4,
-  keys: ['name', 'firstName', 'lastName', 'phoneNumber'],
+  keys: ['name', 'phoneNumber'],
 };
 
 function parse(text: string, matches: ReadonlyArray<[number, number]>) {
@@ -105,11 +106,19 @@ const ClientAutocompleteInput: FC<Props> = ({ getOptionLabel, freeSolo, onChange
     setFuse(new Fuse(data, fuseOptions));
   }, [clients.loading, setFuse, setOptions]);
 
-  const handleChange = React.useCallback(
-    (event: any, value: string) => {
-      setOptions(fuse.search(value));
+  const search = React.useCallback(
+    (value: string) => {
+      setOptions(fuse.search(value).slice(0, 30));
     },
     [fuse, setOptions],
+  );
+
+  const handleChange = React.useMemo(
+    () =>
+      debounce((event: any, value: string): void => {
+        search(value);
+      }, 300),
+    [search],
   );
 
   const handleSelect = React.useCallback(

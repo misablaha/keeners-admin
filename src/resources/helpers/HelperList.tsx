@@ -23,13 +23,13 @@ const HelperList = (props: any) => (
     bulkActionButtons={false}
   >
     <Datagrid optimized rowClick="edit">
-      <TextField source="callSign" />
-      <TextField source="firstName" />
-      <TextField source="lastName" />
-      <TextField source="phoneNumber" noWrap />
-      <TextField source="email" noWrap />
-      <TextField source="address" />
-      <TextField source="note" />
+      <TextField source="callSign" emptyText={' '} />
+      <TextField source="firstName" emptyText={' '} />
+      <TextField source="lastName" emptyText={' '} />
+      <TextField source="phoneNumber" emptyText={' '} noWrap />
+      <TextField source="email" emptyText={' '} noWrap />
+      <TextField source="address" emptyText={' '} />
+      <TextField source="note" emptyText={' '} />
       <BooleanField source="isActive" />
     </Datagrid>
   </List>

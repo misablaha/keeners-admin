@@ -10,7 +10,7 @@ const SupervisorList = (props: any) => (
     bulkActionButtons={false}
   >
     <Datagrid optimized rowClick="edit">
-      <TextField source="name" />
+      <TextField source="name" emptyText={' '} />
     </Datagrid>
   </List>
 );

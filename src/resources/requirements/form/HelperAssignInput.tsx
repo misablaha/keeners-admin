@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
 const HelperAssignInput: FC<{
   record: Requirement;
   onSelect: (ev: React.MouseEvent, helper: Helper) => void;
-}> = props => {
+}> = (props) => {
   const classes = useStyles();
   const translate = useTranslate();
   const [open, setOpen] = React.useState(false);

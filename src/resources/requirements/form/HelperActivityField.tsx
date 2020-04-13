@@ -13,11 +13,7 @@ const HelperActivityField: FC<FieldProps<Helper>> = ({ record }) => {
     { field: 'id', order: 'ASC' },
     {
       'helperId||$eq': record ? record.id : 0,
-      'createdAt||$gte': moment()
-        .startOf('d')
-        .subtract(7, 'd')
-        .toDate()
-        .toISOString(),
+      'createdAt||$gte': moment().startOf('d').subtract(7, 'd').toDate().toISOString(),
     },
   );
 

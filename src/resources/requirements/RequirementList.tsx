@@ -45,9 +45,15 @@ const RequirementList = (props: any) => (
     <Datagrid optimized rowClick="edit">
       <DateField source="createdAt" showTime />
       <ClientLinkField />
-      <TextField label={`resources.clients.fields.age`} source="client.age" sortable={false} noWrap />
-      <TextField label={`resources.clients.fields.phoneNumber`} source="client.phoneNumber" sortable={false} noWrap />
-      <TextField label={`resources.clients.fields.region`} source="region" sortable={false} noWrap />
+      <TextField label={`resources.clients.fields.age`} source="client.age" emptyText={' '} sortable={false} noWrap />
+      <TextField
+        label={`resources.clients.fields.phoneNumber`}
+        source="client.phoneNumber"
+        emptyText={' '}
+        sortable={false}
+        noWrap
+      />
+      <TextField label={`resources.clients.fields.region`} source="region" emptyText={' '} sortable={false} noWrap />
       <DemandsField />
       <DateField source="supplyDate" noWrap />
       <HelperLinkField />
