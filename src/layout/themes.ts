@@ -1,4 +1,6 @@
-import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
+import { merge } from 'lodash';
+import { createMuiTheme, ThemeOptions } from '@material-ui/core/styles';
+import { FontSize } from '../types/core';
 
 export const darkTheme: ThemeOptions = {
   palette: {
@@ -22,4 +24,14 @@ export const lightTheme: ThemeOptions = {
     },
     type: 'light',
   },
+};
+
+export const createTheme = (themeConfig: ThemeOptions, fontSize: FontSize) => {
+  return createMuiTheme(
+    merge({}, themeConfig, {
+      typography: {
+        fontSize: fontSize === 'large' ? 16 : 14,
+      },
+    }),
+  );
 };

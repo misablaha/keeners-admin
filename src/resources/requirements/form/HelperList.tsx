@@ -14,7 +14,7 @@ import AssignButton from './AssignButton';
 import Fuse, { IFuseOptions } from 'fuse.js';
 import HelperActivityField from './HelperActivityField';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   cell: {
     paddingRight: theme.spacing(1),
     paddingLeft: theme.spacing(1),
@@ -56,27 +56,32 @@ const HelperList: FC<{ record: Requirement; onSelect: (ev: React.MouseEvent, hel
 
   React.useEffect(() => {
     const required: string[] = (record.demands || [])
-      .map(d => d.service)
-      .filter(s => !s.isInternal)
-      .map(s => s.id);
+      .map((d) => d.service)
+      .filter((s) => !s.isInternal)
+      .map((s) => s.id);
 
     if (required.length === 0 || !record.location) {
       // Nothing is needed ... Do not offer helpers
       setIds([]);
     } else {
-      forEach(data, h => {
+      forEach(data, (h) => {
         Object.assign(h, { distance: h.location ? getDistance(record.location, h.location) : Number.NaN });
       });
 
       // Filter helpers that provide all required services
       // difference([1,2,3], [1,2]) => [ 3 ]
       // difference([1,2,3], [1,2,3,4]) => []
-      const ids = filter(data, h => difference(required, h.provideIds).length === 0)
+      const ids = filter(data, (h) => difference(required, h.provideIds).length === 0)
         .sort((a, b) => (a.distance || 0) - (b.distance || 0))
-        .map(h => h.id);
+        .map((h) => h.id);
 
       if (search) {
-        setIds(intersection(ids, fuse.search(search).map(f => f.item.id)));
+        setIds(
+          intersection(
+            ids,
+            fuse.search(search).map((f) => f.item.id),
+          ),
+        );
       } else {
         setIds(ids.slice(0, 50));
       }

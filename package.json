@@ -11,6 +11,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@auth0/auth0-spa-js": "^1.6.5",
     "@material-ui/core": "^4.9.8",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.47",
@@ -20,6 +21,8 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "auth0-js": "^9.13.2",
+    "auth0-lock": "^11.23.0",
     "autosuggest-highlight": "^3.1.1",
     "classnames": "^2.2.6",
     "fuse.js": "^5.0.10-beta",
@@ -41,6 +44,8 @@
     "typescript": "~3.7.2"
   },
   "devDependencies": {
+    "@types/auth0-js": "^9.12.4",
+    "@types/auth0-lock": "^11.4.12",
     "@types/autosuggest-highlight": "^3.1.0",
     "@types/classnames": "^2.2.10",
     "@types/google-libphonenumber": "^7.4.17",
