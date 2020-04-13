@@ -84,7 +84,7 @@ const AppWithProviders: FC = props => (
   <LoadScript
     id="script-loader"
     loadingElement={loadingElement}
-    googleMapsApiKey="AIzaSyBRveOLn4H1lbWtmEiliGwo7s1tHajmhJE"
+    googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}
     language="cs"
     region="cz"
     libraries={libraries}
