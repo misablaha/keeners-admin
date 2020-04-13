@@ -1,5 +1,15 @@
 import React from 'react';
-import { Datagrid, DateField, DateInput, Filter, List, ReferenceInput, SelectInput, TextField } from 'react-admin';
+import {
+  Datagrid,
+  DateField,
+  DateInput,
+  Filter,
+  List,
+  Pagination,
+  ReferenceInput,
+  SelectInput,
+  TextField,
+} from 'react-admin';
 import DemandsField from './DemandsField';
 import ClientLinkField from './ClientLinkField';
 import HelperLinkField from './HelperLinkField';
@@ -39,6 +49,7 @@ const RequirementList = (props: any) => (
     {...props}
     filters={<RequirementFilter />}
     perPage={25}
+    pagination={<Pagination rowsPerPageOptions={[25, 50, 100, 250]} />}
     sort={{ field: 'createdAt', order: 'DESC' }}
     bulkActionButtons={false}
   >

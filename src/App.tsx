@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Admin, Resource } from 'react-admin';
 import { createBrowserHistory } from 'history';
+import { LoadScript } from '@react-google-maps/api';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
 import NestJSCrudProvider, { fetchJsonSigned } from './NestJSCrudProvider';
 import { i18nProvider } from './i18n';
-import InitGoogle from './InitGoogle';
 import { Auth0Provider, useAuth0 } from './auth/Auth0';
 import { Layout } from './layout';
 import themeReducer from './layout/themeReducer';
@@ -22,7 +24,22 @@ const history = createBrowserHistory();
 const onRedirectCallback = (appState: any) =>
   history.push(appState && appState.targetUrl ? appState.targetUrl : window.location.pathname);
 
-const App = () => {
+const loadingElement = (
+  <Grid
+    container
+    spacing={0}
+    direction="column"
+    alignItems="center"
+    justify="center"
+    style={{ minHeight: '100vh' }}
+  >
+    <Grid item xs={3}>
+      <CircularProgress color={'primary'} size={56} />
+    </Grid>
+  </Grid>
+);
+
+const App: FC<{ loader?: HTMLCollection }> = props => {
   const auth0 = useAuth0();
   const [dataProvider, setDataProvider] = React.useState(new NestJSCrudProvider('/api'));
   const [authProvider] = React.useState(new Auth0AppProvider(auth0));
@@ -37,7 +54,7 @@ const App = () => {
     authProvider.context = auth0;
   }, [authProvider, auth0]);
 
-  return auth0.loaded ? (
+  return auth0.isAuthenticated ? (
     <Admin
       authProvider={authProvider}
       dataProvider={dataProvider}
@@ -56,11 +73,22 @@ const App = () => {
       <Resource {...services} />
       <Resource {...supervisors} />
     </Admin>
-  ) : null;
+  ) : (
+    <LoginPage loadingElement={loadingElement} />
+  );
 };
 
-export default () => (
-  <InitGoogle>
+const libraries = ['places', 'geometry'];
+
+const AppWithProviders: FC = props => (
+  <LoadScript
+    id="script-loader"
+    loadingElement={loadingElement}
+    googleMapsApiKey="AIzaSyBRveOLn4H1lbWtmEiliGwo7s1tHajmhJE"
+    language="cs"
+    region="cz"
+    libraries={libraries}
+  >
     <Auth0Provider
       domain={process.env.REACT_APP_AUTH0_DOMAIN!}
       client_id={process.env.REACT_APP_AUTH0_CLIENT_ID!}
@@ -70,5 +98,6 @@ export default () => (
     >
       <App />
     </Auth0Provider>
-  </InitGoogle>
+  </LoadScript>
 );
+export default AppWithProviders;

@@ -8,7 +8,6 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { Demand, DemandStatus } from '../../types/records';
-import { FieldProps } from '../../types/core';
 import { PropTypes } from '@material-ui/core';
 
 const themeNew = createMuiTheme({

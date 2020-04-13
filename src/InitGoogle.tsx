@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { LoadScript } from '@react-google-maps/api';
+import { LoadScript, LoadScriptProps } from '@react-google-maps/api';
 
 const libraries = ['places', 'geometry'];
 
