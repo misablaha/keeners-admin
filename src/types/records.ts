@@ -41,6 +41,7 @@ export interface Client extends BaseRecord {
   region: string;
   location: GpsPoint;
   note: string;
+  disease: string;
   requirements: Requirement[];
 }
 
@@ -78,6 +79,7 @@ export interface Requirement extends BaseRecord {
   helperId: string;
   location: GpsPoint;
   note: string;
+  disease: string;
   region: string;
   supervisor: Supervisor;
   supervisorId: string;

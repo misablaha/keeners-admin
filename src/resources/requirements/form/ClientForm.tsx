@@ -98,6 +98,9 @@ const ClientForm: FC<{ onDrop: () => void }> = (props) => {
           onChange={handleYearOfBirthChange}
         />
       </Grid>
+      <Grid item xs={12} className={classes.item}>
+        <TextInput label={'resources.clients.fields.disease'} resource="clients" source="client.disease" fullWidth />
+      </Grid>
     </Grid>
   );
 };

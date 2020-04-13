@@ -130,6 +130,7 @@ const HelperList: FC<{ record: Requirement; onSelect: (ev: React.MouseEvent, hel
             headerClassName={classes.cell}
             label={`resources.helpers.fields.note`}
             source="note"
+            emptyText={' '}
             sortable={false}
           />
           <NumberField
