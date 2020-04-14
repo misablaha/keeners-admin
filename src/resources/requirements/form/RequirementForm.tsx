@@ -1,3 +1,4 @@
+import { omit } from 'lodash';
 import React, { FC } from 'react';
 import { FormWithRedirect, NumberInput, RadioButtonGroupInput, ReferenceInput, required, TextInput } from 'react-admin';
 import { useDataProvider } from 'ra-core';
@@ -58,6 +59,14 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
   const form = useForm();
   const { values } = useFormState<RequirementFormState>();
   const dataProvider = useDataProvider();
+
+  React.useEffect(() => {
+    if (values.demands) {
+      form.change('demands',
+        values.demands.map((d) => (values.id ? d : omit(d, ['id', 'requirementId']))),
+      );
+    }
+  }, []);
 
   const handleClientClean = React.useCallback(() => {
     form.change('client', null);
@@ -152,7 +161,7 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
   return (
     <RequirementFormLayout {...props} record={values}>
       <Card>
-        <Toolbar {...props} />
+        <Toolbar {...props} showClone />
         <CardContent>
           <Grid container spacing={2} className={classes.container}>
             <Grid item xs={12} lg={6} className={classes.item}>
@@ -179,7 +188,10 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
               {values.location && <LocationMapInput source="location" />}
             </Grid>
             <Grid item xs={12} lg={6} className={classes.item}>
-              <DemandList demands={values.demands} onChange={handleDemandsChange} />
+              <DemandList
+                demands={values.demands}
+                onChange={handleDemandsChange}
+              />
               <TextInput resource="requirements" source="note" multiline rows="3" fullWidth />
               <SupplyDateInput resource="requirements" source="supplyDate" fullWidth />
               <ReferenceInput

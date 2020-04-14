@@ -107,6 +107,7 @@ export default defaultsDeep(
     ra: {
       action: {
         search: 'Hledat',
+        clone: 'Duplikovat',
         close: 'Zavřít',
       },
       validation: {
