@@ -1,6 +1,17 @@
 import React from 'react';
-import { BooleanField, BooleanInput, Datagrid, Filter, List, Pagination, TextField, TextInput } from 'react-admin';
+import {
+  BooleanField,
+  BooleanInput,
+  Datagrid,
+  Filter,
+  List,
+  Pagination,
+  ReferenceInput, SelectInput,
+  TextField,
+  TextInput,
+} from 'react-admin';
 import { CondOperator } from '@nestjsx/crud-request';
+import ProvideField from './ProvideField';
 
 const HelperFilter = (props: any) => (
   <Filter {...props}>
@@ -8,6 +19,14 @@ const HelperFilter = (props: any) => (
     <TextInput label={`resources.helpers.fields.firstName`} source={'firstName'} alwaysOn />
     <TextInput label={`resources.helpers.fields.lastName`} source={'lastName'} alwaysOn />
     <TextInput label={`resources.helpers.fields.phoneNumber`} source={'phoneNumber'} alwaysOn />
+    <ReferenceInput
+      label={`resources.helpers.fields.provideIds`}
+      reference="services"
+      source="provide.id||$eq"
+      alwaysOn
+    >
+      <SelectInput source={'name'} />
+    </ReferenceInput>
     <TextInput label={`resources.helpers.fields.note`} source={'note'} alwaysOn />
     <BooleanInput label={`resources.helpers.fields.isActive`} source={`isActive||${CondOperator.EQUALS}`} />
   </Filter>
@@ -27,7 +46,7 @@ const HelperList = (props: any) => (
       <TextField source="firstName" emptyText={' '} />
       <TextField source="lastName" emptyText={' '} />
       <TextField source="phoneNumber" emptyText={' '} noWrap />
-      <TextField source="email" emptyText={' '} noWrap />
+      <ProvideField />
       <TextField source="address" emptyText={' '} />
       <TextField source="note" emptyText={' '} />
       <BooleanField source="isActive" />

@@ -20,6 +20,7 @@ export default defaultsDeep(
           region: 'Oblast',
           isActive: 'Je k dispozici',
           note: 'Poznámka',
+          provide: 'Nabízí',
           provideIds: 'Nabízí',
         },
       },
