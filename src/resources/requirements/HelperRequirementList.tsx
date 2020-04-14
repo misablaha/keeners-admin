@@ -55,11 +55,10 @@ const HelperRequirementList: FC<{ record: Partial<Helper> }> = ({ record }) => {
         hasShow={false}
         hasList={true}
       >
-        <Datagrid optimized rowClick="expand" expand={<RequirementShow />}>
+        <Datagrid optimized rowClick="edit" expand={<RequirementShow />}>
           <DateField cellClassName={classes.cell} headerClassName={classes.cell} source="createdAt" showTime />
           <DemandsField cellClassName={classes.cell} headerClassName={classes.cell} />
           <ClientLinkField cellClassName={classes.cell} headerClassName={classes.cell} />
-          <ShowButton cellClassName={classes.cell} headerClassName={classes.cell} />
         </Datagrid>
       </List>
     </Card>
