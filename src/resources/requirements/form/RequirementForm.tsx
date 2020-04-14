@@ -1,20 +1,13 @@
 import React, { FC } from 'react';
-import {
-  FormWithRedirect,
-  NumberInput,
-  RadioButtonGroupInput,
-  ReferenceInput,
-  required,
-  TextInput,
-  Toolbar,
-} from 'react-admin';
+import { FormWithRedirect, NumberInput, RadioButtonGroupInput, ReferenceInput, required, TextInput } from 'react-admin';
 import { useDataProvider } from 'ra-core';
 import { useForm, useFormState } from 'react-final-form';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import { formatPhoneNumber, pickToolbarProps } from '../../../form/utils';
+import { formatPhoneNumber } from '../../../form/utils';
+import Toolbar from '../../../form/Toolbar';
 import LocationMapInput from '../../../form/LocationMapInput';
 import { Client, Demand, DemandStatus, Helper, Requirement, Supervisor } from '../../../types/records';
 import ClientAutocompleteInput from '../../clients/ClientAutocompleteInput';
@@ -159,6 +152,7 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
   return (
     <RequirementFormLayout {...props} record={values}>
       <Card>
+        <Toolbar {...props} />
         <CardContent>
           <Grid container spacing={2} className={classes.container}>
             <Grid item xs={12} lg={6} className={classes.item}>
@@ -204,7 +198,6 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
             </Grid>
           </Grid>
         </CardContent>
-        <Toolbar {...pickToolbarProps(props)} submitOnEnter={false} />
       </Card>
     </RequirementFormLayout>
   );

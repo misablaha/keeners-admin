@@ -1,11 +1,11 @@
 import React, { FC, Fragment } from 'react';
-import { FormWithRedirect, required, TextInput, Toolbar } from 'react-admin';
-import { Supervisor } from '../../types/records';
-import Grid from '@material-ui/core/Grid';
-import SupervisorRequirementList from '../requirements/SupervisorRequirementList';
+import { FormWithRedirect, required, TextInput } from 'react-admin';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { pickToolbarProps } from '../../form/utils';
+import Grid from '@material-ui/core/Grid';
+import SupervisorRequirementList from '../requirements/SupervisorRequirementList';
+import { Supervisor } from '../../types/records';
+import Toolbar from '../../form/Toolbar';
 
 const SupervisorFormLayout: FC<{ record: Partial<Supervisor> }> = ({ record, children }) => {
   return record.id ? (
@@ -25,10 +25,10 @@ const SupervisorFormLayout: FC<{ record: Partial<Supervisor> }> = ({ record, chi
 const SupervisorFormBody: FC<{ record: Partial<Supervisor> }> = (props) => (
   <SupervisorFormLayout record={props.record}>
     <Card>
+      <Toolbar {...props} />
       <CardContent>
         <TextInput resource="supervisors" source="name" validate={required()} autoFocus fullWidth />
       </CardContent>
-      <Toolbar {...pickToolbarProps(props)} submitOnEnter={false} />
     </Card>
   </SupervisorFormLayout>
 );

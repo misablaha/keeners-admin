@@ -6,7 +6,6 @@ import {
   ReferenceArrayInput,
   required,
   TextInput,
-  Toolbar,
 } from 'react-admin';
 import { useForm } from 'react-final-form';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,7 +13,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/icons/SupervisedUserCircle';
-import { pickToolbarProps } from '../../form/utils';
+import Toolbar from '../../form/Toolbar';
 import { phone } from '../../form/validate';
 import LocationAutocompleteInput, { LocationAutocompleteResult } from '../../form/LocationAutocompleteInput';
 import LocationMapInput from '../../form/LocationMapInput';
@@ -65,6 +64,7 @@ const HelperFormBody: FC<{ record: Partial<Helper> }> = (props) => {
     <HelperFormLayout record={props.record}>
       <Card>
         <IconBar Icon={Icon} bgColor="#6c2744" />
+        <Toolbar {...props} />
         <CardContent>
           <Grid container spacing={2} className={classes.container}>
             <Grid item xs={12} lg={6} className={classes.item}>
@@ -110,7 +110,6 @@ const HelperFormBody: FC<{ record: Partial<Helper> }> = (props) => {
             </Grid>
           </Grid>
         </CardContent>
-        <Toolbar {...pickToolbarProps(props)} submitOnEnter={false} />
       </Card>
     </HelperFormLayout>
   );
