@@ -1,3 +1,4 @@
+import moment from 'moment-timezone';
 import React from 'react';
 import {
   Datagrid,
@@ -18,7 +19,12 @@ import demandStatuses from './form/demandStatuses';
 
 const RequirementFilter = (props: any) => (
   <Filter {...props}>
-    <DateInput label={`resources.requirements.fields.createdAt`} source="createdAt||$gte" alwaysOn />
+    <DateInput
+      label={`resources.requirements.fields.createdAt`}
+      source="createdAt||$gte"
+      parse={(val?: string) => val && moment.tz(val, moment.tz.guess()).toJSON()}
+      alwaysOn
+    />
     <ReferenceInput
       label={`resources.requirements.fields.demands`}
       reference="services"
@@ -31,6 +37,12 @@ const RequirementFilter = (props: any) => (
       label={`resources.requirements.fields.status`}
       source={'demands.status||$eq'}
       choices={demandStatuses}
+      alwaysOn
+    />
+    <DateInput
+      label={`resources.requirements.filter.supplySince`}
+      source="supplyDate||$gte"
+      parse={(val?: string) => val && moment.tz(val, moment.tz.guess()).toJSON()}
       alwaysOn
     />
     <ReferenceInput

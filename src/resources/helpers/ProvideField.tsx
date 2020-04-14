@@ -4,11 +4,7 @@ import { Helper } from '../../types/records';
 import { FieldProps } from '../../types/core';
 
 const ProvideField: FC<FieldProps<Helper>> = ({ record }) => (
-  <Fragment>
-    {record && record.provide && record.provide.map((s) => (
-      <ChipField record={s} source="name" />
-    ))}
-  </Fragment>
+  <Fragment>{record && record.provide && record.provide.map((s) => <ChipField record={s} source="name" />)}</Fragment>
 );
 
 ProvideField.defaultProps = {

@@ -68,6 +68,10 @@ export default defaultsDeep(
           tomorrow: 'Zítra',
           later: 'Jindy',
         },
+        filter: {
+          supplySince: 'Termín od',
+          supplyUntil: 'Termín do',
+        },
         actions: {
           addDemand: 'Přidat poptávku',
           removeDemand: 'Odebrat poptávku',

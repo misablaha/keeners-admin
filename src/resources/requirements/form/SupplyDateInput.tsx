@@ -3,8 +3,7 @@ import { useForm } from 'react-final-form';
 import { InputProps } from 'ra-core';
 import { DateInput, RadioButtonGroupInput } from 'react-admin';
 import { TextFieldProps } from '@material-ui/core/TextField';
-import moment from 'moment';
-import Grid from '@material-ui/core/Grid';
+import moment from 'moment-timezone';
 
 enum Delay {
   TODAY = 'today',

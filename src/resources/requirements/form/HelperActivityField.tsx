@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { FieldProps } from '../../../types/core';
 import { Helper } from '../../../types/records';
 import { useGetList } from 'ra-core';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 

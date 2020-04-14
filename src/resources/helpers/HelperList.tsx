@@ -6,7 +6,8 @@ import {
   Filter,
   List,
   Pagination,
-  ReferenceInput, SelectInput,
+  ReferenceInput,
+  SelectInput,
   TextField,
   TextInput,
 } from 'react-admin';
