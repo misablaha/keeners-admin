@@ -10,6 +10,7 @@ import { Box } from '@material-ui/core';
 import Fuse, { IFuseOptions } from 'fuse.js';
 import { Client } from '../../types/records';
 import { debounce } from 'lodash';
+import { formatPhoneNumber } from '../../form/utils';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -21,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
 
 const fuseOptions: IFuseOptions<Client> = {
   includeMatches: true,
-  includeScore: false,
+  includeScore: true,
   minMatchCharLength: 3,
-  threshold: 0.4,
+  threshold: 0.25,
   keys: ['name', 'phoneNumber'],
 };
 
@@ -108,7 +109,12 @@ const ClientAutocompleteInput: FC<Props> = ({ getOptionLabel, freeSolo, onChange
 
   const search = React.useCallback(
     (value: string) => {
-      setOptions(fuse.search(value).slice(0, 30));
+      const found = fuse.search(value).slice(0, 30);
+      if (found.length > 1 && found[0].score !== undefined && found[0].score <= 0.001) {
+        setOptions(found.filter((f) => f.score! <= 0.001));
+      } else {
+        setOptions(found);
+      }
     },
     [fuse, setOptions],
   );
@@ -116,7 +122,7 @@ const ClientAutocompleteInput: FC<Props> = ({ getOptionLabel, freeSolo, onChange
   const handleChange = React.useMemo(
     () =>
       debounce((event: any, value: string): void => {
-        search(value);
+        search(formatPhoneNumber(value));
       }, 300),
     [search],
   );

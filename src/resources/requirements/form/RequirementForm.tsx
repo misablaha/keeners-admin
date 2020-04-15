@@ -62,7 +62,8 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
 
   React.useEffect(() => {
     if (values.demands) {
-      form.change('demands',
+      form.change(
+        'demands',
         values.demands.map((d) => (values.id ? d : omit(d, ['id', 'requirementId']))),
       );
     }
@@ -188,10 +189,7 @@ const RequirementFormBody: FC<{ record?: Requirement }> = (props) => {
               {values.location && <LocationMapInput source="location" />}
             </Grid>
             <Grid item xs={12} lg={6} className={classes.item}>
-              <DemandList
-                demands={values.demands}
-                onChange={handleDemandsChange}
-              />
+              <DemandList demands={values.demands} onChange={handleDemandsChange} />
               <TextInput resource="requirements" source="note" multiline rows="3" fullWidth />
               <SupplyDateInput resource="requirements" source="supplyDate" fullWidth />
               <ReferenceInput
