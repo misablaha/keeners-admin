@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import DialogContent from '@material-ui/core/DialogContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import MuiTextField from '@material-ui/core/TextField';
-import { Helper, Requirement } from '../../../types/records';
+import { DemandStatus, Helper, Requirement } from '../../../types/records';
 import HelperLinkField from '../../helpers/HelperLinkField';
 import AssignButton from './AssignButton';
 import Fuse, { IFuseOptions } from 'fuse.js';
@@ -56,6 +56,7 @@ const HelperList: FC<{ record: Requirement; onSelect: (ev: React.MouseEvent, hel
 
   React.useEffect(() => {
     const required: string[] = (record.demands || [])
+      .filter((d) => d.status !== DemandStatus.CANCELED)
       .map((d) => d.service)
       .filter((s) => !s.isInternal)
       .map((s) => s.id);
