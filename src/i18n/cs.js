@@ -106,9 +106,10 @@ export default defaultsDeep(
     },
     ra: {
       action: {
-        search: 'Hledat',
         clone: 'Duplikovat',
         close: 'Zavřít',
+        confirm: 'Potvrdit',
+        search: 'Hledat',
       },
       validation: {
         phone: 'Musí být platné telefonní číslo',
