@@ -26,6 +26,7 @@
     "geolib": "^3.2.1",
     "google-libphonenumber": "^3.2.8",
     "history": "^4.10.1",
+    "jsonexport": "^2.4.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
@@ -59,7 +60,7 @@
     "eslint-plugin-import": "^2.20.1",
     "prettier": "^2.0.2"
   },
-  "proxy": "http://localhost:3001",
+  "proxy": "http://34.254.173.157",
   "browserslist": {
     "production": [
       ">0.2%",
