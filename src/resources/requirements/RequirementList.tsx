@@ -36,11 +36,11 @@ const columnToExport = [
 ];
 const exporter = (data: Requirement[]) => {
   const forExport = data
-    .map(ride => pick(ride, columnToExport))
+    .map((ride) => pick(ride, columnToExport))
     .map((row: Pick<Requirement, 'createdAt' | 'address' | 'region' | 'client' | 'demands' | 'note'>) => {
       return {
         ...row,
-        demands: row.demands.map(d => d.service.name).join(', '),
+        demands: row.demands.map((d) => d.service.name).join(', '),
       };
     });
 
