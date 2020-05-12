@@ -33,6 +33,7 @@ const columnToExport = [
   'client.phoneNumber',
   'demands',
   'note',
+  'traveledDistance',
 ];
 const exporter = (data: Requirement[]) => {
   const forExport = data
